@@ -1,0 +1,24 @@
+{
+    "tailwindCSS.experimental.classRegex": [
+        "cva\\(([^)]*)\\)",
+        "variants\\(([^)]*)\\)",
+        // Generic capture of string literals within your variant objects
+        ":\\s*['\"]([^'\"]*)['\"]",
+        // Capture quoted class strings within objects
+        ":\\s*['\"]([^'\"]*)['\"]",
+        // Backup for more complex nested structures
+        ":\\s*{[^}]*}\\s*['\"]([^'\"]*)['\"]"
+    ],
+    "laravelForgemate.frontendPaths": {
+        "modelsPath": "resources/js/support/interfaces/models",
+        "resourcesPath": "resources/js/support/interfaces/resources",
+        "servicesPath": "resources/js/services",
+        "constantsPath": "resources/js/support/constants",
+        "helpersPath": "resources/js/helpers",
+        "othersPath": "resources/js/support/interfaces/others",
+        "componentsPath": "resources/js/components"
+    },
+    "laravelForgemate.relationNameFormat": "snake_case",
+    "chat.tools.autoApprove": true,
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true
+}
