@@ -8,6 +8,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { MouseEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import './axios';
+import { ConfirmationDialogProvider } from './contexts/confirmation-dialog-context';
 import { addRippleEffect } from './helpers';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -38,18 +39,20 @@ createInertiaApp({
         root.render(
             <QueryClientProvider client={queryClient}>
                 <ThemeProvider defaultTheme='system' storageKey='rri-ui-theme'>
-                    <SonnerToaster
-                        toastOptions={
-                            {
-                                // https://github.com/shadcn-ui/ui/issues/2234
+                    <ConfirmationDialogProvider>
+                        <SonnerToaster
+                            toastOptions={
+                                {
+                                    // https://github.com/shadcn-ui/ui/issues/2234
+                                }
                             }
-                        }
-                        theme='light'
-                        richColors
-                        duration={2000}
-                        closeButton
-                    />
-                    <App {...props} />
+                            theme='light'
+                            richColors
+                            duration={2000}
+                            closeButton
+                        />
+                        <App {...props} />
+                    </ConfirmationDialogProvider>
                 </ThemeProvider>
             </QueryClientProvider>,
         );

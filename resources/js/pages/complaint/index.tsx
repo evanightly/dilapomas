@@ -1,0 +1,255 @@
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DataTable } from '@/components/ui/data-table';
+import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
+import { useConfirmation } from '@/contexts/confirmation-dialog-context';
+import AppLayout from '@/layouts/app-layout';
+import { complaintServiceHook } from '@/services/complaintServiceHook';
+import { ROUTES } from '@/support/constants/routes';
+import { TANSTACK_QUERY_KEYS } from '@/support/constants/tanstackQueryKeys';
+import { ServiceFilterOptions } from '@/support/interfaces/others';
+import { ComplaintResource } from '@/support/interfaces/resources';
+import { type BreadcrumbItem } from '@/types';
+import { Head, router } from '@inertiajs/react';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { format } from 'date-fns';
+import { Calendar, Edit, Eye, Plus, Trash2 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
+
+interface Props {
+    data: {
+        data: ComplaintResource[];
+        meta: any;
+    };
+}
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: '/dashboard',
+    },
+    {
+        title: 'Complaints',
+        href: '/complaints',
+    },
+];
+
+export default function ComplaintIndex({ data }: Props) {
+    const confirmAction = useConfirmation();
+    const [filters, setFilters] = useState<ServiceFilterOptions>({
+        page: 1,
+        page_size: 10,
+        sort_by: 'created_at',
+    });
+    const complaints = complaintServiceHook.useGetAll({
+        filters,
+    });
+    const deleteComplaint = complaintServiceHook.useDelete();
+    const [selectedComplaints, setSelectedComplaints] = useState<ComplaintResource[]>([]);
+    const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+    const columnHelper = createColumnHelper<ComplaintResource>();
+
+    const handleBulkDelete = () => {
+        if (selectedComplaints.length === 0) return;
+
+        confirmAction(() => {
+            selectedComplaints.forEach((complaint) => {
+                deleteComplaint.mutate(
+                    { id: complaint.id },
+                    {
+                        onSuccess: () => {
+                            toast.success('Complaints deleted successfully');
+                        },
+                        onError: () => {
+                            toast.error('Failed to delete some complaints');
+                        },
+                    },
+                );
+            });
+            setSelectedComplaints([]);
+            setRowSelection({});
+        });
+    };
+
+    // Sync TanStack row selection with component state
+    useEffect(() => {
+        if (!data?.data) return;
+
+        const selectedRows = Object.keys(rowSelection)
+            .filter((key) => rowSelection[key])
+            .map((id) => data.data.find((complaint) => complaint.id.toString() === id))
+            .filter(Boolean) as ComplaintResource[];
+
+        setSelectedComplaints(selectedRows);
+    }, [rowSelection, data?.data]);
+
+    const handleSingleDelete = (id: number) => {
+        confirmAction(() => {
+            deleteComplaint.mutate(
+                { id },
+                {
+                    onSuccess: () => {
+                        toast.success('Complaint deleted successfully');
+                    },
+                    onError: () => {
+                        toast.error('Failed to delete complaint');
+                    },
+                },
+            );
+        });
+    };
+
+    const handleEdit = (id: number) => {
+        router.visit(route('complaints.edit', id));
+    };
+
+    const handleView = (id: number) => {
+        router.visit(route('complaints.show', id));
+    };
+
+    // DataTable columns
+    const columns = [
+        // Checkbox column for row selection
+        columnHelper.display({
+            id: 'select',
+            header: ({ table }) => (
+                <Checkbox
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+                    aria-label='Select all'
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox onCheckedChange={(value) => row.toggleSelected(!!value)} checked={row.getIsSelected()} aria-label='Select row' />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+            size: 40,
+        }),
+        columnHelper.accessor('id', {
+            header: ({ column }) => <DataTableColumnHeader title='ID' column={column} />,
+            cell: ({ row }) => <div className='font-mono text-sm'>#{row.original.id}</div>,
+            size: 80,
+        }),
+        columnHelper.accessor('reporter', {
+            header: ({ column }) => <DataTableColumnHeader title='Reporter' column={column} />,
+            cell: ({ row }) => (
+                <div className='flex w-[200px] items-center gap-2 overflow-ellipsis whitespace-break-spaces'>
+                    <Avatar className='h-8 w-8'>
+                        <AvatarFallback className='text-xs'>{row.original.reporter?.charAt(0).toUpperCase() || 'A'}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <div className='line-clamp-1 font-medium'>{row.original.reporter || 'Anonymous'}</div>
+                        <div className='text-muted-foreground line-clamp-1 text-xs'>{row.original.reporter_identity_type}</div>
+                    </div>
+                </div>
+            ),
+        }),
+        columnHelper.accessor('incident_title', {
+            header: ({ column }) => <DataTableColumnHeader title='Title' column={column} />,
+            cell: ({ row }) => (
+                <div className='max-w-[200px]'>
+                    <div className='truncate font-medium'>{row.original.incident_title}</div>
+                    <div className='text-muted-foreground truncate text-xs'>{row.original.incident_description}</div>
+                </div>
+            ),
+        }),
+        columnHelper.accessor('reported_person', {
+            header: ({ column }) => <DataTableColumnHeader title='Reported Person' column={column} />,
+            cell: ({ row }) => <div className='text-sm'>{row.original.reported_person || 'N/A'}</div>,
+        }),
+        columnHelper.accessor('incident_time', {
+            header: ({ column }) => <DataTableColumnHeader title='Incident Date' column={column} />,
+            cell: ({ row }) => (
+                <div className='flex items-center gap-1 text-sm'>
+                    <Calendar className='h-3 w-3' />
+                    {row.original.incident_time ? format(new Date(row.original.incident_time), 'dd MMM yyyy') : 'N/A'}
+                </div>
+            ),
+        }),
+        columnHelper.accessor('created_at', {
+            header: ({ column }) => <DataTableColumnHeader title='Submitted' column={column} />,
+            cell: ({ row }) => (
+                <div className='text-muted-foreground text-xs'>
+                    {row.original.created_at ? format(new Date(row.original.created_at), 'dd MMM yyyy HH:mm') : 'N/A'}
+                </div>
+            ),
+        }),
+        columnHelper.display({
+            id: 'actions',
+            header: 'Actions',
+            cell: ({ row }) => (
+                <div className='flex items-center space-x-2'>
+                    <Button variant='ghost' size='icon' onClick={() => handleView(row.original.id)} className='h-8 w-8' title='View details'>
+                        <Eye className='h-4 w-4' />
+                    </Button>
+                    <Button variant='ghost' size='icon' onClick={() => handleEdit(row.original.id)} className='h-8 w-8' title='Edit complaint'>
+                        <Edit className='h-4 w-4' />
+                    </Button>
+                    <Button
+                        variant='ghost'
+                        size='icon'
+                        onClick={() => handleSingleDelete(row.original.id)}
+                        className='text-destructive hover:text-destructive h-8 w-8'
+                        title='Delete complaint'
+                    >
+                        <Trash2 className='h-4 w-4' />
+                    </Button>
+                </div>
+            ),
+            enableSorting: false,
+            size: 120,
+        }),
+    ] as Array<ColumnDef<ComplaintResource, ComplaintResource>>;
+
+    const memoizedColumns = useMemo(() => columns, []);
+
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title='Complaint Management' />
+
+            <div className='space-y-6'>
+                <div className='flex items-center justify-between'>
+                    <div>
+                        <h1 className='text-foreground text-2xl font-bold'>Complaint Management</h1>
+                        <p className='text-muted-foreground'>Manage and track all submitted complaints</p>
+                    </div>
+                    <Button onClick={() => router.visit(route('complaints.create'))} className='gap-2'>
+                        <Plus className='h-4 w-4' />
+                        Add Complaint
+                    </Button>
+                </div>
+
+                {selectedComplaints.length > 0 && (
+                    <div className='bg-muted/50 flex items-center justify-between rounded-lg border p-3'>
+                        <span className='text-sm font-medium'>{selectedComplaints.length} complaint(s) selected</span>
+                        <Button variant='destructive' size='sm' onClick={handleBulkDelete} className='gap-2'>
+                            <Trash2 className='h-4 w-4' />
+                            Delete Selected
+                        </Button>
+                    </div>
+                )}
+
+                <DataTable
+                    baseKey={TANSTACK_QUERY_KEYS.COMPLAINTS}
+                    baseRoute={ROUTES.COMPLAINTS}
+                    meta={complaints?.data?.meta as any}
+                    filters={filters}
+                    setFilters={setFilters}
+                    tableOptions={{
+                        enableRowSelection: true,
+                        state: {
+                            rowSelection,
+                        },
+                        onRowSelectionChange: setRowSelection,
+                        getRowId: (row) => row.id.toString(),
+                    }}
+                    data={complaints?.data?.data || []}
+                    columns={memoizedColumns}
+                />
+            </div>
+        </AppLayout>
+    );
+}
