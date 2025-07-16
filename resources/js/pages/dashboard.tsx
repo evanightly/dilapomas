@@ -1,5 +1,6 @@
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
+import { complaintServiceHook } from '@/services/complaintServiceHook';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 
@@ -11,6 +12,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
+    const complaints = complaintServiceHook.useGetAll();
+
+    if(complaints.isPending) {
+        return (
+            <AppLayout breadcrumbs={breadcrumbs}>
+                <Head title='Dashboard' />
+                <div className='flex h-full flex-1 items-center justify-center'>
+                    <div className='text-lg font-semibold'>Loading...</div>
+                </div>
+            </AppLayout>
+        );
+    }     
+    
+    console.log('Complaints:', complaints.data);
+    
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Dashboard' />

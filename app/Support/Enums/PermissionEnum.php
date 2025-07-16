@@ -27,5 +27,13 @@ enum PermissionEnum: string {
     case ROLE_UPDATE = 'role-update';
     case ROLE_DELETE = 'role-delete';
     
+
+        // Complaint permissions
+        case COMPLAINT_READ = 'complaint.read';
+        case COMPLAINT_CREATE = 'complaint.create';
+        case COMPLAINT_UPDATE = 'complaint.update';
+        case COMPLAINT_DELETE = 'complaint.delete';
+      
+    
     // Add your model permissions here
 }

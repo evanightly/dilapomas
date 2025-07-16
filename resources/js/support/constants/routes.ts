@@ -10,6 +10,6 @@ export const ROUTES = {
     USERS: 'users',
     ROLES: 'roles',
     PERMISSIONS: 'permissions',
-    
+    COMPLAINTS: 'complaints',
     // Add your application routes here
 };

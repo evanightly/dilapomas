@@ -193,3 +193,34 @@
     @apply bg-background text-foreground;
     }
 }
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    @apply h-2 w-2;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-border w-2 rounded-full;
+}
+
+.ripple {
+    position: relative;
+    overflow: hidden; /* Ensures the ripple stays within the element */
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 600ms linear;
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+    pointer-events: none; /* Prevent interaction with the ripple */
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4); /* Ripple grows */
+        opacity: 0; /* Ripple fades out */
+    }
+}
