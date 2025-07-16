@@ -1,5 +1,6 @@
 import '../css/app.css';
 
+import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster as SonnerToaster } from '@/components/ui/sonner';
 import { createInertiaApp } from '@inertiajs/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -8,7 +9,6 @@ import { MouseEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import './axios';
 import { addRippleEffect } from './helpers';
-import { initializeTheme } from './hooks/use-appearance';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 createInertiaApp({
@@ -37,21 +37,20 @@ createInertiaApp({
 
         root.render(
             <QueryClientProvider client={queryClient}>
-                {/* <ThemeWaveTransitionStyles /> */}
-                {/* <ConfirmationDialogProvider> */}
-                <SonnerToaster
-                    toastOptions={
-                        {
-                            // https://github.com/shadcn-ui/ui/issues/2234
+                <ThemeProvider defaultTheme='system' storageKey='rri-ui-theme'>
+                    <SonnerToaster
+                        toastOptions={
+                            {
+                                // https://github.com/shadcn-ui/ui/issues/2234
+                            }
                         }
-                    }
-                    theme='light'
-                    richColors
-                    duration={2000}
-                    closeButton
-                />
-                <App {...props} />
-                {/* </ConfirmationDialogProvider> */}
+                        theme='light'
+                        richColors
+                        duration={2000}
+                        closeButton
+                    />
+                    <App {...props} />
+                </ThemeProvider>
             </QueryClientProvider>,
         );
     },
@@ -59,6 +58,3 @@ createInertiaApp({
         color: 'hsl(var(--primary))',
     },
 });
-
-// This will set light / dark mode on load...
-initializeTheme();

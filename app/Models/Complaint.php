@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Complaint extends Model
-{
+class Complaint extends Model {
     use HasFactory;
-    
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +14,13 @@ class Complaint extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'reporter', 'reporter_identity_type', 'reporter_identity_number', 'incident_title', 'incident_description', 'incident_time', 'reported_person'
+        'reporter',
+        'reporter_identity_type',
+        'reporter_identity_number',
+        'incident_title',
+        'incident_description',
+        'incident_time',
+        'reported_person',
     ];
 
     /**
@@ -28,6 +31,4 @@ class Complaint extends Model
     protected $casts = [
         'incident_time' => 'datetime',
     ];
-
-    
 }

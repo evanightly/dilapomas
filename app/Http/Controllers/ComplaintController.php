@@ -6,6 +6,7 @@ use App\Http\Requests\Complaint\StoreComplaintRequest;
 use App\Http\Requests\Complaint\UpdateComplaintRequest;
 use App\Http\Resources\ComplaintResource;
 use App\Models\Complaint;
+use App\Support\Enums\IntentEnum;
 use App\Support\Interfaces\Services\ComplaintServiceInterface;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,22 @@ class ComplaintController extends Controller {
     }
 
     public function store(StoreComplaintRequest $request) {
+        $intent = request()->get('intent');
+
+        if ($intent === IntentEnum::SUBMIT_PUBLIC_COMPLAINT->value) {
+            $result = $this->complaintService->create($request->validated());
+
+            if ($this->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pengaduan berhasil dikirim',
+                    'data' => $result,
+                ]);
+            }
+
+            return redirect()->route('home')->with('success', 'Pengaduan berhasil dikirim. Nomor tiket: ' . $result['ticket_number']);
+        }
+
         if ($this->ajax()) {
             return $this->complaintService->create($request->validated());
         }
@@ -58,5 +75,15 @@ class ComplaintController extends Controller {
         if ($this->ajax()) {
             return $this->complaintService->delete($complaint);
         }
+    }
+
+    public function storePublic(StoreComplaintRequest $request) {
+        $result = $this->complaintService->create($request->validated());
+
+        if ($result['success']) {
+            return redirect()->route('home')->with('success', 'Pengaduan berhasil dikirim. Nomor tiket: ' . $result['data']['ticket_number']);
+        }
+
+        return redirect()->back()->withInput()->withErrors($result['errors'] ?? 'Terjadi kesalahan saat mengirim pengaduan.');
     }
 }
