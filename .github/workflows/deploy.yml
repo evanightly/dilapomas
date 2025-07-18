@@ -48,16 +48,6 @@ jobs:
             # Clean up old images, containers, and volumes
             docker system prune -af
             
-            # Pull latest images and start containers
-            docker compose pull
-            
-            # Wait for containers to be healthy
-            echo "Waiting for containers to be ready..."
-            php --version > /dev/null 2>&1; do
-              echo "Waiting for Laravel container..."
-              sleep 2
-            done
-            
             # Install/update PHP dependencies
             composer install --no-dev --optimize-autoloader
             
