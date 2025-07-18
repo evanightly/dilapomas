@@ -8,6 +8,7 @@ import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 import { NumberTicker } from '@/components/ui/number-ticker';
 import { Particles } from '@/components/ui/particles';
 import { RainbowButton } from '@/components/ui/rainbow-button';
+import { usePage } from '@inertiajs/react';
 import {
     ArrowRight,
     CheckCircle,
@@ -37,6 +38,7 @@ interface LandingPageProps {
 
 export default function LandingPage({ stats }: LandingPageProps) {
     const [mounted, setMounted] = useState(false);
+    const page = usePage();
 
     useEffect(() => {
         setMounted(true);
@@ -93,34 +95,41 @@ export default function LandingPage({ stats }: LandingPageProps) {
     return (
         <div className='bg-background text-foreground relative min-h-screen overflow-hidden'>
             {/* Particles Background */}
-            <Particles className='absolute inset-0 -z-10' quantity={100} ease={80} color='#1e40af' refresh />
+            <Particles className='absolute inset-0 -z-10' color='#1e40af' ease={80} quantity={100} refresh />
 
             {/* Header */}
             <header className='border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur'>
                 <div className='container mx-auto flex h-16 items-center justify-between px-4'>
                     <div className='flex items-center space-x-3'>
                         <div className='bg-primary flex h-10 w-10 items-center justify-center rounded-lg'>
-                            <Radio className='text-primary-foreground h-6 w-6' />
+                            <img alt='' src='blue-logo.jpg' />
                         </div>
                         <div>
-                            <h1 className='text-foreground text-xl font-bold'>RRI Complaint System</h1>
+                            <h1 className='text-foreground text-xl font-bold'>{page?.props?.name}</h1>
                             <p className='text-muted-foreground text-xs'>Radio Republik Indonesia</p>
                         </div>
                     </div>
                     <div className='flex items-center space-x-4'>
                         <nav className='hidden space-x-6 md:flex'>
-                            <a href='#beranda' className='text-muted-foreground hover:text-foreground transition-colors'>
+                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#beranda'>
                                 Beranda
                             </a>
-                            <a href='#layanan' className='text-muted-foreground hover:text-foreground transition-colors'>
+                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#layanan'>
                                 Layanan
                             </a>
-                            <a href='#kontak' className='text-muted-foreground hover:text-foreground transition-colors'>
+                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#kontak'>
                                 Kontak
+                            </a>
+                            <a
+                                className='text-muted-foreground hover:text-foreground transition-colors'
+                                href='https://ppid.rri.go.id'
+                                target='_blank'
+                            >
+                                RRI Pusat
                             </a>
                         </nav>
                         <div className='flex items-center space-x-3'>
-                            <a href={route('login')} className='text-primary hover:text-primary/80 hidden font-medium transition-colors sm:block'>
+                            <a className='text-primary hover:text-primary/80 hidden font-medium transition-colors sm:block' href={route('login')}>
                                 Login
                             </a>
                             <ModeToggle />
@@ -130,13 +139,13 @@ export default function LandingPage({ stats }: LandingPageProps) {
             </header>
 
             {/* Hero Section */}
-            <section id='beranda' className='relative pt-20 pb-20'>
+            <section className='relative pt-20 pb-20' id='beranda'>
                 <div className='container mx-auto px-4'>
                     <div className='grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20'>
                         {/* Left Side - Hero Content */}
                         <div className='flex flex-col justify-start space-y-8 lg:py-16'>
                             <div className='space-y-6'>
-                                <Badge variant='secondary' className='w-fit px-4 py-2 text-sm'>
+                                <Badge className='w-fit px-4 py-2 text-sm' variant='secondary'>
                                     <Radio className='mr-2 h-4 w-4' />
                                     Sistem Pengaduan Resmi RRI
                                 </Badge>
@@ -185,7 +194,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
                                     <ArrowRight className='ml-2 h-5 w-5' />
                                 </RainbowButton>
 
-                                <Button variant='outline' size='lg' className='px-8 py-4 text-lg'>
+                                <Button className='px-8 py-4 text-lg' size='lg' variant='outline'>
                                     <MessageSquare className='mr-2 h-5 w-5' />
                                     Pelajari Lebih Lanjut
                                 </Button>
@@ -196,7 +205,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
                         <div className='relative lg:py-8'>
                             <div className='sticky top-8'>
                                 <Card className='relative overflow-hidden shadow-2xl'>
-                                    <BorderBeam size={300} duration={15} colorFrom='#1e40af' colorTo='#3b82f6' />
+                                    <BorderBeam colorFrom='#1e40af' colorTo='#3b82f6' duration={15} size={300} />
                                     <CardHeader className='bg-primary/5 py-4 text-center'>
                                         <CardTitle className='text-2xl font-bold'>Form Pengaduan</CardTitle>
                                         <CardDescription className='text-lg'>Sampaikan keluhan atau saran Anda dengan mudah dan aman</CardDescription>
@@ -212,7 +221,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
             </section>
 
             {/* Features Section */}
-            <section id='layanan' className='bg-muted/30 relative py-20'>
+            <section className='bg-muted/30 relative py-20' id='layanan'>
                 <div className='container mx-auto px-4'>
                     <div className='mb-16 text-center'>
                         <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Mengapa Memilih Kami?</h2>
@@ -223,8 +232,8 @@ export default function LandingPage({ stats }: LandingPageProps) {
 
                     <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4'>
                         {features.map((feature, index) => (
-                            <Card key={index} className='group relative transition-all duration-300 hover:shadow-xl'>
-                                <BorderBeam size={250} duration={12} delay={index * 3} />
+                            <Card className='group relative transition-all duration-300 hover:shadow-xl' key={index}>
+                                <BorderBeam delay={index * 3} duration={12} size={250} />
                                 <CardContent className='p-6 text-center'>
                                     <div className='bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
                                         <feature.icon className='text-primary h-6 w-6' />
@@ -250,12 +259,12 @@ export default function LandingPage({ stats }: LandingPageProps) {
 
                     <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
                         {testimonials.map((testimonial, index) => (
-                            <Card key={index} className='group relative transition-all duration-300 hover:shadow-xl'>
-                                <BorderBeam size={250} duration={12} delay={index * 3} />
+                            <Card className='group relative transition-all duration-300 hover:shadow-xl' key={index}>
+                                <BorderBeam delay={index * 3} duration={12} size={250} />
                                 <CardContent className='p-6'>
                                     <div className='mb-4 flex space-x-1'>
                                         {[...Array(testimonial.rating)].map((_, i) => (
-                                            <Star key={i} className='h-5 w-5 fill-yellow-400 text-yellow-400' />
+                                            <Star className='h-5 w-5 fill-yellow-400 text-yellow-400' key={i} />
                                         ))}
                                     </div>
                                     <p className='text-muted-foreground mb-4 italic'>"{testimonial.content}"</p>
@@ -307,7 +316,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
             </section>
 
             {/* Contact Section */}
-            <section id='kontak' className='bg-background border-border relative border-t py-20'>
+            <section className='bg-background border-border relative border-t py-20' id='kontak'>
                 <div className='container mx-auto px-4'>
                     <div className='mb-16 text-center'>
                         <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Hubungi Kami</h2>
@@ -318,7 +327,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
 
                     <div className='mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3'>
                         <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam size={200} duration={10} />
+                            <BorderBeam duration={10} size={200} />
                             <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
                                 <Phone className='text-primary h-8 w-8' />
                             </div>
@@ -328,7 +337,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
                         </Card>
 
                         <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam size={200} duration={10} delay={2} />
+                            <BorderBeam delay={2} duration={10} size={200} />
                             <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
                                 <Mail className='text-primary h-8 w-8' />
                             </div>
@@ -338,7 +347,7 @@ export default function LandingPage({ stats }: LandingPageProps) {
                         </Card>
 
                         <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam size={200} duration={10} delay={4} />
+                            <BorderBeam delay={4} duration={10} size={200} />
                             <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
                                 <MapPin className='text-primary h-8 w-8' />
                             </div>
