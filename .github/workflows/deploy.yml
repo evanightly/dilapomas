@@ -61,6 +61,17 @@ jobs:
               sleep 2
             done
             
+            # Fix storage permissions (more secure approach)
+            docker compose exec -T laravel.test chown -R www-data:www-data /var/www/html/storage
+            docker compose exec -T laravel.test chown -R www-data:www-data /var/www/html/bootstrap/cache
+            docker compose exec -T laravel.test chmod -R 755 /var/www/html/storage
+            docker compose exec -T laravel.test chmod -R 755 /var/www/html/bootstrap/cache
+            
+            # Ensure specific directories have write permissions
+            docker compose exec -T laravel.test chmod -R 775 /var/www/html/storage/logs
+            docker compose exec -T laravel.test chmod -R 775 /var/www/html/storage/framework
+            docker compose exec -T laravel.test chmod -R 775 /var/www/html/storage/app
+            
             # Install/update PHP dependencies
             docker compose exec -T laravel.test composer install --no-dev --optimize-autoloader
             
@@ -68,7 +79,7 @@ jobs:
             docker compose exec -T laravel.test npm install
             docker compose exec -T laravel.test npm run build
 
-            # Run Laravel optimizations (includes config:cache, route:cache, view:cache)
+            # Run Laravel optimizations (config:cache, route:cache, view:cache only - skip cache:clear)
             docker compose exec -T laravel.test php artisan optimize
             
             echo "✅ Deployment completed successfully!"
