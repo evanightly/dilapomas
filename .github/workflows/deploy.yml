@@ -20,14 +20,15 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to VPS
+      - name: Prepare Deployment
         env:
           SSH_HOST: ${{ secrets.VPS_HOST }}
           SSH_USERNAME: ${{ secrets.VPS_USERNAME }}
           VPS_PORT: ${{ secrets.VPS_PORT }}
         run: |
-          ssh -p $VPS_PORT $SSH_USERNAME@$SSH_HOST bash -s << 'ENDSSH'
-            set -ex
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -p $VPS_PORT $SSH_USERNAME@$SSH_HOST << 'ENDSSH'
+            set -e
+            echo "🚀 Starting deployment preparation..."
             
             # Navigate to project directory
             cd /home/sipengaduan
@@ -39,43 +40,94 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             
+            echo "✅ Code updated successfully"
+          ENDSSH
+
+      - name: Update Environment
+        env:
+          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_USERNAME: ${{ secrets.VPS_USERNAME }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -p $VPS_PORT $SSH_USERNAME@$SSH_HOST << 'ENDSSH'
+            set -e
+            cd /home/sipengaduan
+            
             # Update .env with production values
             echo "${{ secrets.PRODUCTION_ENV }}" > .env
             
-            # Stop existing containers
+            echo "✅ Environment updated successfully"
+          ENDSSH
+
+      - name: Build and Deploy Containers
+        env:
+          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_USERNAME: ${{ secrets.VPS_USERNAME }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -p $VPS_PORT $SSH_USERNAME@$SSH_HOST << 'ENDSSH'
+            set -e
+            cd /home/sipengaduan
+            
+            echo "🛑 Stopping existing containers..."
             docker compose -f docker-compose.prod.yml down || true
             
-            # Clean up old images and containers
+            echo "🧹 Cleaning up old images..."
             docker system prune -f
             
-            # Build and start production containers
+            echo "🔨 Building production containers..."
             docker compose -f docker-compose.prod.yml build --no-cache
+            
+            echo "🚀 Starting production containers..."
             docker compose -f docker-compose.prod.yml up -d
             
-            # Wait for application container to be ready
-            echo "Waiting for application to be ready..."
+            echo "✅ Containers deployed successfully"
+          ENDSSH
+
+      - name: Setup Laravel Application
+        env:
+          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_USERNAME: ${{ secrets.VPS_USERNAME }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -p $VPS_PORT $SSH_USERNAME@$SSH_HOST << 'ENDSSH'
+            set -e
+            cd /home/sipengaduan
+            
+            echo "⏳ Waiting for application container to be ready..."
             until docker exec sipengaduan-app php -v > /dev/null 2>&1; do
               echo "Waiting for app container..."
               sleep 5
             done
             
-            # Run Laravel setup commands
+            echo "🔧 Running Laravel setup commands..."
             docker exec sipengaduan-app php artisan key:generate --force
             docker exec sipengaduan-app php artisan migrate --force
             docker exec sipengaduan-app php artisan config:cache
             docker exec sipengaduan-app php artisan route:cache
             docker exec sipengaduan-app php artisan view:cache
-            
-            # Create storage symbolic link
             docker exec sipengaduan-app php artisan storage:link
             
-            # Set proper permissions
+            echo "✅ Laravel setup completed"
+          ENDSSH
+
+      - name: Set Permissions and Finalize
+        env:
+          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_USERNAME: ${{ secrets.VPS_USERNAME }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -p $VPS_PORT $SSH_USERNAME@$SSH_HOST << 'ENDSSH'
+            set -e
+            cd /home/sipengaduan
+            
+            echo "🔐 Setting proper permissions..."
             docker exec sipengaduan-app chown -R sipengaduan:www-data /var/www/html/storage
             docker exec sipengaduan-app chown -R sipengaduan:www-data /var/www/html/bootstrap/cache
             docker exec sipengaduan-app chmod -R 775 /var/www/html/storage
             docker exec sipengaduan-app chmod -R 775 /var/www/html/bootstrap/cache
             
-            # Restart services to apply all changes
+            echo "🔄 Restarting services..."
             docker compose -f docker-compose.prod.yml restart
             
             echo "✅ Production deployment completed successfully!"
