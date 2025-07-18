@@ -1,0 +1,72 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: sipengaduan-app:latest
+    container_name: sipengaduan-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - sipengaduan-network
+    depends_on:
+      - database
+      - redis
+    environment:
+      - APP_ENV=production
+      - DB_HOST=database
+      - REDIS_HOST=redis
+
+  webserver:
+    image: nginx:alpine
+    container_name: sipengaduan-nginx
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    networks:
+      - sipengaduan-network
+
+  database:
+    image: mariadb:11
+    container_name: sipengaduan-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - sipengaduan-network
+
+  redis:
+    image: redis:alpine
+    container_name: sipengaduan-redis
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+    networks:
+      - sipengaduan-network
+
+networks:
+  sipengaduan-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
+  redisdata:
+    driver: local

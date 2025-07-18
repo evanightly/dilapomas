@@ -1,0 +1,7 @@
+# Laravel Cron Jobs
+* * * * * cd /var/www/html && php artisan schedule:run >> /var/www/html/storage/logs/cron.log 2>&1
+
+# Clear logs weekly
+0 0 * * 0 find /var/www/html/storage/logs -name "*.log" -type f -mtime +7 -delete
+
+# EOF
