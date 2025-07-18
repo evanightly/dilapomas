@@ -32,6 +32,9 @@ jobs:
             # Navigate to project directory
             cd /home/sipengaduan
             
+            # Fix Git ownership issue
+            git config --global --add safe.directory /home/sipengaduan
+            
             # Pull latest changes (force pull)
             git fetch --all
             git reset --hard origin/main
