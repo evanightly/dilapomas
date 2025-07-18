@@ -13,11 +13,11 @@ services:
     networks:
       - sipengaduan-network
     depends_on:
-      - database
+      - mariadb
       - redis
     environment:
       - APP_ENV=production
-      - DB_HOST=database
+      - DB_HOST=mariadb
       - REDIS_HOST=redis
 
   webserver:
@@ -36,7 +36,7 @@ services:
     networks:
       - sipengaduan-network
 
-  database:
+  mariadb:
     image: mariadb:11
     container_name: sipengaduan-db
     restart: unless-stopped

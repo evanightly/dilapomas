@@ -40,9 +40,7 @@ jobs:
             git reset --hard origin/main
             
             # Update .env with production values
-            cat > .env << 'EOF'
-            ${{ secrets.PRODUCTION_ENV }}
-            EOF
+            echo "${{ secrets.PRODUCTION_ENV }}" > .env
             
             # Stop existing containers
             docker compose -f docker-compose.prod.yml down || true
