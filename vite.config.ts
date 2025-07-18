@@ -9,15 +9,12 @@ import intentEnumPlugin from './vite_plugins/transformIntentEnumPlugin.js';
 // Read environment variable
 const isProduction = process.env.APP_ENV === 'production';
 
-// Conditionally load custom plugins
-const customDevPlugins = isProduction
-    ? []
-    : [
-          // permissionEnumPlugin(),
-          //  roleEnumPlugin(),
-          intentEnumPlugin(),
-          tanstackQueryKeysPlugin(),
-      ];
+// Fallback checks for CI environments where .env might not be properly loaded
+const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true' || process.env.NODE_ENV === 'production';
+
+// Only load custom plugins in development environments and not CI
+const shouldLoadDevPlugins = !isProduction && !isCI;
+const customDevPlugins = shouldLoadDevPlugins ? [intentEnumPlugin(), tanstackQueryKeysPlugin()] : [];
 
 export default defineConfig({
     plugins: [
