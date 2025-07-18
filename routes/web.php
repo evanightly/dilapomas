@@ -16,3 +16,5 @@ Route::resource('complaints', ComplaintController::class)->only(['store']);
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
+
+Route::resource('complaint-evidences', App\Http\Controllers\ComplaintEvidenceController::class);

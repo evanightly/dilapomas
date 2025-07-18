@@ -11,5 +11,6 @@ export const ROUTES = {
     ROLES: 'roles',
     PERMISSIONS: 'permissions',
     COMPLAINTS: 'complaints',
+    COMPLAINT_EVIDENCES: 'complaint-evidences',
     // Add your application routes here
 };

@@ -32,5 +32,13 @@ enum PermissionEnum: string {
     case COMPLAINT_UPDATE = 'complaint.update';
     case COMPLAINT_DELETE = 'complaint.delete';
 
+
+        // ComplaintEvidence permissions
+        case COMPLAINT_EVIDENCE_READ = 'complaintevidence.read';
+        case COMPLAINT_EVIDENCE_CREATE = 'complaintevidence.create';
+        case COMPLAINT_EVIDENCE_UPDATE = 'complaintevidence.update';
+        case COMPLAINT_EVIDENCE_DELETE = 'complaintevidence.delete';
+      
+    
     // Add your model permissions here
 }
