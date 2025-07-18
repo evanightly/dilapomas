@@ -2,13 +2,11 @@
 
 namespace App\Http\Requests\ComplaintEvidence;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Support\Enums\IntentEnum;
+use Illuminate\Foundation\Http\FormRequest;
 
-class StoreComplaintEvidenceRequest extends FormRequest
-{
-    public function rules(): array
-    {
+class StoreComplaintEvidenceRequest extends FormRequest {
+    public function rules(): array {
         $rules = [
             'complaint_id' => ['required', 'integer'],
             'title' => ['required', 'string'],

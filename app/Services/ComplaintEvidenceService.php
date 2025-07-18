@@ -9,8 +9,7 @@ use App\Support\Interfaces\Services\ComplaintEvidenceServiceInterface;
 use App\Traits\Services\HandlesPageSizeAll;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ComplaintEvidenceService extends BaseCrudService implements ComplaintEvidenceServiceInterface
-{
+class ComplaintEvidenceService extends BaseCrudService implements ComplaintEvidenceServiceInterface {
     use HandlesPageSizeAll;
 
     public function getAllPaginated(array $search = [], int $pageSize = 15): LengthAwarePaginator {

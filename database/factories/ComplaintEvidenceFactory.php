@@ -2,21 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\ComplaintEvidence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ComplaintEvidence>
  */
-class ComplaintEvidenceFactory extends Factory
-{
+class ComplaintEvidenceFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
             'complaint_id' => $this->faker->numberBetween(1, 1000),
             'title' => $this->faker->sentence(),
