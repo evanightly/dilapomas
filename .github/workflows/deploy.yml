@@ -50,7 +50,6 @@ jobs:
             
             # Pull latest images and start containers
             docker compose pull
-            docker compose up -d
             
             # Wait for containers to be healthy
             echo "Waiting for containers to be ready..."
@@ -62,11 +61,12 @@ jobs:
             # Install/update PHP dependencies
             composer install --no-dev --optimize-autoloader
             
-            sail npm i
-            sail npm run build
+            ./vendor/bin/sail npm i
+            ./vendor/bin/sail npm run build
 
             # Run Laravel optimizations (includes config:cache, route:cache, view:cache)
-            sail artisan optimize
+            ./vendor/bin/sail artisan optimize
+            ./vendor/bin/sail up -d
             
             echo "✅ Deployment completed successfully!"
           ENDSSH
