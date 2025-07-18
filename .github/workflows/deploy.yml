@@ -38,8 +38,8 @@ jobs:
             
             # Update .env with production values
             cat > .env << 'EOF'
-${{ secrets.PRODUCTION_ENV }}
-EOF
+            ${{ secrets.PRODUCTION_ENV }}
+            EOF
             
             # Install Node.js dependencies and build assets
             npm install
