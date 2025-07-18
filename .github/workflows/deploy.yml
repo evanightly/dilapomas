@@ -48,15 +48,28 @@ jobs:
             # Clean up old images, containers, and volumes
             docker system prune -af
             
-            # Install/update PHP dependencies
-            composer install --no-dev --optimize-autoloader
+            # Build Laravel Sail image if needed
+            docker compose build laravel.test
             
-            ./vendor/bin/sail npm i
-            ./vendor/bin/sail npm run build
+            # Start containers
+            docker compose up -d
+            
+            # Wait for containers to be healthy
+            echo "Waiting for containers to be ready..."
+            until docker compose exec -T laravel.test php --version > /dev/null 2>&1; do
+              echo "Waiting for Laravel container..."
+              sleep 2
+            done
+            
+            # Install/update PHP dependencies
+            docker compose exec -T laravel.test composer install --no-dev --optimize-autoloader
+            
+            # Install Node.js dependencies and build assets
+            docker compose exec -T laravel.test npm install
+            docker compose exec -T laravel.test npm run build
 
             # Run Laravel optimizations (includes config:cache, route:cache, view:cache)
-            ./vendor/bin/sail artisan optimize
-            ./vendor/bin/sail up -d
+            docker compose exec -T laravel.test php artisan optimize
             
             echo "✅ Deployment completed successfully!"
           ENDSSH
