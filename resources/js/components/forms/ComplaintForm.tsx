@@ -32,7 +32,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
             reporter_identity_number: '',
             incident_title: '',
             incident_description: '',
-            incident_time: undefined,
+            incident_time: new Date(),
             reported_person: '',
             evidence_files: [],
         },
@@ -322,7 +322,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                                         disabled={files.length >= 5}
                                     />
                                 </Button>
-                                <span className='text-muted-foreground text-sm'>Maksimal 5 file (gambar, PDF, atau dokumen)</span>
+                                <span className='text-muted-foreground text-sm'>Maksimal 5 file (gambar, video, PDF, atau dokumen)</span>
                             </div>
 
                             {files.length > 0 && (

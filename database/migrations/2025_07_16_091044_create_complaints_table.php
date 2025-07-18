@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->text('incident_description')->nullable();
             $table->datetime('incident_time')->nullable();
             $table->string('reported_person')->nullable();
+            $table->enum('status', ['pending', 'in_progress', 'resolved', 'rejected'])->default('pending');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->timestamps();
 
         });

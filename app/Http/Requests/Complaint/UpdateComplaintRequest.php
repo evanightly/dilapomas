@@ -15,10 +15,12 @@ class UpdateComplaintRequest extends FormRequest {
             'incident_description' => ['nullable', 'string'],
             'incident_time' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'reported_person' => ['nullable', 'string'],
+            'evidence_files' => ['nullable', 'array', 'max:5'],
+            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,mp4,pdf', 'max:10240'], // 10MB max
         ];
 
         // Handle custom intents if needed
-        switch ($this->get('intent')) {
+        switch (request()->get('intent')) {
             case IntentEnum::CUSTOM_ACTION->value:
                 // Add custom validation for specific actions
                 break;

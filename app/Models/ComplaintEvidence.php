@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\ComplaintEvidenceObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy([ComplaintEvidenceObserver::class])]
 class ComplaintEvidence extends Model {
     use HasFactory;
+
+    protected $table = 'complaint_evidences';
 
     /**
      * The attributes that are mass assignable.

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileUpload } from '@/components/ui/file-upload';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -22,6 +23,7 @@ const complaintSchema = z.object({
     incident_description: z.string().min(1, 'Incident description is required'),
     incident_time: z.string().min(1, 'Incident time is required'),
     reported_person: z.string().min(1, 'Reported person is required'),
+    evidence_files: z.array(z.instanceof(File)).optional(),
 });
 
 type ComplaintFormData = z.infer<typeof complaintSchema>;
@@ -54,6 +56,7 @@ export default function CreateComplaint() {
             incident_description: '',
             incident_time: '',
             reported_person: '',
+            evidence_files: [],
         },
     });
 
@@ -214,6 +217,25 @@ export default function CreateComplaint() {
                                             <FormLabel>Incident Description</FormLabel>
                                             <FormControl>
                                                 <Textarea {...field} className='min-h-[120px]' placeholder='Describe the incident in detail...' />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name='evidence_files'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Evidence Files (Optional)</FormLabel>
+                                            <FormControl>
+                                                <FileUpload
+                                                    disabled={createComplaint.isPending}
+                                                    maxFiles={5}
+                                                    onChange={(files) => field.onChange(files)}
+                                                    value={field.value}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

@@ -50,7 +50,7 @@ class ComplaintController extends Controller {
     }
 
     public function show(Complaint $complaint) {
-        $data = ComplaintResource::make($complaint);
+        $data = ComplaintResource::make($complaint->load('evidences'));
 
         if ($this->ajax()) {
             return $data;
@@ -60,7 +60,7 @@ class ComplaintController extends Controller {
     }
 
     public function edit(Complaint $complaint) {
-        $data = ComplaintResource::make($complaint);
+        $data = ComplaintResource::make($complaint->load('evidences'));
 
         return inertia('complaint/edit', compact('data'));
     }

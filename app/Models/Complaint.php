@@ -21,6 +21,8 @@ class Complaint extends Model {
         'incident_description',
         'incident_time',
         'reported_person',
+        'status',
+        'priority',
     ];
 
     /**
@@ -31,4 +33,11 @@ class Complaint extends Model {
     protected $casts = [
         'incident_time' => 'datetime',
     ];
+
+    /**
+     * hasMany relationship with ComplaintEvidence.
+     */
+    public function evidences() {
+        return $this->hasMany(ComplaintEvidence::class);
+    }
 }

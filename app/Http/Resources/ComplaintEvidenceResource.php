@@ -20,6 +20,7 @@ class ComplaintEvidenceResource extends JsonResource {
             'complaint_id' => $this->complaint_id,
             'title' => $this->title,
             'file_path' => $this->file_path,
+            'file' => $this->file_path ? asset('storage/' . $this->file_path) : null, // Assuming file_path is a URL or path to the file
             'file_type' => $this->file_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

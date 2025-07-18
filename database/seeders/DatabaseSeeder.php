@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder {
             SuperAdminSeeder::class,
         ]);
 
-        Complaint::factory(100)->create();
+        // Complaint::factory(100)->create();
     }
 }

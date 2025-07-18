@@ -4,4 +4,5 @@ import { ComplaintResource } from './ComplaintResource';
 
 export interface ComplaintEvidenceResource extends Resource, ComplaintEvidence {
     complaint?: ComplaintResource;
+    file?: string;
 }

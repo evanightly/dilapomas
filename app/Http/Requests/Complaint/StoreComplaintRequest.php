@@ -23,7 +23,7 @@ class StoreComplaintRequest extends FormRequest {
             'incident_time' => ['required', 'date', 'before_or_equal:now'],
             'reported_person' => ['nullable', 'string', 'max:255'],
             'evidence_files' => ['nullable', 'array', 'max:5'],
-            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,mp4,pdf', 'max:10240'], // 10MB max
+            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,mp4,pdf', 'max:102400'], // 100MB max
         ];
 
         // Handle specific identity validation based on type

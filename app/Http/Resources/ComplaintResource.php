@@ -24,6 +24,7 @@ class ComplaintResource extends JsonResource {
             'incident_description' => $this->incident_description,
             'incident_time' => $this->incident_time,
             'reported_person' => $this->reported_person,
+            'evidences' => ComplaintEvidenceResource::collection($this->whenLoaded('evidences')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

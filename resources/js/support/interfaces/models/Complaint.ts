@@ -11,4 +11,6 @@ export interface Complaint extends Model {
     incident_description?: string;
     incident_time?: string;
     reported_person?: string;
+    status?: string;
+    priority?: string;
 }
