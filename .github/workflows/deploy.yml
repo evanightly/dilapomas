@@ -101,12 +101,8 @@ jobs:
             done
             
             echo "🔧 Running Laravel setup commands..."
-            docker exec sipengaduan-app php artisan key:generate --force
-            docker exec sipengaduan-app php artisan migrate --force
-            docker exec sipengaduan-app php artisan config:cache
-            docker exec sipengaduan-app php artisan route:cache
-            docker exec sipengaduan-app php artisan view:cache
             docker exec sipengaduan-app php artisan storage:link
+            docker exec sipengaduan-app php artisan optimize
             
             echo "✅ Laravel setup completed"
           ENDSSH
