@@ -62,8 +62,8 @@ jobs:
             # Install/update PHP dependencies
             docker compose exec -T laravel.test composer install --no-dev --optimize-autoloader
             
-            sail npm i
-            sail npm run build
+            docker compose exec -T laravel.test npm i
+            docker compose exec -T laravel.test npm run build
 
             # Run Laravel optimizations (includes config:cache, route:cache, view:cache)
             docker compose exec -T laravel.test php artisan optimize
