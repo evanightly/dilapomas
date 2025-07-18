@@ -49,10 +49,10 @@ function handleAxiosError(error: any) {
             (id) => {
                 return (
                     <Dialog defaultOpen key={id}>
-                        <DialogContent className="flex flex-1 flex-col justify-center gap-4 p-14 py-10 [&>button]:hidden">
-                            <DialogHeader className="items-center gap-4">
-                                <DialogTitle className="flex flex-col items-center gap-4 text-xl">
-                                    <OctagonAlert className="size-20 text-destructive" />
+                        <DialogContent className='flex flex-1 flex-col justify-center gap-4 p-14 py-10 [&>button]:hidden'>
+                            <DialogHeader className='items-center gap-4'>
+                                <DialogTitle className='flex flex-col items-center gap-4 text-xl'>
+                                    <OctagonAlert className='text-destructive size-20' />
                                     Oops
                                 </DialogTitle>
                                 <DialogDescription
@@ -61,7 +61,7 @@ function handleAxiosError(error: any) {
                                     }}
                                 />
                             </DialogHeader>
-                            <DialogFooter className="sm:justify-center">
+                            <DialogFooter className='sm:justify-center'>
                                 <DialogClose asChild>
                                     <Button>On It!</Button>
                                 </DialogClose>

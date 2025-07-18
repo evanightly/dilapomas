@@ -7,8 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Repository service provider - auto binds repositories and services
- * 
- * @package App\Providers
+ *
  * @generated Laravel Forgemate Initializer
  */
 class RepositoryServiceProvider extends ServiceProvider {

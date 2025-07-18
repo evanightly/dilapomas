@@ -4,13 +4,11 @@ namespace App\Traits\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait HandlesRelations
-{
+trait HandlesRelations {
     /**
      * Automatically apply relations to the query based on request parameters.
      */
-    protected function applyResolvedRelations(Builder $query, array $params = []): Builder
-    {
+    protected function applyResolvedRelations(Builder $query, array $params = []): Builder {
         $relations = $params[config('constants.handles_relations_relations_query_key', 'relations')] ?? '';
         $relation_count = $params[config('constants.handles_relations_relation_count_query_key', 'relations_count')] ?? '';
 
@@ -38,8 +36,7 @@ trait HandlesRelations
     /**
      * Parse relation string to support nested relations and counts.
      */
-    protected function parseRelation(string $relation, bool $forCount = false): array|string
-    {
+    protected function parseRelation(string $relation, bool $forCount = false): array|string {
         $relationParts = explode('.', $relation);
         $nestedRelation = array_shift($relationParts);
 
@@ -63,8 +60,7 @@ trait HandlesRelations
     /**
      * Handle nested withCount manually for deeply nested relations (e.g., posts.tags.posts).
      */
-    protected function applyManualNestedWithCount(Builder $query, string $relation): void
-    {
+    protected function applyManualNestedWithCount(Builder $query, string $relation): void {
         $relationParts = explode('.', $relation);
 
         // If it's a nested relation, separate the parts

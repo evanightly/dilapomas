@@ -24,32 +24,32 @@ export default function ConfirmPassword() {
 
     return (
         <AuthLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
+            description='This is a secure area of the application. Please confirm your password before continuing.'
+            title='Confirm your password'
         >
-            <Head title="Confirm password" />
+            <Head title='Confirm password' />
 
             <form onSubmit={submit}>
-                <div className="space-y-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                <div className='space-y-6'>
+                    <div className='grid gap-2'>
+                        <Label htmlFor='password'>Password</Label>
                         <Input
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            autoComplete="current-password"
-                            value={data.password}
+                            autoComplete='current-password'
                             autoFocus
+                            id='password'
+                            name='password'
                             onChange={(e) => setData('password', e.target.value)}
+                            placeholder='Password'
+                            type='password'
+                            value={data.password}
                         />
 
                         <InputError message={errors.password} />
                     </div>
 
-                    <div className="flex items-center">
-                        <Button className="w-full" disabled={processing}>
-                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                    <div className='flex items-center'>
+                        <Button className='w-full' disabled={processing}>
+                            {processing && <LoaderCircle className='h-4 w-4 animate-spin' />}
                             Confirm password
                         </Button>
                     </div>

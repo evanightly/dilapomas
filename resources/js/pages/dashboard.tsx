@@ -69,7 +69,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                     <header className='flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'>
                         <div className='flex items-center gap-2 px-4'>
                             <SidebarTrigger className='-ml-1' />
-                            <Separator orientation='vertical' className='mr-2 h-4' />
+                            <Separator className='mr-2 h-4' orientation='vertical' />
                             <Breadcrumb>
                                 <BreadcrumbList>
                                     <BreadcrumbItem>
@@ -91,7 +91,7 @@ export default function Dashboard({ stats }: DashboardProps) {
                                 {statCards.map((stat, index) => {
                                     const Icon = stat.icon;
                                     return (
-                                        <Card key={index} className='relative overflow-hidden'>
+                                        <Card className='relative overflow-hidden' key={index}>
                                             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                                                 <CardTitle className='text-sm font-medium'>{stat.title}</CardTitle>
                                                 <div className={`rounded-md p-2 ${stat.bgColor}`}>

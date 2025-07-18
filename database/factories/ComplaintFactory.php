@@ -2,21 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Complaint;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Complaint>
  */
-class ComplaintFactory extends Factory
-{
+class ComplaintFactory extends Factory {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array {
         return [
             'reporter' => $this->faker->sentence(),
             'reporter_identity_type' => $this->faker->paragraphs(3, true),

@@ -4,15 +4,13 @@ namespace App\Traits\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait RelationQueryable
-{
-    protected function applyFilterConditions(array $conditions = []): Builder
-    {
+trait RelationQueryable {
+    protected function applyFilterConditions(array $conditions = []): Builder {
         $query = $this->getQuery();
 
         foreach ($conditions as $data) {
             // Check if the $data array contains at least two elements (field and operator)
-            if (! is_array($data) || count($data) < 2) {
+            if (!is_array($data) || count($data) < 2) {
                 continue; // Skip any conditions that are not properly formatted
             }
 

@@ -121,7 +121,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             </CardHeader>
                             <CardContent>
                                 <Form {...form}>
-                                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                                    <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
                                         <FormField
                                             control={form.control}
                                             name='nip'
@@ -129,7 +129,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                                 <FormItem>
                                                     <FormLabel>NIP (Employee ID)</FormLabel>
                                                     <FormControl>
-                                                        <Input {...field} placeholder='Enter your NIP' className='h-11' disabled={isLoading} />
+                                                        <Input {...field} className='h-11' disabled={isLoading} placeholder='Enter your NIP' />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -145,10 +145,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                                     <FormControl>
                                                         <Input
                                                             {...field}
-                                                            type='password'
-                                                            placeholder='Enter your password'
                                                             className='h-11'
                                                             disabled={isLoading}
+                                                            placeholder='Enter your password'
+                                                            type='password'
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
@@ -164,11 +164,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                                     <FormItem className='flex items-center space-x-2'>
                                                         <FormControl>
                                                             <input
-                                                                type='checkbox'
                                                                 checked={field.value}
-                                                                onChange={field.onChange}
                                                                 className='text-primary focus:ring-primary h-4 w-4 rounded border-gray-300'
                                                                 disabled={isLoading}
+                                                                onChange={field.onChange}
+                                                                type='checkbox'
                                                             />
                                                         </FormControl>
                                                         <FormLabel className='text-sm font-normal'>Remember me</FormLabel>
@@ -178,15 +178,15 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                                             {canResetPassword && (
                                                 <a
-                                                    href={route('password.request')}
                                                     className='text-primary hover:text-primary/80 text-sm transition-colors'
+                                                    href={route('password.request')}
                                                 >
                                                     Forgot password?
                                                 </a>
                                             )}
                                         </div>
 
-                                        <Button type='submit' className='bg-primary hover:bg-primary/90 h-11 w-full' disabled={isLoading}>
+                                        <Button className='bg-primary hover:bg-primary/90 h-11 w-full' disabled={isLoading} type='submit'>
                                             {isLoading ? (
                                                 <div className='flex items-center space-x-2'>
                                                     <div className='h-4 w-4 animate-spin rounded-full border-b-2 border-white'></div>

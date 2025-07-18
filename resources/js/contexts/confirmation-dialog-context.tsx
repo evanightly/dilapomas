@@ -46,14 +46,14 @@ export const ConfirmationDialogProvider = ({ children }: { children: ReactNode }
     return (
         <ConfirmationDialogContext.Provider value={{ showConfirmation }}>
             {children}
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <Dialog onOpenChange={setIsOpen} open={isOpen}>
                 <DialogContent className='max-w-sm md:max-w-md'>
                     <DialogHeader>
                         <DialogTitle>{title}</DialogTitle>
                         <DialogDescription className='text-md'>{description}</DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant='ghost' onClick={() => setIsOpen(false)}>
+                        <Button onClick={() => setIsOpen(false)} variant='ghost'>
                             Cancel
                         </Button>
                         <Button onClick={handleConfirm}>Confirm</Button>

@@ -6,8 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-trait HandlesFileUpload
-{
+trait HandlesFileUpload {
     /**
      * Store a file in the specified directory
      *
@@ -16,30 +15,29 @@ trait HandlesFileUpload
      * @param  bool  $preserveFileName  Whether to preserve the original filename
      * @return string|null Path to the stored file
      */
-    protected function storeFile(UploadedFile $file, string $directory, bool $preserveFileName = false): ?string
-    {
-        if (! $file) {
+    protected function storeFile(UploadedFile $file, string $directory, bool $preserveFileName = false): ?string {
+        if (!$file) {
             return null;
         }
 
         // Create directory if it doesn't exist
-        Storage::makeDirectory('public/'.$directory, 0755, true);
+        Storage::makeDirectory('public/' . $directory, 0755, true);
 
         // Generate filename
         if ($preserveFileName) {
             // Clean the original filename and make it safe
             $filename = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-            $filename .= '_'.uniqid().'.'.$file->getClientOriginalExtension();
+            $filename .= '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         } else {
             // Generate a completely unique filename with extension
-            $filename = uniqid().'_'.time().'.'.$file->getClientOriginalExtension();
+            $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
         }
 
         // Store the file
-        $file->storeAs('public/'.$directory, $filename);
+        $file->storeAs('public/' . $directory, $filename);
 
         // Return the relative path for database storage
-        return $directory.'/'.$filename;
+        return $directory . '/' . $filename;
     }
 
     /**
@@ -49,8 +47,7 @@ trait HandlesFileUpload
      * @param  string  $disk  Storage disk to use
      * @return bool Whether the file was deleted
      */
-    protected function deleteFile(?string $filePath, string $disk = 'public'): bool
-    {
+    protected function deleteFile(?string $filePath, string $disk = 'public'): bool {
         if (empty($filePath)) {
             return false;
         }

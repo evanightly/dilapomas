@@ -8,8 +8,7 @@ use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Trait for handling 'all' page size requests
- * 
- * @package App\Traits\Services
+ *
  * @generated Laravel Forgemate Initializer
  */
 trait HandlesPageSizeAll {

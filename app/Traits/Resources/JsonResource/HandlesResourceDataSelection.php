@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-trait HandlesResourceDataSelection
-{
+trait HandlesResourceDataSelection {
     /**
      * Filter resource data based on the specified query parameter or return default fields.
      * Ensures closures/functions are only invoked for requested fields.
@@ -37,8 +36,7 @@ trait HandlesResourceDataSelection
      * the test will invoked only if its included in the *_resource request explicitly
      * ```
      */
-    public function filterData(Request $request, array $dataSource, ?array $default = null): array
-    {
+    public function filterData(Request $request, array $dataSource, ?array $default = null): array {
         // Dynamically compute the resource key name for the query string
         $resourceKey = Str::snake(class_basename(static::class));
 
@@ -46,7 +44,7 @@ trait HandlesResourceDataSelection
         $queryFields = $request->query($resourceKey);
 
         // If no specific fields are requested, return default fields
-        if (! $queryFields) {
+        if (!$queryFields) {
             return $this->resolveDataFields($default ?? $dataSource);
         }
 
@@ -62,8 +60,7 @@ trait HandlesResourceDataSelection
     /**
      * Resolve resource fields, evaluating closures when present.
      */
-    private function resolveDataFields(array $data): array
-    {
+    private function resolveDataFields(array $data): array {
         return collect($data)->map(function ($value) {
             // Execute the closure or return the value directly
             return $value instanceof Closure ? $value() : $value;

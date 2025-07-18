@@ -6,8 +6,7 @@ use Adobrovolsky97\LaravelRepositoryServicePattern\Repositories\Contracts\BaseRe
 
 /**
  * Interface for base repository operations
- * 
- * @package App\Support\Interfaces\Repositories
+ *
  * @generated Laravel Forgemate Initializer
  */
 interface BaseRepositoryInterface extends AdobrovolRepositoryBaseInterface {

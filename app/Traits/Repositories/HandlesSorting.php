@@ -13,13 +13,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @generated Laravel Forgemate Initializer
  */
-trait HandlesSorting
-{
+trait HandlesSorting {
     /**
      * Apply sorting to the query based on the given parameters.
      */
-    protected function applySorting(Builder $query, array $searchParams = []): Builder
-    {
+    protected function applySorting(Builder $query, array $searchParams = []): Builder {
         $sortByQueryKey = config('constants.handles_sorting_sort_by_query_key', 'sort_by');
         $sortDirQueryKey = config('constants.handles_sorting_sort_dir_query_key', 'sort_dir');
         $sortByRelationCountKey = config('constants.handles_sorting_sort_by_relation_count_key', 'sort_by_relation_count');
@@ -39,7 +37,7 @@ trait HandlesSorting
             $direction = $searchParams[$sortDirRelationCountKey] ?? $searchParams[$sortDirQueryKey] ?? 'desc';
 
             // Ensure we have a valid relation name
-            if (! empty($relationName)) {
+            if (!empty($relationName)) {
                 // Add withCount for the relation - Laravel will handle duplicates automatically
                 $query->withCount($relationName);
 
@@ -51,7 +49,7 @@ trait HandlesSorting
         // Sort by relation field(s)
         if (isset($searchParams[$sortByRelationFieldKey]) && is_array($searchParams[$sortByRelationFieldKey])) {
             foreach ($searchParams[$sortByRelationFieldKey] as $sortInfo) {
-                if (! isset($sortInfo['relation']) || ! isset($sortInfo['field'])) {
+                if (!isset($sortInfo['relation']) || !isset($sortInfo['field'])) {
                     continue;
                 }
 
@@ -74,8 +72,7 @@ trait HandlesSorting
      * @param  string  $field  The field to sort by
      * @param  string  $direction  The sort direction (asc or desc)
      */
-    protected function sortByRelationField(Builder $query, string $relation, string $field, string $direction): Builder
-    {
+    protected function sortByRelationField(Builder $query, string $relation, string $field, string $direction): Builder {
         // For direct relations, we can join and sort directly
         if (strpos($relation, '.') === false) {
             $model = $query->getModel();
@@ -85,7 +82,7 @@ trait HandlesSorting
             $query->select("{$table}.*");
 
             // Make sure the relation exists on the model
-            if (! method_exists($model, $relation)) {
+            if (!method_exists($model, $relation)) {
                 return $query;
             }
 
@@ -111,7 +108,7 @@ trait HandlesSorting
             );
 
             // Create the aggregate column name (Laravel naming convention)
-            $aggregateColumn = str_replace('.', '_', $relation).'_'.$field.'_'.
+            $aggregateColumn = str_replace('.', '_', $relation) . '_' . $field . '_' .
                 (strtolower($direction) === 'asc' ? 'min' : 'max');
 
             // Sort by the aggregate column
@@ -128,8 +125,7 @@ trait HandlesSorting
      * @param  mixed  $model  The model instance
      * @param  string  $relationName  The relation name
      */
-    protected function joinRelation(Builder $query, $model, string $relationName): void
-    {
+    protected function joinRelation(Builder $query, $model, string $relationName): void {
         $relation = $model->{$relationName}();
         $relatedTable = $relation->getRelated()->getTable();
         $baseTable = $model->getTable();

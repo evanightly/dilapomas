@@ -41,15 +41,15 @@ createInertiaApp({
                 <ThemeProvider defaultTheme='system' storageKey='rri-ui-theme'>
                     <ConfirmationDialogProvider>
                         <SonnerToaster
+                            closeButton
+                            duration={2000}
+                            richColors
+                            theme='light'
                             toastOptions={
                                 {
                                     // https://github.com/shadcn-ui/ui/issues/2234
                                 }
                             }
-                            theme='light'
-                            richColors
-                            duration={2000}
-                            closeButton
                         />
                         <App {...props} />
                     </ConfirmationDialogProvider>

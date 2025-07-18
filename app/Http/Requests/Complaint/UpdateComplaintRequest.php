@@ -2,13 +2,11 @@
 
 namespace App\Http\Requests\Complaint;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Support\Enums\IntentEnum;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateComplaintRequest extends FormRequest
-{
-    public function rules(): array
-    {
+class UpdateComplaintRequest extends FormRequest {
+    public function rules(): array {
         $rules = [
             'reporter' => ['nullable', 'string'],
             'reporter_identity_type' => ['required', 'string'],

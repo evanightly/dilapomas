@@ -116,25 +116,25 @@ export default function ComplaintIndex({ data }: Props) {
             id: 'select',
             header: ({ table }) => (
                 <Checkbox
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
                     aria-label='Select all'
+                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 />
             ),
             cell: ({ row }) => (
-                <Checkbox onCheckedChange={(value) => row.toggleSelected(!!value)} checked={row.getIsSelected()} aria-label='Select row' />
+                <Checkbox aria-label='Select row' checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} />
             ),
             enableSorting: false,
             enableHiding: false,
             size: 40,
         }),
         columnHelper.accessor('id', {
-            header: ({ column }) => <DataTableColumnHeader title='ID' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='ID' />,
             cell: ({ row }) => <div className='font-mono text-sm'>#{row.original.id}</div>,
             size: 80,
         }),
         columnHelper.accessor('reporter', {
-            header: ({ column }) => <DataTableColumnHeader title='Reporter' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Reporter' />,
             cell: ({ row }) => (
                 <div className='flex w-[200px] items-center gap-2 overflow-ellipsis whitespace-break-spaces'>
                     <Avatar className='h-8 w-8'>
@@ -148,7 +148,7 @@ export default function ComplaintIndex({ data }: Props) {
             ),
         }),
         columnHelper.accessor('incident_title', {
-            header: ({ column }) => <DataTableColumnHeader title='Title' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Title' />,
             cell: ({ row }) => (
                 <div className='max-w-[200px]'>
                     <div className='truncate font-medium'>{row.original.incident_title}</div>
@@ -157,11 +157,11 @@ export default function ComplaintIndex({ data }: Props) {
             ),
         }),
         columnHelper.accessor('reported_person', {
-            header: ({ column }) => <DataTableColumnHeader title='Reported Person' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Reported Person' />,
             cell: ({ row }) => <div className='text-sm'>{row.original.reported_person || 'N/A'}</div>,
         }),
         columnHelper.accessor('incident_time', {
-            header: ({ column }) => <DataTableColumnHeader title='Incident Date' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Incident Date' />,
             cell: ({ row }) => (
                 <div className='flex items-center gap-1 text-sm'>
                     <Calendar className='h-3 w-3' />
@@ -170,7 +170,7 @@ export default function ComplaintIndex({ data }: Props) {
             ),
         }),
         columnHelper.accessor('created_at', {
-            header: ({ column }) => <DataTableColumnHeader title='Submitted' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Submitted' />,
             cell: ({ row }) => (
                 <div className='text-muted-foreground text-xs'>
                     {row.original.created_at ? format(new Date(row.original.created_at), 'dd MMM yyyy HH:mm') : 'N/A'}
@@ -182,18 +182,18 @@ export default function ComplaintIndex({ data }: Props) {
             header: 'Actions',
             cell: ({ row }) => (
                 <div className='flex items-center space-x-2'>
-                    <Button variant='ghost' size='icon' onClick={() => handleView(row.original.id)} className='h-8 w-8' title='View details'>
+                    <Button className='h-8 w-8' onClick={() => handleView(row.original.id)} size='icon' title='View details' variant='ghost'>
                         <Eye className='h-4 w-4' />
                     </Button>
-                    <Button variant='ghost' size='icon' onClick={() => handleEdit(row.original.id)} className='h-8 w-8' title='Edit complaint'>
+                    <Button className='h-8 w-8' onClick={() => handleEdit(row.original.id)} size='icon' title='Edit complaint' variant='ghost'>
                         <Edit className='h-4 w-4' />
                     </Button>
                     <Button
-                        variant='ghost'
-                        size='icon'
-                        onClick={() => handleSingleDelete(row.original.id)}
                         className='text-destructive hover:text-destructive h-8 w-8'
+                        onClick={() => handleSingleDelete(row.original.id)}
+                        size='icon'
                         title='Delete complaint'
+                        variant='ghost'
                     >
                         <Trash2 className='h-4 w-4' />
                     </Button>
@@ -216,7 +216,7 @@ export default function ComplaintIndex({ data }: Props) {
                         <h1 className='text-foreground text-2xl font-bold'>Complaint Management</h1>
                         <p className='text-muted-foreground'>Manage and track all submitted complaints</p>
                     </div>
-                    <Button onClick={() => router.visit(route('complaints.create'))} className='gap-2'>
+                    <Button className='gap-2' onClick={() => router.visit(route('complaints.create'))}>
                         <Plus className='h-4 w-4' />
                         Add Complaint
                     </Button>
@@ -225,7 +225,7 @@ export default function ComplaintIndex({ data }: Props) {
                 {selectedComplaints.length > 0 && (
                     <div className='bg-muted/50 flex items-center justify-between rounded-lg border p-3'>
                         <span className='text-sm font-medium'>{selectedComplaints.length} complaint(s) selected</span>
-                        <Button variant='destructive' size='sm' onClick={handleBulkDelete} className='gap-2'>
+                        <Button className='gap-2' onClick={handleBulkDelete} size='sm' variant='destructive'>
                             <Trash2 className='h-4 w-4' />
                             Delete Selected
                         </Button>
@@ -235,8 +235,10 @@ export default function ComplaintIndex({ data }: Props) {
                 <DataTable
                     baseKey={TANSTACK_QUERY_KEYS.COMPLAINTS}
                     baseRoute={ROUTES.COMPLAINTS}
-                    meta={complaints?.data?.meta as any}
+                    columns={memoizedColumns}
+                    data={complaints?.data?.data || []}
                     filters={filters}
+                    meta={complaints?.data?.meta as any}
                     setFilters={setFilters}
                     tableOptions={{
                         enableRowSelection: true,
@@ -246,8 +248,6 @@ export default function ComplaintIndex({ data }: Props) {
                         onRowSelectionChange: setRowSelection,
                         getRowId: (row) => row.id.toString(),
                     }}
-                    data={complaints?.data?.data || []}
-                    columns={memoizedColumns}
                 />
             </div>
         </AppLayout>

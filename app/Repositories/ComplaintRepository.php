@@ -10,8 +10,7 @@ use App\Traits\Repositories\HandlesSorting;
 use App\Traits\Repositories\RelationQueryable;
 use Illuminate\Database\Eloquent\Builder;
 
-class ComplaintRepository extends BaseRepository implements ComplaintRepositoryInterface
-{
+class ComplaintRepository extends BaseRepository implements ComplaintRepositoryInterface {
     use HandlesFiltering, HandlesRelations, HandlesSorting, RelationQueryable;
 
     protected function applyFilters(array $searchParams = []): Builder {

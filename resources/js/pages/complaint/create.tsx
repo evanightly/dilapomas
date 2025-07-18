@@ -86,7 +86,7 @@ export default function CreateComplaint() {
             <div className='space-y-6'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center space-x-4'>
-                        <Button variant='ghost' onClick={() => router.visit(route('complaints.index'))} className='gap-2'>
+                        <Button className='gap-2' onClick={() => router.visit(route('complaints.index'))} variant='ghost'>
                             <ArrowLeft className='h-4 w-4' />
                             Back to Complaints
                         </Button>
@@ -107,7 +107,7 @@ export default function CreateComplaint() {
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                            <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                                     <FormField
                                         control={form.control}
@@ -129,7 +129,7 @@ export default function CreateComplaint() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Identity Type</FormLabel>
-                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <Select defaultValue={field.value} onValueChange={field.onChange}>
                                                     <FormControl>
                                                         <SelectTrigger>
                                                             <SelectValue placeholder='Select identity type' />
@@ -213,7 +213,7 @@ export default function CreateComplaint() {
                                         <FormItem>
                                             <FormLabel>Incident Description</FormLabel>
                                             <FormControl>
-                                                <Textarea {...field} placeholder='Describe the incident in detail...' className='min-h-[120px]' />
+                                                <Textarea {...field} className='min-h-[120px]' placeholder='Describe the incident in detail...' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -221,7 +221,7 @@ export default function CreateComplaint() {
                                 />
 
                                 <div className='flex items-center space-x-4 pt-4'>
-                                    <Button type='submit' disabled={createComplaint.isPending} className='gap-2'>
+                                    <Button className='gap-2' disabled={createComplaint.isPending} type='submit'>
                                         {createComplaint.isPending ? (
                                             <>
                                                 <div className='h-4 w-4 animate-spin rounded-full border-b-2 border-white'></div>
@@ -236,10 +236,10 @@ export default function CreateComplaint() {
                                     </Button>
 
                                     <Button
+                                        disabled={createComplaint.isPending}
+                                        onClick={() => router.visit(route('complaints.index'))}
                                         type='button'
                                         variant='outline'
-                                        onClick={() => router.visit(route('complaints.index'))}
-                                        disabled={createComplaint.isPending}
                                     >
                                         Cancel
                                     </Button>

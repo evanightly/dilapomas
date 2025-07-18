@@ -54,7 +54,7 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
                                 </div>
                                 <span className='text-lg font-semibold'>RRI Admin</span>
                             </div>
-                            <Button variant='ghost' size='icon' onClick={() => setSidebarOpen(false)}>
+                            <Button onClick={() => setSidebarOpen(false)} size='icon' variant='ghost'>
                                 <X className='h-5 w-5' />
                             </Button>
                         </div>
@@ -69,13 +69,13 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
                                     return (
                                         <li key={item.name}>
                                             <a
-                                                href={route(item.href)}
                                                 className={cn(
                                                     'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
                                                     isActive
                                                         ? 'bg-primary text-primary-foreground'
                                                         : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700',
                                                 )}
+                                                href={route(item.href)}
                                             >
                                                 <Icon className='mr-3 h-5 w-5' />
                                                 {item.name}
@@ -110,13 +110,13 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
                                     return (
                                         <li key={item.name}>
                                             <a
-                                                href={route(item.href)}
                                                 className={cn(
                                                     'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
                                                     isActive
                                                         ? 'bg-primary text-primary-foreground'
                                                         : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700',
                                                 )}
+                                                href={route(item.href)}
                                             >
                                                 <Icon className='mr-3 h-5 w-5' />
                                                 {item.name}
@@ -135,7 +135,7 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
                     <header className='border-b bg-white shadow-sm dark:bg-gray-800'>
                         <div className='flex items-center justify-between p-4'>
                             <div className='flex items-center'>
-                                <Button variant='ghost' size='icon' className='lg:hidden' onClick={() => setSidebarOpen(true)}>
+                                <Button className='lg:hidden' onClick={() => setSidebarOpen(true)} size='icon' variant='ghost'>
                                     <Menu className='h-5 w-5' />
                                 </Button>
                                 {header}
@@ -144,14 +144,14 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
                             <div className='flex items-center space-x-4'>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
+                                        <Button className='relative h-8 w-8 rounded-full' variant='ghost'>
                                             <Avatar className='h-8 w-8'>
-                                                <AvatarImage src='' alt={user?.name} />
+                                                <AvatarImage alt={user?.name} src='' />
                                                 <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className='w-56' align='end' forceMount>
+                                    <DropdownMenuContent align='end' className='w-56' forceMount>
                                         <DropdownMenuLabel className='font-normal'>
                                             <div className='flex flex-col space-y-1'>
                                                 <p className='text-sm leading-none font-medium'>{user?.name}</p>

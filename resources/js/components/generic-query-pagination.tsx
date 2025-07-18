@@ -76,13 +76,7 @@ export default function <R extends Resource = any>({
         return <div dangerouslySetInnerHTML={obj}></div>;
     };
 
-    const ConditionallyRenderPagination = ({
-        link,
-        index,
-    }: {
-        link: PaginateMetaLink;
-        index: number;
-    }) => {
+    const ConditionallyRenderPagination = ({ link, index }: { link: PaginateMetaLink; index: number }) => {
         if (!meta) {
             return null;
         }
@@ -133,20 +127,14 @@ export default function <R extends Resource = any>({
                 if (meta.current_page !== 1)
                     return (
                         <PaginationItem>
-                            <PaginationPrevious
-                                onMouseEnter={prefetchPreviousPage}
-                                onClick={navigateToPrevious}
-                            />
+                            <PaginationPrevious onMouseEnter={prefetchPreviousPage} onClick={navigateToPrevious} />
                         </PaginationItem>
                     );
             } else if (link.label === PAGINATION_NAVIGATOR.NEXT) {
                 if (meta.current_page !== meta.last_page)
                     return (
                         <PaginationItem>
-                            <PaginationNext
-                                onMouseEnter={prefetchNextPage}
-                                onClick={navigateToNext}
-                            />
+                            <PaginationNext onMouseEnter={prefetchNextPage} onClick={navigateToNext} />
                         </PaginationItem>
                     );
             } else if (link.label === PAGINATION_NAVIGATOR.ELLIPSIS) {
@@ -179,9 +167,7 @@ export default function <R extends Resource = any>({
         meta && (
             <Pagination className={cn('justify-start', className)}>
                 <PaginationContent className='cursor-pointer'>
-                    {meta.links?.map((link, index) => (
-                        <ConditionallyRenderPagination link={link} key={index} index={index} />
-                    ))}
+                    {meta.links?.map((link, index) => <ConditionallyRenderPagination link={link} key={index} index={index} />)}
                 </PaginationContent>
             </Pagination>
         )

@@ -105,13 +105,13 @@ export default function UserIndex({ data }: Props) {
             id: 'select',
             header: ({ table }) => (
                 <Checkbox
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
                     aria-label='Select all'
+                    checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 />
             ),
             cell: ({ row }) => (
-                <Checkbox onCheckedChange={(value) => row.toggleSelected(!!value)} checked={row.getIsSelected()} aria-label='Select row' />
+                <Checkbox aria-label='Select row' checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} />
             ),
             enableSorting: false,
             enableHiding: false,
@@ -129,19 +129,19 @@ export default function UserIndex({ data }: Props) {
             size: 50,
         }),
         columnHelper.accessor('nip', {
-            header: ({ column }) => <DataTableColumnHeader title='NIP' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='NIP' />,
             cell: ({ row }) => <div className='font-mono text-sm'>{row.original.nip}</div>,
         }),
         columnHelper.accessor('name', {
-            header: ({ column }) => <DataTableColumnHeader title='Name' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Name' />,
             cell: ({ row }) => <div className='font-medium'>{row.original.name}</div>,
         }),
         columnHelper.accessor('email', {
-            header: ({ column }) => <DataTableColumnHeader title='Email' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Email' />,
             cell: ({ row }) => <div className='text-muted-foreground'>{row.original.email}</div>,
         }),
         columnHelper.accessor('role', {
-            header: ({ column }) => <DataTableColumnHeader title='Role' column={column} />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Role' />,
             cell: ({ row }) => (
                 <div
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
@@ -159,15 +159,15 @@ export default function UserIndex({ data }: Props) {
             header: 'Actions',
             cell: ({ row }) => (
                 <div className='flex items-center space-x-2'>
-                    <Button variant='ghost' size='icon' onClick={() => handleEdit(row.original.nip)} className='h-8 w-8'>
+                    <Button className='h-8 w-8' onClick={() => handleEdit(row.original.nip)} size='icon' variant='ghost'>
                         <Edit className='h-4 w-4' />
                     </Button>
                     {row.original.role !== 'SuperAdmin' && (
                         <Button
-                            variant='ghost'
-                            size='icon'
-                            onClick={() => handleSingleDelete(row.original.nip)}
                             className='text-destructive hover:text-destructive h-8 w-8'
+                            onClick={() => handleSingleDelete(row.original.nip)}
+                            size='icon'
+                            variant='ghost'
                         >
                             <Trash2 className='h-4 w-4' />
                         </Button>
@@ -191,7 +191,7 @@ export default function UserIndex({ data }: Props) {
                         <h1 className='text-foreground text-2xl font-bold'>User Management</h1>
                         <p className='text-muted-foreground'>Manage system users and their roles</p>
                     </div>
-                    <Button onClick={() => router.visit(route('users.create'))} className='gap-2'>
+                    <Button className='gap-2' onClick={() => router.visit(route('users.create'))}>
                         <Plus className='h-4 w-4' />
                         Add User
                     </Button>
@@ -200,7 +200,7 @@ export default function UserIndex({ data }: Props) {
                 {selectedUsers.length > 0 && (
                     <div className='bg-muted/50 flex items-center justify-between rounded-lg border p-3'>
                         <span className='text-sm font-medium'>{selectedUsers.length} user(s) selected</span>
-                        <Button variant='destructive' size='sm' onClick={handleBulkDelete} className='gap-2'>
+                        <Button className='gap-2' onClick={handleBulkDelete} size='sm' variant='destructive'>
                             <UserMinus className='h-4 w-4' />
                             Delete Selected
                         </Button>
@@ -208,6 +208,13 @@ export default function UserIndex({ data }: Props) {
                 )}
 
                 <DataTable
+                    baseKey={TANSTACK_QUERY_KEYS.USERS}
+                    baseRoute={ROUTES.USERS}
+                    columns={memoizedColumns}
+                    data={users?.data?.data || []}
+                    filters={filters}
+                    meta={users.data?.meta || {}}
+                    setFilters={setFilters}
                     tableOptions={{
                         enableRowSelection: true,
                         state: {
@@ -216,13 +223,6 @@ export default function UserIndex({ data }: Props) {
                         onRowSelectionChange: setRowSelection,
                         getRowId: (row) => row.nip.toString(),
                     }}
-                    filters={filters}
-                    setFilters={setFilters}
-                    baseKey={TANSTACK_QUERY_KEYS.USERS}
-                    baseRoute={ROUTES.USERS}
-                    meta={users.data?.meta || {}}
-                    data={users?.data?.data || []}
-                    columns={memoizedColumns}
                 />
             </div>
         </AppLayout>

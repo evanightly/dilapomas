@@ -113,7 +113,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
             <div className='space-y-6'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center space-x-4'>
-                        <Button variant='ghost' onClick={() => router.visit(route('users.index'))} className='gap-2'>
+                        <Button className='gap-2' onClick={() => router.visit(route('users.index'))} variant='ghost'>
                             <ArrowLeft className='h-4 w-4' />
                             Back to Users
                         </Button>
@@ -134,7 +134,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                            <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                                     <FormField
                                         control={form.control}
@@ -173,7 +173,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                             <FormItem>
                                                 <FormLabel>Email Address</FormLabel>
                                                 <FormControl>
-                                                    <Input type='email' placeholder='Enter email address' {...field} />
+                                                    <Input placeholder='Enter email address' type='email' {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -215,7 +215,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Role</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
                                                     <SelectTrigger>
                                                         <SelectValue placeholder='Select a role' />
@@ -246,7 +246,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                                 <FormItem>
                                                     <FormLabel>New Password</FormLabel>
                                                     <FormControl>
-                                                        <Input type='password' placeholder='Enter new password' {...field} />
+                                                        <Input placeholder='Enter new password' type='password' {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -260,7 +260,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                                 <FormItem>
                                                     <FormLabel>Confirm New Password</FormLabel>
                                                     <FormControl>
-                                                        <Input type='password' placeholder='Confirm new password' {...field} />
+                                                        <Input placeholder='Confirm new password' type='password' {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -270,7 +270,7 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                 </div>
 
                                 <div className='flex items-center space-x-4 pt-4'>
-                                    <Button type='submit' disabled={updateUser.isPending} className='gap-2'>
+                                    <Button className='gap-2' disabled={updateUser.isPending} type='submit'>
                                         {updateUser.isPending ? (
                                             <>
                                                 <div className='h-4 w-4 animate-spin rounded-full border-b-2 border-white'></div>
@@ -285,10 +285,10 @@ export default function EditUser({ data: user, roles }: EditUserProps) {
                                     </Button>
 
                                     <Button
+                                        disabled={updateUser.isPending}
+                                        onClick={() => router.visit(route('users.index'))}
                                         type='button'
                                         variant='outline'
-                                        onClick={() => router.visit(route('users.index'))}
-                                        disabled={updateUser.isPending}
                                     >
                                         Cancel
                                     </Button>
