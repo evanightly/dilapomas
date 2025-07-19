@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
 import { userServiceHook } from '@/services/userServiceHook';
@@ -16,7 +15,7 @@ import { z } from 'zod';
 
 const userSchema = z
     .object({
-        nip: z.string().min(1, 'NIP is required'),
+        nip: z.string().min(18, 'NIP must be at least 18 characters long').max(18, 'NIP must be exactly 18 characters long'),
         name: z.string().min(1, 'Name is required'),
         email: z.string().email('Please enter a valid email'),
         phone_number: z.string().optional(),
@@ -193,7 +192,7 @@ export default function CreateUser({ roles }: CreateUserProps) {
                                     )}
                                 />
 
-                                <FormField
+                                {/* <FormField
                                     control={form.control}
                                     name='role'
                                     render={({ field }) => (
@@ -216,7 +215,7 @@ export default function CreateUser({ roles }: CreateUserProps) {
                                             <FormMessage />
                                         </FormItem>
                                     )}
-                                />
+                                /> */}
 
                                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                                     <FormField
