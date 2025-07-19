@@ -23,7 +23,7 @@ class StoreComplaintRequest extends FormRequest {
             'incident_time' => ['required', 'date', 'before_or_equal:now'],
             'reported_person' => ['nullable', 'string', 'max:255'],
             'evidence_files' => ['nullable', 'array', 'max:5'],
-            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,mp4,pdf', 'max:102400'], // 100MB max
+            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,avi,mov,webm,pdf,doc,docx,txt,rtf', 'max:102400'], // 100MB max
         ];
 
         // Handle specific identity validation based on type
@@ -72,7 +72,7 @@ class StoreComplaintRequest extends FormRequest {
             'evidence_files.array' => 'File bukti harus berupa array.',
             'evidence_files.max' => 'Maksimal 5 file bukti dapat diunggah.',
             'evidence_files.*.file' => 'File bukti harus berupa file yang valid.',
-            'evidence_files.*.mimes' => 'File bukti harus berformat JPG, PNG, MP4, atau PDF.',
+            'evidence_files.*.mimes' => 'File bukti harus berformat JPG, PNG, GIF, WebP, SVG, MP4, AVI, MOV, WebM, PDF, DOC, DOCX, TXT, atau RTF.',
             'evidence_files.*.max' => 'Ukuran file bukti maksimal 10MB.',
         ];
     }

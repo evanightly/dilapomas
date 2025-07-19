@@ -316,7 +316,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                                     <input
                                         type='file'
                                         multiple
-                                        accept='image/*,application/pdf,.doc,.docx'
+                                        accept='image/*,video/mp4,.mp4,application/pdf,.doc,.docx'
                                         onChange={handleFileChange}
                                         className='absolute inset-0 cursor-pointer opacity-0'
                                         disabled={files.length >= 5}
