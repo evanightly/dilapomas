@@ -358,7 +358,7 @@ export default function Welcome() {
                 <section className='relative py-20'>
                     <div className='container mx-auto px-4'>
                         <div className='mx-auto max-w-4xl text-center'>
-                            <MagicCard className='group' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'}>
+                            <div className='group'>
                                 <div className='from-primary to-primary/75 text-primary-foreground rounded-2xl bg-gradient-to-r p-12'>
                                     <div className='mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm'>
                                         <Heart className='h-8 w-8 text-white' />
@@ -371,19 +371,19 @@ export default function Welcome() {
                                     </p>
 
                                     <div className='flex flex-col justify-center gap-4 sm:flex-row'>
-                                        <Button className='text-primary bg-white px-8 py-3 text-lg font-medium' size='lg'>
+                                        <Button className='px-8 py-3 text-lg font-medium' size='lg' variant='secondary'>
                                             Get Started Now
                                             <Zap className='ml-2 h-5 w-5' />
                                         </Button>
 
                                         <Link href='/login'>
-                                            <Button className='border-white px-8 py-3 text-lg font-medium text-white hover:bg-white/10' size='lg'>
+                                            <Button className='px-8 py-3 text-lg font-medium' size='lg'>
                                                 Sign In
                                             </Button>
                                         </Link>
                                     </div>
                                 </div>
-                            </MagicCard>
+                            </div>
                         </div>
                     </div>
                 </section>
