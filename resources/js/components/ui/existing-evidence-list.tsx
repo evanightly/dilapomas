@@ -130,7 +130,7 @@ export function ExistingEvidenceList({ evidences }: ExistingEvidenceListProps) {
                                     {renderPreviewThumbnail(evidence)}
                                 </EvidencePreviewModal>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium truncate">{evidence.title}</p>
+                                    <p className="text-sm font-medium truncate text-wrap">{evidence.title}</p>
                                     <div className="flex items-center gap-2 mt-1">
                                         <Badge 
                                             variant="secondary" 
