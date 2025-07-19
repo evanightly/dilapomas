@@ -102,9 +102,15 @@ jobs:
               echo "Waiting for app container..."
               sleep 5
             done
-            
+
+            docker exec sipengaduan-app composer install --no-dev --optimize-autoloader
+            docker exec sipengaduan-app npm install
+            docker exec sipengaduan-app npm run build
+            docker exec sipengaduan-app composer dump-autoload 
+
             echo "🔧 Running Laravel setup commands..."
             docker exec sipengaduan-app php artisan storage:link
+            docker exec sipengaduan-app php artisan optimize:clear
             docker exec sipengaduan-app php artisan optimize
             
             echo "✅ Laravel setup completed"
