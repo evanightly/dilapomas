@@ -50,9 +50,15 @@ class ComplaintController extends Controller {
     }
 
     public function show(Complaint $complaint) {
+        $intent = request()->get('intent');
         $data = ComplaintResource::make($complaint->load('evidences'));
-
         if ($this->ajax()) {
+            if ($intent === IntentEnum::GENERATE_COMPLAINT_REPORT->value) {
+                $result = $this->complaintService->generateReport($complaint);
+
+                return response()->json($result);
+            }
+
             return $data;
         }
 
@@ -85,5 +91,12 @@ class ComplaintController extends Controller {
         }
 
         return redirect()->back()->withInput()->withErrors($result['errors'] ?? 'Terjadi kesalahan saat mengirim pengaduan.');
+    }
+
+    /**
+     * Download PDF report for a complaint
+     */
+    public function downloadReport(Complaint $complaint, $filename) {
+        return $this->complaintService->downloadReport($complaint);
     }
 }

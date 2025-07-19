@@ -4,6 +4,7 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type User } from '@/types';
 import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
+import { ModeToggle } from './mode-toggle';
 
 interface UserMenuContentProps {
     user: User;
@@ -22,6 +23,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuLabel className='p-0 font-normal'>
                 <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                     <UserInfo user={user} showEmail={true} />
+                    <ModeToggle />
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

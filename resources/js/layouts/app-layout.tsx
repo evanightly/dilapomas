@@ -12,6 +12,6 @@ interface AppLayoutProps {
 
 export default ({ children, breadcrumbs, hasPadding = true, className, ...props }: AppLayoutProps) => (
     <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
-        <div className={cn('min-h-full', hasPadding && 'p-4', className)}>{children}</div>
+        <div className={cn(hasPadding && 'p-4', className)}>{children}</div>
     </AppLayoutTemplate>
 );

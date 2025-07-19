@@ -8,9 +8,12 @@ use App\Repositories\ComplaintRepository;
 use App\Support\Interfaces\Repositories\ComplaintRepositoryInterface;
 use App\Support\Interfaces\Services\ComplaintServiceInterface;
 use App\Traits\Services\HandlesPageSizeAll;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ComplaintService extends BaseCrudService implements ComplaintServiceInterface {
     use HandlesPageSizeAll;
@@ -83,5 +86,102 @@ class ComplaintService extends BaseCrudService implements ComplaintServiceInterf
                 ]);
             }
         }
+    }
+
+    /**
+     * Generate a comprehensive PDF report for a complaint
+     */
+    public function generateReport($complaint): array {
+        // Load relationships
+        $complaint->load(['evidences']);
+
+        try {
+            // Generate PDF using Blade template
+            $pdf = Pdf::loadView('reports.complaint-report', [
+                'complaint' => $complaint,
+            ]);
+
+            // Set PDF options
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+                'defaultFont' => 'DejaVu Sans',
+                'dpi' => 150,
+                'defaultPaperSize' => 'A4',
+                'chroot' => public_path(),
+            ]);
+
+            // Generate filename
+            $filename = 'RRI-Complaint-Report-' . $complaint->id . '-' . now()->format('Y-m-d') . '.pdf';
+
+            // Store PDF temporarily for download
+            $pdfContent = $pdf->output();
+            $tempPath = 'temp/reports/' . $filename;
+
+            // Ensure directory exists
+            Storage::disk('public')->makeDirectory('temp/reports');
+            Storage::disk('public')->put($tempPath, $pdfContent);
+
+            // Generate download URL
+            $downloadUrl = route('complaints.download-report', [
+                'complaint' => $complaint->id,
+                'filename' => $filename,
+            ]);
+
+            // Return download information
+            return [
+                'success' => true,
+                'data' => [
+                    'filename' => $filename,
+                    'path' => asset('storage/' . $tempPath),
+                    'download_url' => $downloadUrl,
+                    'file_size' => strlen($pdfContent),
+                    'content_type' => 'application/pdf',
+                ],
+                'message' => 'PDF report generated successfully',
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('PDF generation failed', [
+                'complaint_id' => $complaint->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return [
+                'success' => false,
+                'message' => 'Failed to generate PDF report: ' . $e->getMessage(),
+                'data' => null,
+            ];
+        }
+    }
+
+    /**
+     * Generate and directly download PDF report
+     */
+    public function downloadReport($complaint): \Illuminate\Http\Response {
+        // Load relationships
+        $complaint->load(['evidences']);
+
+        // Generate PDF
+        $pdf = Pdf::loadView('reports.complaint-report', [
+            'complaint' => $complaint,
+        ]);
+
+        // Set PDF options
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,
+            'defaultFont' => 'DejaVu Sans',
+            'dpi' => 150,
+        ]);
+
+        // Generate filename
+        $filename = 'RRI-Complaint-Report-' . $complaint->id . '-' . now()->format('Y-m-d') . '.pdf';
+
+        // Return PDF download response
+        return $pdf->download($filename);
     }
 }

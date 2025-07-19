@@ -1,385 +1,415 @@
 import { ComplaintForm } from '@/components/forms/ComplaintForm';
 import { ModeToggle } from '@/components/mode-toggle';
+import { useTheme } from '@/components/theme-provider';
 import { Badge } from '@/components/ui/badge';
-import { BorderBeam } from '@/components/ui/border-beam';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
-import { NumberTicker } from '@/components/ui/number-ticker';
-import { Particles } from '@/components/ui/particles';
-import { RainbowButton } from '@/components/ui/rainbow-button';
-import { usePage } from '@inertiajs/react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MagicCard } from '@/components/ui/magic-card';
+import { Meteors } from '@/components/ui/meteors';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
+    Award,
     CheckCircle,
     Clock,
     Eye,
+    File,
+    FileImage,
     FileText,
+    FileVideo,
+    Heart,
     Mail,
     MapPin,
-    MessageSquare,
+    MessageCircle,
     Phone,
     Radio,
     Scale,
     Shield,
     Star,
-    Users,
+    Upload,
     Zap,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
 
-interface LandingPageProps {
-    stats?: {
-        total_complaints: number;
-        resolved_complaints: number;
-        response_time_hours: number;
-    };
-}
-
-export default function LandingPage({ stats }: LandingPageProps) {
-    const [mounted, setMounted] = useState(false);
+export default function Welcome() {
     const page = usePage();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const theme = useTheme();
 
     const features = [
         {
             icon: Shield,
-            title: 'Aman & Terpercaya',
-            description: 'Data laporan Anda dijamin aman dengan enkripsi end-to-end dan sistem keamanan berlapis.',
+            title: 'Secure & Trusted',
+            description: 'Your complaint data is protected with enterprise-grade security and end-to-end encryption.',
+            color: 'from-green-500 to-emerald-500',
         },
         {
             icon: Clock,
-            title: 'Respon Cepat',
-            description: 'Tim kami berkomitmen merespon setiap laporan dalam waktu maksimal 24 jam.',
+            title: 'Quick Response',
+            description: 'Our team is committed to responding to every complaint within a maximum of 24 hours.',
+            color: 'from-blue-500 to-cyan-500',
         },
         {
             icon: Eye,
-            title: 'Transparan',
-            description: 'Pantau progress penanganan laporan Anda secara real-time dengan sistem tracking terintegrasi.',
+            title: 'Transparent Process',
+            description: 'Monitor your complaint progress in real-time with our integrated tracking system.',
+            color: 'from-purple-500 to-pink-500',
         },
         {
             icon: Scale,
-            title: 'Berdasarkan Hukum',
-            description: 'Setiap laporan ditangani sesuai Peraturan Direktur Utama No. 06 Tahun 2023.',
+            title: 'Legal Compliance',
+            description: 'Every complaint is handled in accordance with Director General Regulation No. 06 of 2023.',
+            color: 'from-orange-500 to-red-500',
         },
     ];
 
-    const testimonials = [
+    const supportedFiles = [
         {
-            name: 'Budi Santoso',
-            role: 'Pendengar RRI Jakarta',
-            content: 'Sistem pengaduan ini sangat membantu. Laporan saya ditanggapi dengan cepat dan profesional.',
-            rating: 5,
+            icon: FileImage,
+            title: 'Images',
+            description: 'JPG, PNG, GIF, WebP, SVG',
+            color: 'text-blue-500',
         },
         {
-            name: 'Siti Nurhaliza',
-            role: 'Pendengar RRI Surabaya',
-            content: 'Proses yang transparan dan mudah digunakan. Terima kasih RRI atas layanan yang excellent.',
-            rating: 5,
+            icon: FileVideo,
+            title: 'Videos',
+            description: 'MP4, AVI, MOV, WebM',
+            color: 'text-purple-500',
         },
         {
-            name: 'Ahmad Rahman',
-            role: 'Pendengar RRI Medan',
-            content: 'Interface yang user-friendly dan tim support yang sangat responsif. Highly recommended!',
-            rating: 5,
+            icon: File,
+            title: 'Documents',
+            description: 'PDF, DOC, DOCX, TXT, RTF',
+            color: 'text-green-500',
+        },
+        {
+            icon: Upload,
+            title: 'Large Files',
+            description: 'Up to 100MB per file',
+            color: 'text-orange-500',
         },
     ];
 
-    if (!mounted) {
-        return null;
-    }
+    const stats = [
+        {
+            icon: Award,
+            number: '1000+',
+            label: 'Complaints Resolved',
+            color: 'from-yellow-400 to-orange-500',
+        },
+        {
+            icon: Star,
+            number: '4.9/5',
+            label: 'Customer Satisfaction',
+            color: 'from-green-400 to-emerald-500',
+        },
+        {
+            icon: Clock,
+            number: '24/7',
+            label: 'Support Available',
+            color: 'from-blue-400 to-cyan-500',
+        },
+        {
+            icon: CheckCircle,
+            number: '99.9%',
+            label: 'Uptime Guarantee',
+            color: 'from-purple-400 to-pink-500',
+        },
+    ];
 
     return (
-        <div className='bg-background text-foreground relative min-h-screen overflow-hidden'>
-            {/* Particles Background */}
-            <Particles className='absolute inset-0 -z-10' color='#1e40af' ease={80} quantity={100} refresh />
+        <>
+            <Head title='RRI Complaint System - Submit Your Complaint' />
 
-            {/* Header */}
-            <header className='border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur'>
-                <div className='container mx-auto flex h-16 items-center justify-between px-4'>
-                    <div className='flex items-center space-x-3'>
-                        <div className='bg-primary flex h-10 w-10 items-center justify-center rounded-lg'>
-                            <img alt='' src='blue-logo.jpg' />
-                        </div>
-                        <div>
-                            <h1 className='text-foreground text-xl font-bold'>{page?.props?.name}</h1>
-                            <p className='text-muted-foreground text-xs'>Radio Republik Indonesia</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center space-x-4'>
-                        <nav className='hidden space-x-6 md:flex'>
-                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#beranda'>
-                                Beranda
-                            </a>
-                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#layanan'>
-                                Layanan
-                            </a>
-                            <a className='text-muted-foreground hover:text-foreground transition-colors' href='#kontak'>
-                                Kontak
-                            </a>
-                            <a
-                                className='text-muted-foreground hover:text-foreground transition-colors'
-                                href='https://ppid.rri.go.id'
-                                target='_blank'
-                            >
-                                RRI Pusat
-                            </a>
-                        </nav>
+            <div className='min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900'>
+                {/* Header */}
+                <header className='border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur'>
+                    <div className='container mx-auto flex h-16 items-center justify-between px-4'>
                         <div className='flex items-center space-x-3'>
-                            <a className='text-primary hover:text-primary/80 hidden font-medium transition-colors sm:block' href={route('login')}>
-                                Login
-                            </a>
-                            <ModeToggle />
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            {/* Hero Section */}
-            <section className='relative pt-20 pb-20' id='beranda'>
-                <div className='container mx-auto px-4'>
-                    <div className='grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20'>
-                        {/* Left Side - Hero Content */}
-                        <div className='flex flex-col justify-start space-y-8 lg:py-16'>
-                            <div className='space-y-6'>
-                                <Badge className='w-fit px-4 py-2 text-sm' variant='secondary'>
-                                    <Radio className='mr-2 h-4 w-4' />
-                                    Sistem Pengaduan Resmi RRI
-                                </Badge>
-
-                                <h1 className='from-primary bg-gradient-to-r to-blue-600 bg-clip-text text-4xl leading-tight font-bold text-transparent md:text-5xl lg:text-6xl'>
-                                    Suara Anda, Tanggung Jawab Kami
-                                </h1>
-
-                                <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
-                                    Platform resmi Radio Republik Indonesia untuk menerima, mengelola, dan menindaklanjuti pengaduan masyarakat. Kami
-                                    berkomitmen memberikan layanan terbaik dengan transparansi dan akuntabilitas yang tinggi.
-                                </p>
-                            </div>
-
-                            {/* Stats Section */}
-                            {stats && (
-                                <div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
-                                    <NeonGradientCard className='p-6 text-center' neonColors={{ firstColor: '#1e40af', secondColor: '#3b82f6' }}>
-                                        <div className='text-primary mb-2 text-3xl font-bold'>
-                                            <NumberTicker value={stats.total_complaints} />
-                                        </div>
-                                        <p className='text-muted-foreground text-sm'>Total Laporan</p>
-                                    </NeonGradientCard>
-
-                                    <NeonGradientCard className='p-6 text-center' neonColors={{ firstColor: '#1e40af', secondColor: '#3b82f6' }}>
-                                        <div className='mb-2 text-3xl font-bold text-blue-600 dark:text-blue-400'>
-                                            <NumberTicker value={stats.resolved_complaints} />
-                                        </div>
-                                        <p className='text-muted-foreground text-sm'>Diselesaikan</p>
-                                    </NeonGradientCard>
-
-                                    <NeonGradientCard className='p-6 text-center' neonColors={{ firstColor: '#1e40af', secondColor: '#3b82f6' }}>
-                                        <div className='mb-2 text-3xl font-bold text-blue-600 dark:text-blue-400'>
-                                            <NumberTicker value={stats.response_time_hours} />
-                                            <span className='text-lg'>h</span>
-                                        </div>
-                                        <p className='text-muted-foreground text-sm'>Rata-rata Respon</p>
-                                    </NeonGradientCard>
-                                </div>
-                            )}
-
-                            <div className='flex flex-col gap-4 sm:flex-row'>
-                                <RainbowButton className='px-8 py-4 text-lg'>
-                                    <FileText className='mr-2 h-5 w-5' />
-                                    Buat Laporan
-                                    <ArrowRight className='ml-2 h-5 w-5' />
-                                </RainbowButton>
-
-                                <Button className='px-8 py-4 text-lg' size='lg' variant='outline'>
-                                    <MessageSquare className='mr-2 h-5 w-5' />
-                                    Pelajari Lebih Lanjut
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Right Side - Complaint Form */}
-                        <div className='relative lg:py-8'>
-                            <div className='sticky top-8'>
-                                <Card className='relative overflow-hidden shadow-2xl'>
-                                    <BorderBeam colorFrom='#1e40af' colorTo='#3b82f6' duration={15} size={300} />
-                                    <CardHeader className='bg-primary/5 py-4 text-center'>
-                                        <CardTitle className='text-2xl font-bold'>Form Pengaduan</CardTitle>
-                                        <CardDescription className='text-lg'>Sampaikan keluhan atau saran Anda dengan mudah dan aman</CardDescription>
-                                    </CardHeader>
-                                    <CardContent className='p-6'>
-                                        <ComplaintForm />
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Features Section */}
-            <section className='bg-muted/30 relative py-20' id='layanan'>
-                <div className='container mx-auto px-4'>
-                    <div className='mb-16 text-center'>
-                        <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Mengapa Memilih Kami?</h2>
-                        <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                            Komitmen kami untuk memberikan layanan pengaduan terbaik dengan standar profesional tinggi
-                        </p>
-                    </div>
-
-                    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4'>
-                        {features.map((feature, index) => (
-                            <Card className='group relative transition-all duration-300 hover:shadow-xl' key={index}>
-                                <BorderBeam delay={index * 3} duration={12} size={250} />
-                                <CardContent className='p-6 text-center'>
-                                    <div className='bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
-                                        <feature.icon className='text-primary h-6 w-6' />
-                                    </div>
-                                    <h3 className='text-foreground mb-2 text-lg font-semibold'>{feature.title}</h3>
-                                    <p className='text-muted-foreground text-sm'>{feature.description}</p>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Testimonials Section */}
-            <section className='relative py-20'>
-                <div className='container mx-auto px-4'>
-                    <div className='mb-16 text-center'>
-                        <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Apa Kata Mereka</h2>
-                        <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                            Testimoni dari pengguna yang telah merasakan layanan pengaduan RRI
-                        </p>
-                    </div>
-
-                    <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
-                        {testimonials.map((testimonial, index) => (
-                            <Card className='group relative transition-all duration-300 hover:shadow-xl' key={index}>
-                                <BorderBeam delay={index * 3} duration={12} size={250} />
-                                <CardContent className='p-6'>
-                                    <div className='mb-4 flex space-x-1'>
-                                        {[...Array(testimonial.rating)].map((_, i) => (
-                                            <Star className='h-5 w-5 fill-yellow-400 text-yellow-400' key={i} />
-                                        ))}
-                                    </div>
-                                    <p className='text-muted-foreground mb-4 italic'>"{testimonial.content}"</p>
-                                    <div>
-                                        <h4 className='text-foreground font-semibold'>{testimonial.name}</h4>
-                                        <p className='text-muted-foreground text-sm'>{testimonial.role}</p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Benefits Section */}
-            <section className='bg-muted/30 relative py-20'>
-                <div className='container mx-auto px-4'>
-                    <div className='mb-16 text-center'>
-                        <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Keunggulan Platform Kami</h2>
-                        <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>Pengalaman pengaduan yang mudah, cepat, dan terpercaya</p>
-                    </div>
-
-                    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-                        <Card className='group relative p-6 transition-all duration-300 hover:shadow-xl'>
-                            <div className='bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
-                                <Zap className='text-primary h-6 w-6' />
-                            </div>
-                            <h3 className='text-foreground mb-2 text-lg font-semibold'>Proses Otomatis</h3>
-                            <p className='text-muted-foreground text-sm'>Sistem otomatis yang memproses laporan dengan efisien dan akurat</p>
-                        </Card>
-
-                        <Card className='group relative p-6 transition-all duration-300 hover:shadow-xl'>
-                            <div className='bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
-                                <Users className='text-primary h-6 w-6' />
-                            </div>
-                            <h3 className='text-foreground mb-2 text-lg font-semibold'>Tim Profesional</h3>
-                            <p className='text-muted-foreground text-sm'>Ditangani oleh tim berpengalaman dengan standar pelayanan tinggi</p>
-                        </Card>
-
-                        <Card className='group relative p-6 transition-all duration-300 hover:shadow-xl'>
-                            <div className='bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
-                                <CheckCircle className='text-primary h-6 w-6' />
-                            </div>
-                            <h3 className='text-foreground mb-2 text-lg font-semibold'>Hasil Terjamin</h3>
-                            <p className='text-muted-foreground text-sm'>Komitmen menyelesaikan setiap laporan dengan hasil yang memuaskan</p>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Contact Section */}
-            <section className='bg-background border-border relative border-t py-20' id='kontak'>
-                <div className='container mx-auto px-4'>
-                    <div className='mb-16 text-center'>
-                        <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Hubungi Kami</h2>
-                        <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                            Butuh bantuan atau informasi lebih lanjut? Tim kami siap membantu Anda 24/7
-                        </p>
-                    </div>
-
-                    <div className='mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3'>
-                        <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam duration={10} size={200} />
-                            <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
-                                <Phone className='text-primary h-8 w-8' />
-                            </div>
-                            <h3 className='mb-2 text-lg font-semibold'>Call Center</h3>
-                            <p className='text-muted-foreground mb-2'>(021) 345-7890</p>
-                            <p className='text-muted-foreground text-sm'>Senin - Jumat, 08:00 - 17:00 WIB</p>
-                        </Card>
-
-                        <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam delay={2} duration={10} size={200} />
-                            <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
-                                <Mail className='text-primary h-8 w-8' />
-                            </div>
-                            <h3 className='mb-2 text-lg font-semibold'>Email Support</h3>
-                            <p className='text-muted-foreground mb-2'>pengaduan@rri.co.id</p>
-                            <p className='text-muted-foreground text-sm'>Respon dalam 24 jam</p>
-                        </Card>
-
-                        <Card className='group p-6 text-center transition-all duration-300 hover:shadow-xl'>
-                            <BorderBeam delay={4} duration={10} size={200} />
-                            <div className='bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
-                                <MapPin className='text-primary h-8 w-8' />
-                            </div>
-                            <h3 className='mb-2 text-lg font-semibold'>Kantor Pusat</h3>
-                            <p className='text-muted-foreground mb-2'>Jl. Medan Merdeka Barat No. 4-5</p>
-                            <p className='text-muted-foreground text-sm'>Jakarta Pusat 10110</p>
-                        </Card>
-                    </div>
-                </div>
-            </section>
-
-            {/* Footer */}
-            <footer className='bg-muted/50 border-border relative border-t py-12'>
-                <div className='container mx-auto px-4'>
-                    <div className='flex flex-col items-center justify-between md:flex-row'>
-                        <div className='mb-4 flex items-center space-x-3 md:mb-0'>
-                            <div className='bg-primary flex h-8 w-8 items-center justify-center rounded-lg'>
-                                <Radio className='text-primary-foreground h-5 w-5' />
+                            <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
+                                <img alt='logo' src='blue-logo.jpg' />
                             </div>
                             <div>
-                                <h3 className='text-foreground text-lg font-bold'>RRI Complaint System</h3>
-                                <p className='text-muted-foreground text-sm'>Radio Republik Indonesia</p>
+                                <h1 className='text-foreground text-xl font-bold'>{page.props?.name}</h1>
+                                <p className='text-muted-foreground text-xs'>Radio Republik Indonesia</p>
                             </div>
                         </div>
-
-                        <div className='text-center md:text-right'>
-                            <p className='text-muted-foreground text-sm'>© 2025 Radio Republik Indonesia. Hak Cipta Dilindungi.</p>
-                            <p className='text-muted-foreground mt-1 text-xs'>Berdasarkan Peraturan Direktur Utama No. 06 Tahun 2023</p>
+                        <div className='flex items-center space-x-4'>
+                            <nav className='hidden space-x-6 md:flex'>
+                                <a className='text-muted-foreground hover:text-foreground transition-colors' href='#home'>
+                                    Home
+                                </a>
+                                <a className='text-muted-foreground hover:text-foreground transition-colors' href='#features'>
+                                    Features
+                                </a>
+                                <a className='text-muted-foreground hover:text-foreground transition-colors' href='#contact'>
+                                    Contact
+                                </a>
+                                <a
+                                    className='text-muted-foreground hover:text-foreground transition-colors'
+                                    href='https://ppid.rri.go.id'
+                                    target='_blank'
+                                >
+                                    Halaman Pusat
+                                </a>
+                            </nav>
+                            <div className='flex items-center space-x-3'>
+                                <Link href='/login'>
+                                    <Button className='font-medium' variant='ghost'>
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link href='/register'>
+                                    <Button className='from-primary to-primary/75 text-primary-foreground bg-gradient-to-r'>Register</Button>
+                                </Link>
+                                <ModeToggle />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-        </div>
+                </header>
+
+                {/* Hero Section with Form */}
+                <section className='relative pt-8 pb-20' id='home'>
+                    <Meteors number={30} />
+                    <div className='container mx-auto px-4'>
+                        <div className='grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20'>
+                            {/* Left Side - Hero Content */}
+                            <div className='mt-8 flex flex-col space-y-8 lg:py-16'>
+                                <div className='space-y-6'>
+                                    <Badge className='w-fit px-4 py-2 text-sm' variant='secondary'>
+                                        <Radio className='mr-2 h-4 w-4' />
+                                        Official RRI Complaint System
+                                    </Badge>
+
+                                    <h1 className='text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl'>
+                                        <span className='from-primary to-primary/55 bg-gradient-to-r bg-clip-text text-transparent'>Your Voice,</span>
+                                        <br />
+                                        <span className='bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent dark:from-white dark:to-slate-300'>
+                                            Our Responsibility
+                                        </span>
+                                    </h1>
+
+                                    <p className='text-muted-foreground text-lg leading-relaxed md:text-xl'>
+                                        Official Radio Republik Indonesia platform for receiving, managing, and following up on public complaints. We
+                                        are committed to providing the best service with high transparency and accountability.
+                                    </p>
+                                </div>
+
+                                {/* Stats Section */}
+                                <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>
+                                    {stats.map((stat, index) => (
+                                        <div className='text-center' key={index}>
+                                            <div
+                                                className={`mx-auto mb-2 h-12 w-12 rounded-full bg-gradient-to-br ${stat.color} flex items-center justify-center`}
+                                            >
+                                                <stat.icon className='h-6 w-6 text-white' />
+                                            </div>
+                                            <div className='text-foreground text-2xl font-bold'>{stat.number}</div>
+                                            <p className='text-muted-foreground text-xs'>{stat.label}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className='flex flex-col gap-4 sm:flex-row'>
+                                    <Button
+                                        className='from-primary to-primary/75 text-primary-foreground bg-gradient-to-r px-8 py-4 text-lg font-medium'
+                                        size='lg'
+                                    >
+                                        <FileText className='mr-2 h-5 w-5' />
+                                        Submit Complaint
+                                        <ArrowRight className='ml-2 h-5 w-5' />
+                                    </Button>
+
+                                    <Button className='border-1 bg-white px-8 py-4 text-lg font-medium text-black hover:bg-white' size='lg'>
+                                        <MessageCircle className='mr-2 h-5 w-5' />
+                                        Learn More
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Right Side - Complaint Form */}
+                            <div className='relative lg:py-8'>
+                                <ComplaintForm />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Features Section */}
+                <section className='bg-muted/30 relative py-20' id='features'>
+                    <div className='container mx-auto px-4'>
+                        <div className='mb-16 text-center'>
+                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Why Choose Our System?</h2>
+                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
+                                Our commitment to providing the best complaint service with high professional standards
+                            </p>
+                        </div>
+
+                        <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4'>
+                            {features.map((feature, index) => (
+                                <MagicCard className='group h-full' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'} key={index}>
+                                    <Card className='h-full border-0 bg-transparent shadow-none'>
+                                        <CardHeader className='pb-4 text-center'>
+                                            <div
+                                                className={`mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br ${feature.color} flex transform items-center justify-center transition-all duration-300 group-hover:scale-110`}
+                                            >
+                                                <feature.icon className='h-8 w-8 text-white' />
+                                            </div>
+                                            <CardTitle className='text-foreground text-xl font-semibold'>{feature.title}</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className='text-center'>
+                                            <p className='text-muted-foreground'>{feature.description}</p>
+                                        </CardContent>
+                                    </Card>
+                                </MagicCard>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Supported Files Section */}
+                <section className='relative py-20'>
+                    <div className='container mx-auto px-4'>
+                        <div className='mb-16 text-center'>
+                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Comprehensive Evidence Support</h2>
+                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
+                                Upload various file types as evidence for your complaints
+                            </p>
+                        </div>
+
+                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+                            {supportedFiles.map((file, index) => (
+                                <MagicCard className='group h-full' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'} key={index}>
+                                    <Card className='h-full border-0 bg-transparent shadow-none'>
+                                        <CardHeader className='pb-4 text-center'>
+                                            <div className='bg-muted mx-auto mb-4 flex h-16 w-16 transform items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110'>
+                                                <file.icon className={`h-8 w-8 ${file.color}`} />
+                                            </div>
+                                            <CardTitle className='text-foreground text-xl font-semibold'>{file.title}</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className='text-center'>
+                                            <p className='text-muted-foreground'>{file.description}</p>
+                                        </CardContent>
+                                    </Card>
+                                </MagicCard>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Contact Section */}
+                <section className='bg-muted/30 relative py-20' id='contact'>
+                    <div className='container mx-auto px-4'>
+                        <div className='mb-16 text-center'>
+                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Contact Us</h2>
+                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
+                                Need help or more information? Our team is ready to assist you 24/7
+                            </p>
+                        </div>
+
+                        <div className='mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3'>
+                            <MagicCard className='group h-full' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'}>
+                                <Card className='h-full border-0 bg-transparent shadow-none'>
+                                    <CardHeader className='pb-4 text-center'>
+                                        <div className='mx-auto mb-4 flex h-16 w-16 transform items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 transition-all duration-300 group-hover:scale-110'>
+                                            <Phone className='h-8 w-8 text-white' />
+                                        </div>
+                                        <CardTitle className='text-foreground text-xl font-semibold'>Call Center</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className='text-center'>
+                                        <p className='text-muted-foreground mb-2'>(021) 345-7890</p>
+                                        <p className='text-muted-foreground text-sm'>Monday - Friday, 08:00 - 17:00 WIB</p>
+                                    </CardContent>
+                                </Card>
+                            </MagicCard>
+
+                            <MagicCard className='group h-full' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'}>
+                                <Card className='h-full border-0 bg-transparent shadow-none'>
+                                    <CardHeader className='pb-4 text-center'>
+                                        <div className='mx-auto mb-4 flex h-16 w-16 transform items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 transition-all duration-300 group-hover:scale-110'>
+                                            <Mail className='h-8 w-8 text-white' />
+                                        </div>
+                                        <CardTitle className='text-foreground text-xl font-semibold'>Email Support</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className='text-center'>
+                                        <p className='text-muted-foreground mb-2'>complaints@rri.co.id</p>
+                                        <p className='text-muted-foreground text-sm'>Response within 24 hours</p>
+                                    </CardContent>
+                                </Card>
+                            </MagicCard>
+
+                            <MagicCard className='group h-full' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'}>
+                                <Card className='h-full border-0 bg-transparent shadow-none'>
+                                    <CardHeader className='pb-4 text-center'>
+                                        <div className='mx-auto mb-4 flex h-16 w-16 transform items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 transition-all duration-300 group-hover:scale-110'>
+                                            <MapPin className='h-8 w-8 text-white' />
+                                        </div>
+                                        <CardTitle className='text-foreground text-xl font-semibold'>Head Office</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className='text-center'>
+                                        <p className='text-muted-foreground mb-2'>Jl. Medan Merdeka Barat No. 4-5</p>
+                                        <p className='text-muted-foreground text-sm'>Jakarta Pusat 10110</p>
+                                    </CardContent>
+                                </Card>
+                            </MagicCard>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA Section */}
+                <section className='relative py-20'>
+                    <div className='container mx-auto px-4'>
+                        <div className='mx-auto max-w-4xl text-center'>
+                            <MagicCard className='group' gradientColor={theme.theme === 'dark' ? '#262626' : '#D9D9D955'}>
+                                <div className='from-primary to-primary/75 text-primary-foreground rounded-2xl bg-gradient-to-r p-12'>
+                                    <div className='mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm'>
+                                        <Heart className='h-8 w-8 text-white' />
+                                    </div>
+
+                                    <h2 className='mb-4 text-4xl font-bold'>Ready to Make Your Voice Heard?</h2>
+
+                                    <p className='mb-8 text-xl text-blue-100'>
+                                        Join thousands of satisfied users who trust our platform for their complaints and feedback.
+                                    </p>
+
+                                    <div className='flex flex-col justify-center gap-4 sm:flex-row'>
+                                        <Button className='text-primary bg-white px-8 py-3 text-lg font-medium' size='lg'>
+                                            Get Started Now
+                                            <Zap className='ml-2 h-5 w-5' />
+                                        </Button>
+
+                                        <Link href='/login'>
+                                            <Button className='border-white px-8 py-3 text-lg font-medium text-white hover:bg-white/10' size='lg'>
+                                                Sign In
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </MagicCard>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className='bg-muted/50 border-border relative border-t py-12'>
+                    <div className='container mx-auto px-4'>
+                        <div className='flex flex-col items-center justify-between md:flex-row'>
+                            <div className='mb-4 flex items-center space-x-3 md:mb-0'>
+                                <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
+                                    <img alt='logo' src='blue-logo.jpg' />
+                                </div>
+                                <div>
+                                    <h3 className='text-foreground text-lg font-bold'>{page.props?.name}</h3>
+                                    <p className='text-muted-foreground text-sm'>Radio Republik Indonesia</p>
+                                </div>
+                            </div>
+
+                            <div className='text-center md:text-right'>
+                                <p className='text-muted-foreground text-sm'>© 2025 Radio Republik Indonesia. All Rights Reserved.</p>
+                                <p className='text-muted-foreground mt-1 text-xs'>Based on Director General Regulation No. 06 of 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </>
     );
 }

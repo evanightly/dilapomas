@@ -10,6 +10,7 @@ namespace App\Support\Enums;
 enum IntentEnum: string {
     case CUSTOM_ACTION = 'custom.action';
     case SUBMIT_PUBLIC_COMPLAINT = 'submit.public.complaint';
+    case GENERATE_COMPLAINT_REPORT = 'generate.complaint.report';
 
     // Add your custom intents here
 }

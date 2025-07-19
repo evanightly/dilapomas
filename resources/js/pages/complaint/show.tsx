@@ -1,9 +1,11 @@
+import { ComplaintStatusManager } from '@/components/complaint/ComplaintStatusManager';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExistingEvidenceList } from '@/components/ui/existing-evidence-list';
 import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
+import { complaintServiceHook } from '@/services/complaintServiceHook';
 import { ComplaintResource } from '@/support/interfaces/resources';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
@@ -32,6 +34,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
     const [showFullDescription, setShowFullDescription] = useState(false);
+
+    const generateReportMutation = complaintServiceHook.useGenerateReport();
 
     const getStatusColor = (status: string) => {
         switch (status?.toLowerCase()) {
@@ -96,9 +100,28 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
         router.visit(route('complaints.edit', complaint.id));
     };
 
-    const handleGenerateReport = () => {
-        // TODO: Implement report generation
-        toast.success('Report generation feature coming soon!');
+    const handleGenerateReport = async () => {
+        try {
+            const result = await generateReportMutation.mutateAsync({ id: complaint.id });
+
+            if (result.data.success && result.data.data.download_url) {
+                // Create a temporary link to download the PDF
+                const link = document.createElement('a');
+                link.href = result.data.data.download_url;
+                link.download = result.data.data.filename;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                toast.success(`PDF report generated successfully! File: ${result.data.data.filename}`);
+            } else {
+                throw new Error(result.message || 'Failed to generate report');
+            }
+        } catch (error) {
+            console.error('Error generating report:', error);
+            toast.error('Failed to generate PDF report. Please try again.');
+        }
     };
 
     const truncateDescription = (text: string, maxLength: number = 200) => {
@@ -126,7 +149,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                     <div className='flex items-center gap-3'>
                         <Button className='gap-2' onClick={handleGenerateReport} variant='outline'>
                             <Download className='h-4 w-4' />
-                            Generate Report
+                            Generate PDF Report
                         </Button>
                         <Button className='gap-2' onClick={handleEdit}>
                             <Edit3 className='h-4 w-4' />
@@ -355,32 +378,14 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             </CardContent>
                         </Card>
 
-                        {/* Quick Actions */}
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className='flex items-center gap-2'>
-                                    <Shield className='h-5 w-5' />
-                                    Quick Actions
-                                </CardTitle>
-                                <CardDescription>Common actions for this complaint</CardDescription>
-                            </CardHeader>
-                            <CardContent className='space-y-3'>
-                                <Button className='w-full gap-2' onClick={handleEdit} variant='outline'>
-                                    <Edit3 className='h-4 w-4' />
-                                    Edit Complaint
-                                </Button>
-
-                                <Button className='w-full gap-2' onClick={handleGenerateReport} variant='outline'>
-                                    <Download className='h-4 w-4' />
-                                    Generate Report
-                                </Button>
-
-                                <Button className='w-full gap-2' onClick={() => copyToClipboard(window.location.href)} variant='outline'>
-                                    <Copy className='h-4 w-4' />
-                                    Copy Link
-                                </Button>
-                            </CardContent>
-                        </Card>
+                        {/* Status Manager */}
+                        <ComplaintStatusManager
+                            complaint={complaint}
+                            onUpdate={() => {
+                                // Refresh the page to get updated data
+                                router.reload();
+                            }}
+                        />
                     </div>
                 </div>
             </div>

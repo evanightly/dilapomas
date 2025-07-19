@@ -74,6 +74,7 @@ export const complaintServiceHook = {
                     method: 'post', // Use POST with _method=PUT for FormData
                     url: route(`${ROUTES.COMPLAINTS}.update`, params.id),
                     data: formData,
+                    params: { _method: 'PUT' },
                     requestConfig: {
                         headers: {
                             'Content-Type': 'multipart/form-data',
@@ -103,6 +104,21 @@ export const complaintServiceHook = {
                 });
             },
             invalidateQueryKeys: [{ queryKey: [TANSTACK_QUERY_KEYS.COMPLAINTS], exact: false }],
+        });
+    },
+
+    // Custom method for generating complaint report
+    useGenerateReport: () => {
+        return createMutation({
+            mutationFn: async (params: { id: number }) => {
+                return mutationApi({
+                    method: 'get',
+                    url: route(`${ROUTES.COMPLAINTS}.show`, params.id),
+                    data: {},
+                    params: { intent: IntentEnum.GENERATE_COMPLAINT_REPORT },
+                });
+            },
+            invalidateQueryKeys: [], // No need to invalidate queries for report generation
         });
     },
 };
