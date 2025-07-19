@@ -39,10 +39,10 @@ RUN mkdir -p /home/sipengaduan/.composer && \
 COPY . /var/www/html
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Install Node.js dependencies and build assets
-RUN npm install && npm run build
+# RUN npm install && npm run build
 
 # Set proper permissions
 RUN chown -R sipengaduan:www-data /var/www/html \
