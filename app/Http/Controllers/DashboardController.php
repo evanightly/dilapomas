@@ -108,7 +108,7 @@ class DashboardController extends Controller {
                     'evidences_count' => $complaint->evidences->count(),
                     'created_at' => $complaint->created_at,
                     'updated_at' => $complaint->updated_at,
-                    'days_since_created' => ceil($complaint->created_at->diffInRealDays(now())),
+                    'days_since_created' => ceil($complaint->created_at->diffInUTCDay(now())),
                     'time_since_created' => $complaint->created_at->diffForHumans(),
                     'time_created' => $complaint->created_at->format('H:i:s'),
                 ];

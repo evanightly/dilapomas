@@ -165,9 +165,9 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             <div className='flex items-center gap-2'>
                                 <Shield className='h-5 w-5 text-blue-600' />
                                 <div>
-                                    <p className='text-sm font-medium text-gray-600'>Complaint ID</p>
+                                    <p className='text-foreground/80 text-sm font-medium'>Complaint ID</p>
                                     <div className='flex items-center gap-2'>
-                                        <p className='text-lg font-bold text-gray-900'>#{complaint.id}</p>
+                                        <p className='text-foreground text-lg font-bold'>#{complaint.id}</p>
                                         <Button
                                             className='h-6 w-6 p-0'
                                             onClick={() => copyToClipboard(complaint.id.toString())}
@@ -187,8 +187,8 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             <div className='flex items-center gap-2'>
                                 <Calendar className='h-5 w-5 text-green-600' />
                                 <div>
-                                    <p className='text-sm font-medium text-gray-600'>Created</p>
-                                    <p className='text-lg font-bold text-gray-900'>{formatDate(complaint.created_at)}</p>
+                                    <p className='text-foreground/80 text-sm font-medium'>Created</p>
+                                    <p className='text-foreground text-lg font-bold'>{formatDate(complaint.created_at)}</p>
                                 </div>
                             </div>
                         </CardContent>
@@ -199,7 +199,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             <div className='flex items-center gap-2'>
                                 <AlertCircle className='h-5 w-5 text-purple-600' />
                                 <div>
-                                    <p className='text-sm font-medium text-gray-600'>Status</p>
+                                    <p className='text-foreground/80 text-sm font-medium'>Status</p>
                                     <Badge className={`${getStatusColor(complaint.status || 'pending')} mt-1 flex items-center gap-1`}>
                                         {getStatusIcon(complaint.status || 'pending')}
                                         {complaint.status || 'Pending'}
@@ -214,7 +214,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             <div className='flex items-center gap-2'>
                                 <Clock className='h-5 w-5 text-orange-600' />
                                 <div>
-                                    <p className='text-sm font-medium text-gray-600'>Priority</p>
+                                    <p className='text-foreground/80 text-sm font-medium'>Priority</p>
                                     <Badge className={`${getPriorityColor(complaint.priority || 'medium')} mt-1`}>
                                         {complaint.priority || 'Medium'}
                                     </Badge>
@@ -238,15 +238,15 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             </CardHeader>
                             <CardContent className='space-y-4'>
                                 <div>
-                                    <label className='text-sm font-semibold text-gray-700'>Incident Title</label>
-                                    <p className='mt-1 text-lg font-medium text-gray-900'>{complaint.incident_title}</p>
+                                    <label className='text-foreground/70 text-sm font-semibold'>Incident Title</label>
+                                    <p className='text-foreground mt-1 text-lg font-medium'>{complaint.incident_title}</p>
                                 </div>
 
                                 <Separator />
 
                                 <div>
-                                    <label className='text-sm font-semibold text-gray-700'>Incident Description</label>
-                                    <div className='mt-1 leading-relaxed text-gray-900'>
+                                    <label className='text-foreground/70 text-sm font-semibold'>Incident Description</label>
+                                    <div className='text-foreground mt-1 leading-relaxed'>
                                         {showFullDescription ? (
                                             <>
                                                 <p className='whitespace-pre-wrap'>{complaint.incident_description}</p>
@@ -281,17 +281,17 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
 
                                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                                     <div>
-                                        <label className='text-sm font-semibold text-gray-700'>Incident Time</label>
-                                        <p className='mt-1 flex items-center gap-2 text-gray-900'>
-                                            <Clock className='h-4 w-4 text-gray-500' />
+                                        <label className='text-foreground/70 text-sm font-semibold'>Incident Time</label>
+                                        <p className='text-foreground mt-1 flex items-center gap-2'>
+                                            <Clock className='h-4 w-4 text-foreground/50' />
                                             {complaint.incident_time ? formatDate(complaint.incident_time) : 'Not specified'}
                                         </p>
                                     </div>
 
                                     <div>
-                                        <label className='text-sm font-semibold text-gray-700'>Reported Person</label>
-                                        <p className='mt-1 flex items-center gap-2 text-gray-900'>
-                                            <User className='h-4 w-4 text-gray-500' />
+                                        <label className='text-foreground/70 text-sm font-semibold'>Reported Person</label>
+                                        <p className='text-foreground mt-1 flex items-center gap-2'>
+                                            <User className='h-4 w-4 text-foreground/50' />
                                             {complaint.reported_person || 'Not specified'}
                                         </p>
                                     </div>
@@ -316,23 +316,23 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             </CardHeader>
                             <CardContent className='space-y-4'>
                                 <div>
-                                    <label className='text-sm font-semibold text-gray-700'>Reporter Name</label>
-                                    <p className='mt-1 font-medium text-gray-900'>{complaint.reporter}</p>
+                                    <label className='text-foreground/70 text-sm font-semibold'>Reporter Name</label>
+                                    <p className='text-foreground mt-1 font-medium'>{complaint.reporter}</p>
                                 </div>
 
                                 <Separator />
 
                                 <div>
-                                    <label className='text-sm font-semibold text-gray-700'>Identity Type</label>
+                                    <label className='text-foreground/70 text-sm font-semibold'>Identity Type</label>
                                     <Badge className='mt-1 block w-fit' variant='outline'>
                                         {complaint.reporter_identity_type}
                                     </Badge>
                                 </div>
 
                                 <div>
-                                    <label className='text-sm font-semibold text-gray-700'>Identity Number</label>
+                                    <label className='text-foreground/70 text-sm font-semibold'>Identity Number</label>
                                     <div className='mt-1 flex items-center gap-2'>
-                                        <p className='font-mono text-gray-900'>{complaint.reporter_identity_number}</p>
+                                        <p className='text-foreground font-mono'>{complaint.reporter_identity_number}</p>
                                         <Button
                                             className='h-6 w-6 p-0'
                                             onClick={() => copyToClipboard(complaint.reporter_identity_number || '')}
@@ -360,8 +360,8 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                     <div className='flex items-start gap-3'>
                                         <div className='mt-2 h-2 w-2 rounded-full bg-blue-500'></div>
                                         <div>
-                                            <p className='text-sm font-medium text-gray-900'>Complaint Created</p>
-                                            <p className='text-xs text-gray-500'>{formatDate(complaint.created_at)}</p>
+                                            <p className='text-foreground text-sm font-medium'>Complaint Created</p>
+                                            <p className='text-xs text-foreground/50'>{formatDate(complaint.created_at)}</p>
                                         </div>
                                     </div>
 
@@ -369,8 +369,8 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                         <div className='flex items-start gap-3'>
                                             <div className='mt-2 h-2 w-2 rounded-full bg-green-500'></div>
                                             <div>
-                                                <p className='text-sm font-medium text-gray-900'>Last Updated</p>
-                                                <p className='text-xs text-gray-500'>{formatDate(complaint.updated_at)}</p>
+                                                <p className='text-foreground text-sm font-medium'>Last Updated</p>
+                                                <p className='text-xs text-foreground/50'>{formatDate(complaint.updated_at)}</p>
                                             </div>
                                         </div>
                                     )}

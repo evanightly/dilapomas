@@ -70,18 +70,21 @@ jobs:
             cd /home/sipengaduan
             
             echo "🛑 Stopping existing containers..."
-            docker compose -f docker-compose.prod.yml down || true
+            docker compose -f docker-compose.prod.yml down
             
-            echo "🧹 Cleaning up old images..."
-            docker system prune -f
+            echo "🧹 Removing old app containers only..."
+            docker compose -f docker-compose.prod.yml rm -f
             
-            echo "🔨 Building production containers..."
-            docker compose -f docker-compose.prod.yml build --no-cache
+            echo "🗑️ Cleaning dangling images only..."
+            docker image prune -f
             
-            echo "🚀 Starting production containers..."
+            echo "🔨 Building containers with cache..."
+            docker compose -f docker-compose.prod.yml build
+            
+            echo "🚀 Starting containers..."
             docker compose -f docker-compose.prod.yml up -d
             
-            echo "✅ Containers deployed successfully"
+            echo "✅ Deployment completed"
           ENDSSH
 
       - name: Setup Laravel Application

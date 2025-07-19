@@ -125,7 +125,7 @@ export default function Welcome() {
                     <div className='container mx-auto flex h-16 items-center justify-between px-4'>
                         <div className='flex items-center space-x-3'>
                             <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
-                                <img alt='logo' src='blue-logo.jpg' />
+                                <img alt='logo' src='/blue-logo.jpg' />
                             </div>
                             <div>
                                 <h1 className='text-foreground text-xl font-bold'>{page.props?.name}</h1>
@@ -394,7 +394,7 @@ export default function Welcome() {
                         <div className='flex flex-col items-center justify-between md:flex-row'>
                             <div className='mb-4 flex items-center space-x-3 md:mb-0'>
                                 <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
-                                    <img alt='logo' src='blue-logo.jpg' />
+                                    <img alt='logo' src='/blue-logo.jpg' />
                                 </div>
                                 <div>
                                     <h3 className='text-foreground text-lg font-bold'>{page.props?.name}</h3>

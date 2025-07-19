@@ -1,3 +1,4 @@
+import { RoleEnum } from '@/support/enums/roleEnum';
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
@@ -20,6 +21,7 @@ export interface NavItem {
     href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    roles?: RoleEnum[]; // Roles that can access this item
 }
 
 export interface SharedData {
@@ -39,9 +41,11 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    role: RoleEnum;
     [key: string]: unknown; // This allows for additional properties...
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     name: string;
+    auth: Auth;
 };

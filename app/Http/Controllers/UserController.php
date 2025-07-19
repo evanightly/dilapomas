@@ -7,12 +7,29 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Support\Interfaces\Services\UserServiceInterface;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller {
+class UserController extends Controller implements HasMiddleware {
     public function __construct(
         protected UserServiceInterface $userService
     ) {}
+
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array {
+        return [
+            function (Request $request, Closure $next) {
+                if(Auth::user()->role !== User::ROLE_SUPER_ADMIN) {
+                    abort(403, 'Unauthorized action.');
+                }
+                return $next($request);
+            },
+        ];
+    }
 
     /**
      * Display a listing of the resource.
