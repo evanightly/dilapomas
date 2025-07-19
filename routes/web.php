@@ -17,7 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('complaints/{complaint}/download-report/{filename}', [ComplaintController::class, 'downloadReport'])->name('complaints.download-report');
 
 // Test route for PDF generation debugging
-Route::get('test-pdf/{complaint}', function(App\Models\Complaint $complaint) {
+Route::get('test-pdf/{complaint}', function (App\Models\Complaint $complaint) {
     return response()->json([
         'message' => 'PDF test route accessible',
         'complaint_id' => $complaint->id,

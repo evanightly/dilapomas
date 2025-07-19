@@ -136,7 +136,7 @@ class ComplaintService extends BaseCrudService implements ComplaintServiceInterf
     public function downloadReport($complaint): \Illuminate\Http\Response {
         try {
             Log::info('Starting PDF download for complaint', ['complaint_id' => $complaint->id]);
-            
+
             // Load relationships
             $complaint->load(['evidences']);
 
@@ -156,22 +156,22 @@ class ComplaintService extends BaseCrudService implements ComplaintServiceInterf
 
             // Generate filename
             $filename = 'RRI-Complaint-Report-' . $complaint->id . '-' . now()->format('Y-m-d') . '.pdf';
-            
+
             Log::info('PDF generated successfully', [
                 'complaint_id' => $complaint->id,
-                'filename' => $filename
+                'filename' => $filename,
             ]);
 
             // Return PDF download response
             return $pdf->download($filename);
-            
+
         } catch (\Exception $e) {
             Log::error('PDF download failed', [
                 'complaint_id' => $complaint->id,
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
-            
+
             return response('PDF generation failed', 500);
         }
     }
