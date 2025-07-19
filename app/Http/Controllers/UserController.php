@@ -23,9 +23,10 @@ class UserController extends Controller implements HasMiddleware {
     public static function middleware(): array {
         return [
             function (Request $request, Closure $next) {
-                if(Auth::user()->role !== User::ROLE_SUPER_ADMIN) {
+                if (Auth::user()->role !== User::ROLE_SUPER_ADMIN) {
                     abort(403, 'Unauthorized action.');
                 }
+
                 return $next($request);
             },
         ];

@@ -2,11 +2,11 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { RoleEnum } from '@/support/enums/roleEnum';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, FileText, Folder, LayoutGrid, Users } from 'lucide-react';
 import AppLogo from './app-logo';
-import { RoleEnum } from '@/support/enums/roleEnum';
 
 const mainNavItems: NavItem[] = [
     {

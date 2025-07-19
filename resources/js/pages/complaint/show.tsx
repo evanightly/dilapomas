@@ -283,7 +283,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                     <div>
                                         <label className='text-foreground/70 text-sm font-semibold'>Incident Time</label>
                                         <p className='text-foreground mt-1 flex items-center gap-2'>
-                                            <Clock className='h-4 w-4 text-foreground/50' />
+                                            <Clock className='text-foreground/50 h-4 w-4' />
                                             {complaint.incident_time ? formatDate(complaint.incident_time) : 'Not specified'}
                                         </p>
                                     </div>
@@ -291,7 +291,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                     <div>
                                         <label className='text-foreground/70 text-sm font-semibold'>Reported Person</label>
                                         <p className='text-foreground mt-1 flex items-center gap-2'>
-                                            <User className='h-4 w-4 text-foreground/50' />
+                                            <User className='text-foreground/50 h-4 w-4' />
                                             {complaint.reported_person || 'Not specified'}
                                         </p>
                                     </div>
@@ -361,7 +361,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                         <div className='mt-2 h-2 w-2 rounded-full bg-blue-500'></div>
                                         <div>
                                             <p className='text-foreground text-sm font-medium'>Complaint Created</p>
-                                            <p className='text-xs text-foreground/50'>{formatDate(complaint.created_at)}</p>
+                                            <p className='text-foreground/50 text-xs'>{formatDate(complaint.created_at)}</p>
                                         </div>
                                     </div>
 
@@ -370,7 +370,7 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                             <div className='mt-2 h-2 w-2 rounded-full bg-green-500'></div>
                                             <div>
                                                 <p className='text-foreground text-sm font-medium'>Last Updated</p>
-                                                <p className='text-xs text-foreground/50'>{formatDate(complaint.updated_at)}</p>
+                                                <p className='text-foreground/50 text-xs'>{formatDate(complaint.updated_at)}</p>
                                             </div>
                                         </div>
                                     )}
