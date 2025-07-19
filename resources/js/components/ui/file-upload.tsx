@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { X, Upload, FileText, Image, Video, File } from 'lucide-react';
+import { X, Upload, FileText, Image, Video, File, Music } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -22,6 +22,7 @@ export function FileUpload({
     acceptedTypes = [
         'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
         'video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/webm',
+        'audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/flac', 'audio/aac', 'audio/ogg',
         'application/pdf',
         'application/msword', 
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -57,6 +58,7 @@ export function FileUpload({
     const getFileIcon = (fileType: string) => {
         if (fileType.startsWith('image/')) return <Image className="h-4 w-4" />;
         if (fileType.startsWith('video/')) return <Video className="h-4 w-4" />;
+        if (fileType.startsWith('audio/')) return <Music className="h-4 w-4" />;
         if (fileType === 'application/pdf') return <FileText className="h-4 w-4" />;
         return <File className="h-4 w-4" />;
     };
@@ -79,7 +81,7 @@ export function FileUpload({
                 <CardDescription>
                     Upload supporting evidence files (optional). Maximum {maxFiles} files, 100MB each.
                     <br />
-                    <strong>File yang didukung:</strong> .jpg, .png, .gif, .webp, .mp4, .avi, .mov, .wmv, .webm, .pdf, .doc, .docx
+                    <strong>File yang didukung:</strong> .jpg, .png, .gif, .webp, .mp4, .avi, .mov, .wmv, .webm, .mp3, .wav, .flac, .aac, .ogg, .pdf, .doc, .docx
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -102,7 +104,7 @@ export function FileUpload({
                                 Drag and drop files here, or click to select files
                             </p>
                             <p className="text-xs text-gray-500">
-                                Maksimal 100MB per file. Format: JPG, PNG, GIF, WEBP, MP4, AVI, MOV, WMV, WEBM, PDF, DOC, DOCX
+                                Maksimal 100MB per file. Format: JPG, PNG, GIF, WEBP, MP4, AVI, MOV, WMV, WEBM, MP3, WAV, FLAC, AAC, OGG, PDF, DOC, DOCX
                             </p>
                         </div>
                     )}

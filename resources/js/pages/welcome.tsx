@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Meteors } from '@/components/ui/meteors';
+import { SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import {
@@ -22,6 +23,7 @@ import {
     Mail,
     MapPin,
     MessageCircle,
+    Music,
     Phone,
     Radio,
     Scale,
@@ -32,8 +34,9 @@ import {
 } from 'lucide-react';
 
 export default function Welcome() {
-    const page = usePage();
+    const page = usePage<SharedData>();
     const theme = useTheme();
+    const isAuthenticated = !!page.props.auth?.user;
 
     const features = [
         {
@@ -74,6 +77,12 @@ export default function Welcome() {
             title: 'Videos',
             description: 'MP4, AVI, MOV, WebM',
             color: 'text-purple-500',
+        },
+        {
+            icon: Music,
+            title: 'Audio',
+            description: 'MP3, WAV, FLAC, AAC, OGG',
+            color: 'text-pink-500',
         },
         {
             icon: File,
@@ -168,11 +177,19 @@ export default function Welcome() {
                                 </a>
                             </nav>
                             <div className='flex items-center space-x-3'>
-                                <Link href='/login'>
-                                    <Button className='font-medium' variant='default'>
-                                        Login
-                                    </Button>
-                                </Link>
+                                {isAuthenticated ? (
+                                    <Link href='/dashboard'>
+                                        <Button className='font-medium' variant='default'>
+                                            Dashboard
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <Link href='/login'>
+                                        <Button className='font-medium' variant='default'>
+                                            Login
+                                        </Button>
+                                    </Link>
+                                )}
                                 <ModeToggle />
                             </div>
                         </motion.div>
@@ -547,13 +564,23 @@ export default function Welcome() {
                                             </Button>
                                         </motion.div>
 
-                                        <Link href='/login'>
-                                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                                <Button className='px-8 py-3 text-lg font-medium' size='lg'>
-                                                    Sign In
-                                                </Button>
-                                            </motion.div>
-                                        </Link>
+                                        {isAuthenticated ? (
+                                            <Link href='/dashboard'>
+                                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                                    <Button className='px-8 py-3 text-lg font-medium' size='lg'>
+                                                        Go to Dashboard
+                                                    </Button>
+                                                </motion.div>
+                                            </Link>
+                                        ) : (
+                                            <Link href='/login'>
+                                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                                    <Button className='px-8 py-3 text-lg font-medium' size='lg'>
+                                                        Sign In
+                                                    </Button>
+                                                </motion.div>
+                                            </Link>
+                                        )}
                                     </motion.div>
                                 </div>
                             </motion.div>

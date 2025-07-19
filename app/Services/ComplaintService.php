@@ -13,7 +13,6 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class ComplaintService extends BaseCrudService implements ComplaintServiceInterface {
     use HandlesPageSizeAll;
@@ -96,32 +95,8 @@ class ComplaintService extends BaseCrudService implements ComplaintServiceInterf
         $complaint->load(['evidences']);
 
         try {
-            // Generate PDF using Blade template
-            $pdf = Pdf::loadView('reports.complaint-report', [
-                'complaint' => $complaint,
-            ]);
-
-            // Set PDF options
-            $pdf->setPaper('A4', 'portrait');
-            $pdf->setOptions([
-                'isHtml5ParserEnabled' => true,
-                'isPhpEnabled' => true,
-                'defaultFont' => 'DejaVu Sans',
-                'dpi' => 150,
-                'defaultPaperSize' => 'A4',
-                'chroot' => public_path(),
-            ]);
-
             // Generate filename
             $filename = 'RRI-Complaint-Report-' . $complaint->id . '-' . now()->format('Y-m-d') . '.pdf';
-
-            // Store PDF temporarily for download
-            $pdfContent = $pdf->output();
-            $tempPath = 'temp/reports/' . $filename;
-
-            // Ensure directory exists
-            Storage::disk('public')->makeDirectory('temp/reports');
-            Storage::disk('public')->put($tempPath, $pdfContent);
 
             // Generate download URL
             $downloadUrl = route('complaints.download-report', [
@@ -134,9 +109,7 @@ class ComplaintService extends BaseCrudService implements ComplaintServiceInterf
                 'success' => true,
                 'data' => [
                     'filename' => $filename,
-                    'path' => asset('storage/' . $tempPath),
                     'download_url' => $downloadUrl,
-                    'file_size' => strlen($pdfContent),
                     'content_type' => 'application/pdf',
                 ],
                 'message' => 'PDF report generated successfully',
