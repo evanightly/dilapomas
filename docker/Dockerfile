@@ -46,11 +46,7 @@ RUN npm install && npm run build
 
 # Set proper permissions
 RUN chown -R sipengaduan:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage/logs \
-    && chmod -R 775 /var/www/html/storage/framework \
-    && chmod -R 775 /var/www/html/storage/app
+    && chmod -R 755 /var/www/html/storage
 
 # Copy supervisor configuration
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
