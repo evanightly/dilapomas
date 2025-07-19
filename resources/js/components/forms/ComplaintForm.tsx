@@ -32,7 +32,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
             reporter_identity_number: '',
             incident_title: '',
             incident_description: '',
-            incident_time: new Date(),
+            incident_time: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // yesterday
             reported_person: '',
             evidence_files: [],
         },
