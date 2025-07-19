@@ -109,7 +109,14 @@ jobs:
             docker exec sipengaduan-app composer dump-autoload 
 
             echo "🔧 Running Laravel setup commands..."
-            docker exec sipengaduan-app php artisan storage:link
+            
+            # Force create storage link and verify
+            docker exec sipengaduan-app rm -f /var/www/html/public/storage
+            docker exec sipengaduan-app php artisan storage:link --force
+            echo "Storage link status:"
+            docker exec sipengaduan-app ls -la /var/www/html/public/ | grep storage || echo "Storage link not found"
+            docker exec sipengaduan-app ls -la /var/www/html/storage/app/public/ || echo "Storage directory not found"
+            
             docker exec sipengaduan-app php artisan optimize:clear
             docker exec sipengaduan-app php artisan optimize
             
