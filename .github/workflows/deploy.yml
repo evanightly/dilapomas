@@ -127,10 +127,8 @@ jobs:
             cd /home/sipengaduan
             
             echo "🔐 Setting proper permissions..."
-            docker exec sipengaduan-app chown -R sipengaduan:www-data /var/www/html/storage
-            docker exec sipengaduan-app chown -R sipengaduan:www-data /var/www/html/bootstrap/cache
-            docker exec sipengaduan-app chmod -R 775 /var/www/html/storage
-            docker exec sipengaduan-app chmod -R 775 /var/www/html/bootstrap/cache
+            docker exec sipengaduan-app chown -R www-data:www-data /var/www/html
+            docker exec sipengaduan-app chmod -R 777 /var/www/html/storage
             
             echo "🔄 Restarting services..."
             docker compose -f docker-compose.prod.yml restart
