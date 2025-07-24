@@ -142,7 +142,7 @@ export default function Welcome() {
                             initial={{ opacity: 0, x: -30 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
-                            <div className='flex items-center justify-center rounded-lg gap-4'>
+                            <div className='flex items-center justify-center gap-4 rounded-lg'>
                                 <img alt='logo' className='h-10' src='/blue-logo.png' />
                                 <img alt='logo' className='h-10' src='/pro1.png' />
                                 <img alt='logo' className='h-10' src='/pro2.png' />
