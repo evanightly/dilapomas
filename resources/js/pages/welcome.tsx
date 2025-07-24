@@ -18,7 +18,6 @@ import {
     File,
     FileImage,
     FileText,
-    FileVideo,
     Heart,
     Mail,
     MapPin,
@@ -29,7 +28,6 @@ import {
     Scale,
     Shield,
     Star,
-    Upload,
     Zap,
 } from 'lucide-react';
 
@@ -72,12 +70,12 @@ export default function Welcome() {
             description: 'JPG, PNG, GIF, WebP, SVG',
             color: 'text-blue-500',
         },
-        {
-            icon: FileVideo,
-            title: 'Videos',
-            description: 'MP4, AVI, MOV, WebM',
-            color: 'text-purple-500',
-        },
+        // {
+        //     icon: FileVideo,
+        //     title: 'Videos',
+        //     description: 'MP4, AVI, MOV, WebM',
+        //     color: 'text-purple-500',
+        // },
         {
             icon: Music,
             title: 'Audio',
@@ -90,12 +88,12 @@ export default function Welcome() {
             description: 'PDF, DOC, DOCX, TXT, RTF',
             color: 'text-green-500',
         },
-        {
-            icon: Upload,
-            title: 'Large Files',
-            description: 'Up to 100MB per file',
-            color: 'text-orange-500',
-        },
+        // {
+        //     icon: Upload,
+        //     title: 'Large Files',
+        //     description: 'Up to 100MB per file',
+        //     color: 'text-orange-500',
+        // },
     ];
 
     const stats = [
@@ -144,12 +142,11 @@ export default function Welcome() {
                             initial={{ opacity: 0, x: -30 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
-                            <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
-                                <img alt='logo' src='/blue-logo.jpg' />
-                            </div>
-                            <div>
-                                <h1 className='text-foreground text-xl font-bold'>{page.props?.name}</h1>
-                                <p className='text-muted-foreground text-xs'>Radio Republik Indonesia</p>
+                            <div className='flex items-center justify-center rounded-lg gap-4'>
+                                <img alt='logo' className='h-10' src='/blue-logo.png' />
+                                <img alt='logo' className='h-10' src='/pro1.png' />
+                                <img alt='logo' className='h-10' src='/pro2.png' />
+                                <img alt='logo' className='h-10' src='/pro4.png' />
                             </div>
                         </motion.div>
                         <motion.div
@@ -170,7 +167,7 @@ export default function Welcome() {
                                 </a>
                                 <a
                                     className='text-muted-foreground hover:text-foreground transition-colors'
-                                    href='https://ppid.rri.go.id'
+                                    href='https://ppid.rri.go.id/pengaduan'
                                     target='_blank'
                                 >
                                     Halaman Pusat
@@ -609,8 +606,8 @@ export default function Welcome() {
                                 transition={{ type: 'spring', stiffness: 300 }}
                                 whileHover={{ scale: 1.05 }}
                             >
-                                <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600'>
-                                    <img alt='logo' src='/blue-logo.jpg' />
+                                <div className='flex h-8 w-8 items-center justify-center rounded-lg'>
+                                    <img alt='logo' src='/blue-logo.png' />
                                 </div>
                                 <div>
                                     <h3 className='text-foreground text-lg font-bold'>{page.props?.name}</h3>

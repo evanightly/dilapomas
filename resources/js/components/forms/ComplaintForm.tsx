@@ -315,13 +315,13 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                                     <input
                                         type='file'
                                         multiple
-                                        accept='image/*,video/mp4,.mp4,audio/mp3,.mp3,audio/wav,.wav,audio/flac,.flac,audio/aac,.aac,audio/ogg,.ogg,application/pdf,.doc,.docx'
+                                        accept='image/*,audio/mp3,.mp3,audio/wav,.wav,audio/flac,.flac,audio/aac,.aac,audio/ogg,.ogg,application/pdf,.doc,.docx'
                                         onChange={handleFileChange}
                                         className='absolute inset-0 cursor-pointer opacity-0'
                                         disabled={files.length >= 5}
                                     />
                                 </Button>
-                                <span className='text-muted-foreground text-sm'>Maksimal 5 file (gambar, video, audio, PDF, atau dokumen)</span>
+                                <span className='text-muted-foreground text-sm'>Maksimal 5 file (gambar, audio, PDF, atau dokumen)</span>
                             </div>
 
                             {files.length > 0 && (
@@ -351,7 +351,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                         ) : (
                             <>
                                 <SendHorizontal className='mr-2 h-4 w-4' />
-                                Kirim Laporan
+                                Komplen
                             </>
                         )}
                     </Button>
