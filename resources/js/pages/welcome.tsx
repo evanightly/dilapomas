@@ -1,7 +1,6 @@
 import { ComplaintForm } from '@/components/forms/ComplaintForm';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useTheme } from '@/components/theme-provider';
-import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MagicCard } from '@/components/ui/magic-card';
@@ -9,27 +8,7 @@ import { Meteors } from '@/components/ui/meteors';
 import { SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import {
-    ArrowRight,
-    Award,
-    CheckCircle,
-    Clock,
-    Eye,
-    File,
-    FileImage,
-    FileText,
-    Heart,
-    Mail,
-    MapPin,
-    MessageCircle,
-    Music,
-    Phone,
-    Radio,
-    Scale,
-    Shield,
-    Star,
-    Zap,
-} from 'lucide-react';
+import { ArrowRight, Clock, Eye, File, FileImage, FileText, Mail, MapPin, MessageCircle, Music, Phone, Scale, Shield } from 'lucide-react';
 
 export default function Welcome() {
     const page = usePage<SharedData>();
@@ -176,19 +155,17 @@ export default function Welcome() {
                                 </a>
                             </nav>
                             <div className='flex items-center space-x-3'>
-                                {isAuthenticated ?
-                                    (
-                                        <Link href='/dashboard' className={buttonVariants({ variant: 'default', className: 'font-medium' })}>
-                                            Dashboard
-                                        </Link>
-                                    ) :
-                                    (
-                                        <Link href='/login'>
-                                            <Button className='font-medium' variant='default'>
-                                                Login
-                                            </Button>
-                                        </Link>
-                                    )}
+                                {isAuthenticated ? (
+                                    <Link className={buttonVariants({ variant: 'default', className: 'font-medium' })} href='/dashboard'>
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <Link href='/login'>
+                                        <Button className='font-medium' variant='default'>
+                                            Login
+                                        </Button>
+                                    </Link>
+                                )}
                                 <ModeToggle />
                             </div>
                         </motion.div>
@@ -223,7 +200,7 @@ export default function Welcome() {
                                             Official RRI Complaint System
                                         </Badge>
                                     </motion.div> */}
-                                    <img src="/logo_dilapomas.png" alt="logo" className='size-100' />
+                                    <img alt='logo' className='size-100' src='/logo_dilapomas.png' />
                                     <motion.h1
                                         animate={{ opacity: 1, y: 0 }}
                                         className='text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl'
@@ -243,7 +220,8 @@ export default function Welcome() {
                                         initial={{ opacity: 0, y: 30 }}
                                         transition={{ duration: 0.6, delay: 0.7 }}
                                     >
-                                        Layanan dan Pengelolaan Pengaduan Masyarakat di RRI Pontianak berbasis teknologi informasi untuk meningkatkan transparansi dan akuntabilitas.
+                                        Layanan dan Pengelolaan Pengaduan Masyarakat di RRI Pontianak berbasis teknologi informasi untuk meningkatkan
+                                        transparansi dan akuntabilitas.
                                     </motion.p>
                                 </motion.div>
 
@@ -385,9 +363,7 @@ export default function Welcome() {
                             whileInView={{ opacity: 1, y: 0 }}
                         >
                             <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Dukungan Bukti Komprehensif</h2>
-                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                                Unggah berbagai jenis file sebagai bukti keluhan Anda
-                            </p>
+                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>Unggah berbagai jenis file sebagai bukti keluhan Anda</p>
                         </motion.div>
 
                         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
@@ -442,9 +418,7 @@ export default function Welcome() {
                             <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Hubungi Kami</h2>
                             <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
                                 Butuh bantuan atau informasi lebih lanjut?
-                                <span className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                                    Tim kami siap membantu Anda 24/7
-                                </span>
+                                <span className='text-muted-foreground mx-auto max-w-2xl text-xl'>Tim kami siap membantu Anda 24/7</span>
                             </p>
                         </motion.div>
 

@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Head, router, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Shield } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -122,9 +121,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 <h2 className='from-primary bg-gradient-to-r to-blue-600 bg-clip-text text-4xl font-bold text-transparent lg:text-5xl'>
                                     RRI PONTIANAK
                                 </h2>
-                                <p className='text-muted-foreground text-lg leading-relaxed'>
-                                    Layanan dan Pengelolaan Pengaduan Masyarakat
-                                </p>
+                                <p className='text-muted-foreground text-lg leading-relaxed'>Layanan dan Pengelolaan Pengaduan Masyarakat</p>
                             </motion.div>
 
                             <motion.div

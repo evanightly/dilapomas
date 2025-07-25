@@ -184,7 +184,6 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                 <h1 className='text-foreground text-2xl font-bold'>Dashboard</h1>
                                 <p className='text-muted-foreground'>Selamat Datang di layanan pengaduan RRI Pontianak</p>
                             </div>
-
                             {/* Filters */}
                             <Card>
                                 <CardHeader>
@@ -303,7 +302,6 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                     </div>
                                 </CardContent>
                             </Card>
-
                             {/* Stats Cards */}
                             <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
                                 {statCards.map((stat, index) => {
@@ -324,7 +322,6 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                     );
                                 })}
                             </div>
-
                             {/* Charts Section */}
                             <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
                                 {/* Status Distribution Chart */}
@@ -388,7 +385,6 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                     </CardContent>
                                 </Card>
                             </div>
-
                             {/* Monthly Trends Chart */}
                             <Card>
                                 <CardHeader>
@@ -407,8 +403,8 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </CardContent>
-                            </Card> */
-
+                            </Card>{' '}
+                            */
                             {/* Recent Complaints */}
                             <Card>
                                 <CardHeader>
@@ -470,7 +466,8 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                         </div>
                                     )}
                                 </CardContent>
-                            </Card> */
+                            </Card>{' '}
+                            */
                         </div>
                     </div>
                 </SidebarInset>
