@@ -23,7 +23,8 @@ class StoreComplaintRequest extends FormRequest {
             'incident_time' => ['required', 'date', 'before_or_equal:now'],
             'reported_person' => ['nullable', 'string', 'max:255'],
             'evidence_files' => ['nullable', 'array', 'max:5'],
-            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,avi,mov,webm,mp3,wav,flac,aac,ogg,pdf,doc,docx,txt,rtf', 'max:102400'], // 100MB max
+            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp,svg,mp3,wav,flac,aac,ogg,pdf,doc,docx,txt,rtf', 'max:102400'], // 100MB max
+
         ];
 
         // Handle specific identity validation based on type

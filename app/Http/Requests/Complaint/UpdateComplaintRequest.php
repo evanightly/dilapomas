@@ -16,7 +16,7 @@ class UpdateComplaintRequest extends FormRequest {
             'incident_time' => ['nullable', 'date_format:Y-m-d H:i:s'],
             'reported_person' => ['nullable', 'string'],
             'evidence_files' => ['nullable', 'array', 'max:5'],
-            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,mp4,pdf', 'max:10240'], // 10MB max
+            'evidence_files.*' => ['file', 'mimes:jpg,jpeg,png,gif,webp,svg,mp3,wav,flac,aac,ogg,pdf,doc,docx,txt,rtf', 'max:102400'], // 100MB max
             'status' => ['nullable', 'string'],
             'priority' => ['nullable', 'string'],
         ];
