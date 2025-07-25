@@ -2,7 +2,7 @@ import { ComplaintForm } from '@/components/forms/ComplaintForm';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useTheme } from '@/components/theme-provider';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Meteors } from '@/components/ui/meteors';
@@ -33,6 +33,8 @@ import {
 
 export default function Welcome() {
     const page = usePage<SharedData>();
+    console.log(page);
+
     const theme = useTheme();
     const isAuthenticated = !!page.props.auth?.user;
 
@@ -96,36 +98,36 @@ export default function Welcome() {
         // },
     ];
 
-    const stats = [
-        {
-            icon: Award,
-            number: '1000+',
-            label: 'Complaints Resolved',
-            color: 'from-yellow-400 to-orange-500',
-        },
-        {
-            icon: Star,
-            number: '4.9/5',
-            label: 'Customer Satisfaction',
-            color: 'from-green-400 to-emerald-500',
-        },
-        {
-            icon: Clock,
-            number: '24/7',
-            label: 'Support Available',
-            color: 'from-blue-400 to-cyan-500',
-        },
-        {
-            icon: CheckCircle,
-            number: '99.9%',
-            label: 'Uptime Guarantee',
-            color: 'from-purple-400 to-pink-500',
-        },
-    ];
+    // const stats = [
+    //     {
+    //         icon: Award,
+    //         number: '1000+',
+    //         label: 'Complaints Resolved',
+    //         color: 'from-yellow-400 to-orange-500',
+    //     },
+    //     {
+    //         icon: Star,
+    //         number: '4.9/5',
+    //         label: 'Customer Satisfaction',
+    //         color: 'from-green-400 to-emerald-500',
+    //     },
+    //     {
+    //         icon: Clock,
+    //         number: '24/7',
+    //         label: 'Support Available',
+    //         color: 'from-blue-400 to-cyan-500',
+    //     },
+    //     {
+    //         icon: CheckCircle,
+    //         number: '99.9%',
+    //         label: 'Uptime Guarantee',
+    //         color: 'from-purple-400 to-pink-500',
+    //     },
+    // ];
 
     return (
         <>
-            <Head title='RRI Complaint System - Submit Your Complaint' />
+            <Head title=' RRI PONTIANAK ' />
 
             <div className='min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900'>
                 {/* Header */}
@@ -157,36 +159,36 @@ export default function Welcome() {
                         >
                             <nav className='hidden space-x-6 md:flex'>
                                 <a className='text-muted-foreground hover:text-foreground transition-colors' href='#home'>
-                                    Home
+                                    Beranda
                                 </a>
                                 <a className='text-muted-foreground hover:text-foreground transition-colors' href='#features'>
-                                    Features
+                                    Layanan
                                 </a>
                                 <a className='text-muted-foreground hover:text-foreground transition-colors' href='#contact'>
-                                    Contact
+                                    Kontak
                                 </a>
                                 <a
                                     className='text-muted-foreground hover:text-foreground transition-colors'
                                     href='https://ppid.rri.go.id/pengaduan'
                                     target='_blank'
                                 >
-                                    Halaman Pusat
+                                    PPID
                                 </a>
                             </nav>
                             <div className='flex items-center space-x-3'>
-                                {isAuthenticated ? (
-                                    <Link href='/dashboard'>
-                                        <Button className='font-medium' variant='default'>
+                                {isAuthenticated ?
+                                    (
+                                        <Link href='/dashboard' className={buttonVariants({ variant: 'default', className: 'font-medium' })}>
                                             Dashboard
-                                        </Button>
-                                    </Link>
-                                ) : (
-                                    <Link href='/login'>
-                                        <Button className='font-medium' variant='default'>
-                                            Login
-                                        </Button>
-                                    </Link>
-                                )}
+                                        </Link>
+                                    ) :
+                                    (
+                                        <Link href='/login'>
+                                            <Button className='font-medium' variant='default'>
+                                                Login
+                                            </Button>
+                                        </Link>
+                                    )}
                                 <ModeToggle />
                             </div>
                         </motion.div>
@@ -201,7 +203,7 @@ export default function Welcome() {
                             {/* Left Side - Hero Content */}
                             <motion.div
                                 animate={{ opacity: 1, x: 0 }}
-                                className='mt-8 flex flex-col space-y-8 lg:py-16'
+                                className='flex flex-col space-y-8'
                                 initial={{ opacity: 0, x: -60 }}
                                 transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
                             >
@@ -211,7 +213,7 @@ export default function Welcome() {
                                     initial={{ opacity: 0 }}
                                     transition={{ duration: 0.6, delay: 0.4 }}
                                 >
-                                    <motion.div
+                                    {/* <motion.div
                                         animate={{ opacity: 1, y: 0 }}
                                         initial={{ opacity: 0, y: 30 }}
                                         transition={{ duration: 0.6, delay: 0.5 }}
@@ -220,18 +222,18 @@ export default function Welcome() {
                                             <Radio className='mr-2 h-4 w-4' />
                                             Official RRI Complaint System
                                         </Badge>
-                                    </motion.div>
-
+                                    </motion.div> */}
+                                    <img src="/logo_dilapomas.png" alt="logo" className='size-100' />
                                     <motion.h1
                                         animate={{ opacity: 1, y: 0 }}
                                         className='text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl'
                                         initial={{ opacity: 0, y: 30 }}
                                         transition={{ duration: 0.6, delay: 0.6 }}
                                     >
-                                        <span className='from-primary to-primary/55 bg-gradient-to-r bg-clip-text text-transparent'>Your Voice,</span>
+                                        <span className='from-primary to-primary/55 bg-gradient-to-r bg-clip-text text-transparent'>DILAPOMAS</span>
                                         <br />
                                         <span className='bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent dark:from-white dark:to-slate-300'>
-                                            Our Responsibility
+                                            RRI PONTIANAK
                                         </span>
                                     </motion.h1>
 
@@ -241,8 +243,7 @@ export default function Welcome() {
                                         initial={{ opacity: 0, y: 30 }}
                                         transition={{ duration: 0.6, delay: 0.7 }}
                                     >
-                                        Official Radio Republik Indonesia platform for receiving, managing, and following up on public complaints. We
-                                        are committed to providing the best service with high transparency and accountability.
+                                        Layanan dan Pengelolaan Pengaduan Masyarakat di RRI Pontianak berbasis teknologi informasi untuk meningkatkan transparansi dan akuntabilitas.
                                     </motion.p>
                                 </motion.div>
 
@@ -253,7 +254,7 @@ export default function Welcome() {
                                     initial={{ opacity: 0, y: 30 }}
                                     transition={{ duration: 0.6, delay: 0.8 }}
                                 >
-                                    {stats.map((stat, index) => (
+                                    {/* {stats.map((stat, index) => (
                                         <motion.div
                                             animate={{ opacity: 1, scale: 1 }}
                                             className='text-center'
@@ -270,7 +271,7 @@ export default function Welcome() {
                                             <div className='text-foreground text-2xl font-bold'>{stat.number}</div>
                                             <p className='text-muted-foreground text-xs'>{stat.label}</p>
                                         </motion.div>
-                                    ))}
+                                    ))} */}
                                 </motion.div>
 
                                 <motion.div
@@ -285,7 +286,7 @@ export default function Welcome() {
                                             size='lg'
                                         >
                                             <FileText className='mr-2 h-5 w-5' />
-                                            Submit Complaint
+                                            Buat Laporan
                                             <ArrowRight className='ml-2 h-5 w-5' />
                                         </Button>
                                     </motion.div>
@@ -313,7 +314,7 @@ export default function Welcome() {
                 </section>
 
                 {/* Features Section */}
-                <motion.section
+                {/* <motion.section
                     className='bg-muted/30 relative py-20'
                     id='features'
                     initial={{ opacity: 0 }}
@@ -365,7 +366,7 @@ export default function Welcome() {
                             ))}
                         </div>
                     </div>
-                </motion.section>
+                </motion.section> */}
 
                 {/* Supported Files Section */}
                 <motion.section
@@ -383,13 +384,13 @@ export default function Welcome() {
                             viewport={{ once: true }}
                             whileInView={{ opacity: 1, y: 0 }}
                         >
-                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Comprehensive Evidence Support</h2>
+                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Dukungan Bukti Komprehensif</h2>
                             <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                                Upload various file types as evidence for your complaints
+                                Unggah berbagai jenis file sebagai bukti keluhan Anda
                             </p>
                         </motion.div>
 
-                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
                             {supportedFiles.map((file, index) => (
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
@@ -438,9 +439,12 @@ export default function Welcome() {
                             viewport={{ once: true }}
                             whileInView={{ opacity: 1, y: 0 }}
                         >
-                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Contact Us</h2>
+                            <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Hubungi Kami</h2>
                             <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-                                Need help or more information? Our team is ready to assist you 24/7
+                                Butuh bantuan atau informasi lebih lanjut?
+                                <span className='text-muted-foreground mx-auto max-w-2xl text-xl'>
+                                    Tim kami siap membantu Anda 24/7
+                                </span>
                             </p>
                         </motion.div>
 
@@ -449,22 +453,22 @@ export default function Welcome() {
                                 {
                                     icon: Phone,
                                     title: 'Call Center',
-                                    content: '(021) 345-7890',
-                                    subtitle: 'Monday - Friday, 08:00 - 17:00 WIB',
+                                    content: '081256071799',
+                                    subtitle: 'Monday - Friday, 08:00 - 16:00 WIB',
                                     color: 'from-blue-500 to-cyan-500',
                                 },
                                 {
                                     icon: Mail,
-                                    title: 'Email Support',
-                                    content: 'complaints@rri.co.id',
-                                    subtitle: 'Response within 24 hours',
+                                    title: 'Email',
+                                    content: 'rripontianak@gmail.com',
+                                    subtitle: 'Respon dalam 24 jam',
                                     color: 'from-green-500 to-emerald-500',
                                 },
                                 {
                                     icon: MapPin,
-                                    title: 'Head Office',
-                                    content: 'Jl. Medan Merdeka Barat No. 4-5',
-                                    subtitle: 'Jakarta Pusat 10110',
+                                    title: 'Kantor RRI Pontianak',
+                                    content: 'Jl. Sudirman No 7',
+                                    subtitle: 'Pontianak, Kalimantan Barat',
                                     color: 'from-purple-500 to-pink-500',
                                 },
                             ].map((contact, index) => (
@@ -500,7 +504,7 @@ export default function Welcome() {
                 </motion.section>
 
                 {/* CTA Section */}
-                <motion.section
+                {/* <motion.section
                     className='relative py-20'
                     initial={{ opacity: 0 }}
                     transition={{ duration: 0.8 }}
@@ -583,7 +587,7 @@ export default function Welcome() {
                             </motion.div>
                         </motion.div>
                     </div>
-                </motion.section>
+                </motion.section> */}
 
                 {/* Footer */}
                 <motion.footer
@@ -611,7 +615,7 @@ export default function Welcome() {
                                 </div>
                                 <div>
                                     <h3 className='text-foreground text-lg font-bold'>{page.props?.name}</h3>
-                                    <p className='text-muted-foreground text-sm'>Radio Republik Indonesia</p>
+                                    <p className='text-muted-foreground text-sm'>Layanan Pengaduan RRI Pontianak</p>
                                 </div>
                             </motion.div>
 

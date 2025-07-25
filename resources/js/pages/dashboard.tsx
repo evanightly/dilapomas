@@ -65,33 +65,33 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
     });
     const statCards = [
         {
-            title: 'Total Complaints',
+            title: 'Total Keluhan',
             value: stats.totalComplaints,
-            description: 'All submitted complaints',
+            // description: 'All submitted complaints',
             icon: FileText,
             color: 'text-blue-600',
             bgColor: 'bg-blue-100 dark:bg-blue-900',
         },
         {
-            title: 'Total Users',
+            title: 'Total Pengguna',
             value: stats.totalUsers,
-            description: 'Active system users',
+            // description: 'Active system users',
             icon: Users,
             color: 'text-green-600',
             bgColor: 'bg-green-100 dark:bg-green-900',
         },
         {
-            title: 'Pending Complaints',
+            title: 'Menunggu Tanggapan',
             value: stats.pendingComplaints,
-            description: 'Awaiting resolution',
+            // description: 'Awaiting resolution',
             icon: Clock,
             color: 'text-yellow-600',
             bgColor: 'bg-yellow-100 dark:bg-yellow-900',
         },
         {
-            title: 'Resolved Complaints',
+            title: 'Keluhan Teratasi',
             value: stats.resolvedComplaints,
-            description: 'Successfully resolved',
+            // description: 'Successfully resolved',
             icon: TrendingUp,
             color: 'text-emerald-600',
             bgColor: 'bg-emerald-100 dark:bg-emerald-900',
@@ -182,7 +182,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                         <div className='space-y-6'>
                             <div>
                                 <h1 className='text-foreground text-2xl font-bold'>Dashboard</h1>
-                                <p className='text-muted-foreground'>Welcome to the RRI Complaint Management System</p>
+                                <p className='text-muted-foreground'>Selamat Datang di layanan pengaduan RRI Pontianak</p>
                             </div>
 
                             {/* Filters */}
@@ -316,10 +316,10 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                     <Icon className={`h-4 w-4 ${stat.color}`} />
                                                 </div>
                                             </CardHeader>
-                                            <CardContent>
+                                            {/* <CardContent>
                                                 <div className='text-2xl font-bold'>{stat.value.toLocaleString()}</div>
                                                 <p className='text-muted-foreground text-xs'>{stat.description}</p>
-                                            </CardContent>
+                                            </CardContent> */}
                                         </Card>
                                     );
                                 })}
@@ -407,7 +407,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </CardContent>
-                            </Card>
+                            </Card> */
 
                             {/* Recent Complaints */}
                             <Card>
@@ -470,7 +470,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                         </div>
                                     )}
                                 </CardContent>
-                            </Card>
+                            </Card> */
                         </div>
                     </div>
                 </SidebarInset>

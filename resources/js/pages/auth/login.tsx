@@ -65,7 +65,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     return (
         <>
-            <Head title='Login - RRI Complaint System' />
+            <Head title='Login' />
 
             <motion.div
                 animate={{ opacity: 1 }}
@@ -120,11 +120,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 transition={{ duration: 0.6, delay: 0.9 }}
                             >
                                 <h2 className='from-primary bg-gradient-to-r to-blue-600 bg-clip-text text-4xl font-bold text-transparent lg:text-5xl'>
-                                    Secure Access Portal
+                                    RRI PONTIANAK
                                 </h2>
                                 <p className='text-muted-foreground text-lg leading-relaxed'>
-                                    Access the RRI complaint management system with your authorized credentials. Manage complaints efficiently and
-                                    ensure public service excellence.
+                                    Layanan dan Pengelolaan Pengaduan Masyarakat
                                 </p>
                             </motion.div>
 
@@ -134,7 +133,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 initial={{ opacity: 0, y: 30 }}
                                 transition={{ duration: 0.6, delay: 1.0 }}
                             >
-                                <motion.div
+                                {/* <motion.div
                                     animate={{ opacity: 1, x: 0 }}
                                     className='border-l-primary flex items-center space-x-3 border-l-4 pl-4'
                                     initial={{ opacity: 0, x: -20 }}
@@ -153,7 +152,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 >
                                     <ArrowRight className='text-primary h-5 w-5' />
                                     <span className='text-muted-foreground text-sm'>Role-based access control for different user types</span>
-                                </motion.div>
+                                </motion.div> */}
                             </motion.div>
                         </motion.div>
                     </motion.div>

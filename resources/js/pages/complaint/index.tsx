@@ -213,7 +213,7 @@ export default function ComplaintIndex({ data }: Props) {
             <div className='space-y-6'>
                 <div className='flex items-center justify-between'>
                     <div>
-                        <h1 className='text-foreground text-2xl font-bold'>Complaint Management</h1>
+                        <h1 className='text-foreground text-2xl font-bold'>Layanan Pengaduan</h1>
                         <p className='text-muted-foreground'>Manage and track all submitted complaints</p>
                     </div>
                     <Button className='gap-2' onClick={() => router.visit(route('complaints.create'))}>

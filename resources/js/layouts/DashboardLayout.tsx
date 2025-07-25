@@ -40,7 +40,7 @@ export default function DashboardLayout({ user, header, children }: DashboardLay
 
     return (
         <>
-            <Head title='Dashboard - RRI Complaint System' />
+            <Head title='Dashboard' />
 
             <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
                 {/* Mobile sidebar */}
