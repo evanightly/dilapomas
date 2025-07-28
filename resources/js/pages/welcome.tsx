@@ -427,22 +427,22 @@ export default function Welcome() {
                                 {
                                     icon: Phone,
                                     title: 'Call Center',
-                                    content: '081256071799',
+                                    content: '0811 5701 042',
                                     subtitle: 'Monday - Friday, 08:00 - 16:00 WIB',
                                     color: 'from-blue-500 to-cyan-500',
                                 },
                                 {
                                     icon: Mail,
                                     title: 'Email',
-                                    content: 'rripontianak@gmail.com',
+                                    content: 'laporrripontianak@gmail.com',
                                     subtitle: 'Respon dalam 24 jam',
                                     color: 'from-green-500 to-emerald-500',
                                 },
                                 {
                                     icon: MapPin,
                                     title: 'Kantor RRI Pontianak',
-                                    content: 'Jl. Sudirman No 7',
-                                    subtitle: 'Pontianak, Kalimantan Barat',
+                                    content: 'Jalan Jenderal Sudirman No.7',
+                                    subtitle: 'Pontianak - 78111',
                                     color: 'from-purple-500 to-pink-500',
                                 },
                             ].map((contact, index) => (
