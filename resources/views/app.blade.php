@@ -30,7 +30,7 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', 'Dilapomas') }}</title>
 
         <link rel="icon" href="/logo_dilapomas.png" sizes="any">
         <link rel="icon" href="/logo_dilapomas.png" type="image/svg+xml">

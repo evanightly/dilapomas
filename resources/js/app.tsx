@@ -11,7 +11,7 @@ import './axios';
 import { ConfirmationDialogProvider } from './contexts/confirmation-dialog-context';
 import { addRippleEffect } from './helpers';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Dilapomas';
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
