@@ -126,10 +126,7 @@ export function ComplaintStatusManager({ complaint, onUpdate }: ComplaintStatusM
                         <Badge variant='secondary' className={getPriorityColor(complaint.priority || 'medium')}>
                             <Flag className='h-4 w-4' />
                             <span className='ml-2 capitalize'>
-                                {(complaint.priority || 'medium')
-                                    .replace('low', 'Rendah')
-                                    .replace('medium', 'Sedang')
-                                    .replace('high', 'Tinggi')}
+                                {(complaint.priority || 'medium').replace('low', 'Rendah').replace('medium', 'Sedang').replace('high', 'Tinggi')}
                             </span>
                         </Badge>
                     </div>

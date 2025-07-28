@@ -389,7 +389,9 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                             <Card>
                                 <CardHeader>
                                     <CardTitle>Tren Bulanan</CardTitle>
-                                    <CardDescription>Tren pengajuan dan penyelesaian keluhan selama {localFilters.months_back} bulan terakhir</CardDescription>
+                                    <CardDescription>
+                                        Tren pengajuan dan penyelesaian keluhan selama {localFilters.months_back} bulan terakhir
+                                    </CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <ResponsiveContainer height={300} width='100%'>
