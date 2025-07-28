@@ -8,7 +8,7 @@ import { Meteors } from '@/components/ui/meteors';
 import { SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, Eye, File, FileImage, FileText, Mail, MapPin, MessageCircle, Music, Phone, Scale, Shield } from 'lucide-react';
+import { Clock, Eye, File, FileImage, Mail, MapPin, Music, Phone, Scale, Shield } from 'lucide-react';
 
 export default function Welcome() {
     const page = usePage<SharedData>();
@@ -124,7 +124,7 @@ export default function Welcome() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
                             <div className='flex items-center justify-center gap-4 rounded-lg'>
-                                <img alt='logo' className='h-10' src='/blue-logo.png' />
+                                <img alt='logo' className='h-10' src='/blue-main-logo.png' />
                                 <img alt='logo' className='h-10' src='/pro1.png' />
                                 <img alt='logo' className='h-10' src='/pro2.png' />
                                 <img alt='logo' className='h-10' src='/pro4.png' />
@@ -200,7 +200,7 @@ export default function Welcome() {
                                             Official RRI Complaint System
                                         </Badge>
                                     </motion.div> */}
-                                    <img alt='logo' className='size-100' src='/logo_dilapomas.png' />
+                                    <img alt='logo' className='size-100' src='/blue-logo.png' />
                                     <motion.h1
                                         animate={{ opacity: 1, y: 0 }}
                                         className='text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl'
@@ -220,8 +220,15 @@ export default function Welcome() {
                                         initial={{ opacity: 0, y: 30 }}
                                         transition={{ duration: 0.6, delay: 0.7 }}
                                     >
-                                        Layanan dan Pengelolaan Pengaduan Masyarakat di RRI Pontianak berbasis teknologi informasi untuk meningkatkan
-                                        transparansi dan akuntabilitas.
+                                        Suara Anda, Tanggung Jawab Kami
+                                        <br />
+                                        <br />
+                                        Website Pengaduan Masyarakat RRI Pontianak untuk menerima, mengelola, dan menindaklanjuti pengaduan
+                                        masyarakat. Kami berkomitmen untuk memberikan layanan terbaik dengan transparansi dan akuntabilitas yang
+                                        tinggi.
+                                        <br />
+                                        <br />
+                                        Layanan Pengaduan Masyarakat RRI Pontianak
                                     </motion.p>
                                 </motion.div>
 
@@ -251,7 +258,7 @@ export default function Welcome() {
                                         </motion.div>
                                     ))} */}
                                 </motion.div>
-
+                                {/* 
                                 <motion.div
                                     animate={{ opacity: 1, y: 0 }}
                                     className='flex flex-col gap-4 sm:flex-row'
@@ -275,7 +282,7 @@ export default function Welcome() {
                                             Learn More
                                         </Button>
                                     </motion.div>
-                                </motion.div>
+                                </motion.div> */}
                             </motion.div>
 
                             {/* Right Side - Complaint Form */}
@@ -428,7 +435,7 @@ export default function Welcome() {
                                     icon: Phone,
                                     title: 'Call Center',
                                     content: '0811 5701 042',
-                                    subtitle: 'Monday - Friday, 08:00 - 16:00 WIB',
+                                    subtitle: 'Senin - Jumlat, 09:00 - 16:00 WIB',
                                     color: 'from-blue-500 to-cyan-500',
                                 },
                                 {

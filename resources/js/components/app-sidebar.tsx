@@ -15,12 +15,12 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Complaints',
+        title: 'Pengaduan',
         href: '/complaints',
         icon: FileText,
     },
     {
-        title: 'Users',
+        title: 'Pengguna',
         href: '/users',
         icon: Users,
         roles: [RoleEnum.SuperAdmin],
@@ -60,7 +60,7 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className='mt-auto' />
+                {/* <NavFooter items={footerNavItems} className='mt-auto' /> */}
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

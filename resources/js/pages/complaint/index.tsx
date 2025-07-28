@@ -129,7 +129,7 @@ export default function ComplaintIndex({ data }: Props) {
             size: 40,
         }),
         columnHelper.accessor('id', {
-            header: ({ column }) => <DataTableColumnHeader column={column} title='ID' />,
+            header: ({ column }) => <DataTableColumnHeader column={column} title='Nomor Registrasi' />,
             cell: ({ row }) => <div className='font-mono text-sm'>#{row.original.id}</div>,
             size: 80,
         }),
@@ -208,17 +208,17 @@ export default function ComplaintIndex({ data }: Props) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title='Complaint Management' />
+            <Head title='Pengelolaan Pengaduan' />
 
             <div className='space-y-6'>
                 <div className='flex items-center justify-between'>
                     <div>
                         <h1 className='text-foreground text-2xl font-bold'>Layanan Pengaduan</h1>
-                        <p className='text-muted-foreground'>Manage and track all submitted complaints</p>
+                        <p className='text-muted-foreground'>Laporan pengaduan yang masuk</p>
                     </div>
                     <Button className='gap-2' onClick={() => router.visit(route('complaints.create'))}>
                         <Plus className='h-4 w-4' />
-                        Add Complaint
+                        Tambah pengaduan
                     </Button>
                 </div>
 

@@ -183,17 +183,17 @@ export default function UserIndex({ data }: Props) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title='User Management' />
+            <Head title='Pengguna' />
 
             <div className='space-y-6'>
                 <div className='flex items-center justify-between'>
                     <div>
-                        <h1 className='text-foreground text-2xl font-bold'>User Management</h1>
-                        <p className='text-muted-foreground'>Manage system users and their roles</p>
+                        <h1 className='text-foreground text-2xl font-bold'>Pengguna</h1>
+                        <p className='text-muted-foreground'>Daftar karyawan pengguna dilapomas</p>
                     </div>
                     <Button className='gap-2' onClick={() => router.visit(route('users.create'))}>
                         <Plus className='h-4 w-4' />
-                        Add User
+                        Tambah Pengguna
                     </Button>
                 </div>
 
