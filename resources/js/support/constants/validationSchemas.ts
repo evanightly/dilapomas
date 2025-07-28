@@ -9,13 +9,13 @@ export const complaintValidationSchema = z.object({
         .string()
         .min(1, 'Nomor telepon harus diisi')
         .refine((val) => {
-            // If user manually adds +62, show validation error
-            if (val.startsWith('+62')) {
+            // If user manually adds +62 or starts with 0, show validation error
+            if (val.startsWith('+62') || val.startsWith('0')) {
                 return false;
             }
             // Check if it's a valid Indonesian phone number (8-12 digits)
             return /^[0-9]{8,12}$/.test(val);
-        }, 'Masukkan nomor telepon tanpa kode negara (+62). Contoh: 81234567890'),
+        }, 'Masukkan nomor telepon tanpa kode negara (+62) atau angka 0 di depan. Contoh: 81234567890'),
 
     reporter_identity_type: z.enum(['KTP', 'SIM', 'PASSPORT'], {
         message: 'Pilih jenis identitas',
