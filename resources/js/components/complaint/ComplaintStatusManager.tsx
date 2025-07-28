@@ -108,22 +108,34 @@ export function ComplaintStatusManager({ complaint, onUpdate }: ComplaintStatusM
                 </CardTitle>
             </CardHeader>
             <CardContent className='space-y-6'>
-                {/* Current Status */}
+                {/* Status Saat Ini */}
                 <div className='space-y-2'>
                     <label className='text-sm font-medium'>Status Saat Ini</label>
                     <div className='flex items-center gap-2'>
                         <Badge variant='secondary' className={getStatusColor(complaint.status || 'pending')}>
                             {getStatusIcon(complaint.status || 'pending')}
-                            <span className='ml-2 capitalize'>{(complaint.status || 'pending').replace('_', ' ')}</span>
+                            <span className='ml-2 capitalize'>
+                                {(complaint.status || 'pending')
+                                    .replace('_', ' ')
+                                    .replace('pending', 'Menunggu')
+                                    .replace('in progress', 'Sedang Diproses')
+                                    .replace('resolved', 'Selesai')
+                                    .replace('rejected', 'Ditolak')}
+                            </span>
                         </Badge>
                         <Badge variant='secondary' className={getPriorityColor(complaint.priority || 'medium')}>
                             <Flag className='h-4 w-4' />
-                            <span className='ml-2 capitalize'>{complaint.priority || 'medium'}</span>
+                            <span className='ml-2 capitalize'>
+                                {(complaint.priority || 'medium')
+                                    .replace('low', 'Rendah')
+                                    .replace('medium', 'Sedang')
+                                    .replace('high', 'Tinggi')}
+                            </span>
                         </Badge>
                     </div>
                 </div>
 
-                {/* Status Selection */}
+                {/* Pilih Status */}
                 <div className='space-y-2'>
                     <label className='text-sm font-medium'>Ubah Status</label>
                     <Select value={status} onValueChange={setStatus}>
@@ -134,32 +146,32 @@ export function ComplaintStatusManager({ complaint, onUpdate }: ComplaintStatusM
                             <SelectItem value='pending'>
                                 <div className='flex items-center gap-2'>
                                     <Clock className='h-4 w-4' />
-                                    Pending
+                                    Menunggu
                                 </div>
                             </SelectItem>
                             <SelectItem value='in_progress'>
                                 <div className='flex items-center gap-2'>
                                     <Settings className='h-4 w-4' />
-                                    In Progress
+                                    Sedang Diproses
                                 </div>
                             </SelectItem>
                             <SelectItem value='resolved'>
                                 <div className='flex items-center gap-2'>
                                     <CheckCircle className='h-4 w-4' />
-                                    Resolved
+                                    Selesai
                                 </div>
                             </SelectItem>
                             <SelectItem value='rejected'>
                                 <div className='flex items-center gap-2'>
                                     <AlertCircle className='h-4 w-4' />
-                                    Rejected
+                                    Ditolak
                                 </div>
                             </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
-                {/* Priority Selection */}
+                {/* Pilih Prioritas */}
                 <div className='space-y-2'>
                     <label className='text-sm font-medium'>Ubah Prioritas</label>
                     <Select value={priority} onValueChange={setPriority}>
@@ -170,26 +182,26 @@ export function ComplaintStatusManager({ complaint, onUpdate }: ComplaintStatusM
                             <SelectItem value='low'>
                                 <div className='flex items-center gap-2'>
                                     <Flag className='h-4 w-4 text-green-600' />
-                                    Low
+                                    Rendah
                                 </div>
                             </SelectItem>
                             <SelectItem value='medium'>
                                 <div className='flex items-center gap-2'>
                                     <Flag className='h-4 w-4 text-yellow-600' />
-                                    Medium
+                                    Sedang
                                 </div>
                             </SelectItem>
                             <SelectItem value='high'>
                                 <div className='flex items-center gap-2'>
                                     <Flag className='h-4 w-4 text-red-600' />
-                                    High
+                                    Tinggi
                                 </div>
                             </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
-                {/* Update Button */}
+                {/* Tombol Perbarui */}
                 <Button
                     onClick={handleUpdate}
                     disabled={isUpdating || (status === complaint.status && priority === complaint.priority)}

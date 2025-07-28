@@ -67,7 +67,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
         {
             title: 'Total Keluhan',
             value: stats.totalComplaints,
-            // description: 'All submitted complaints',
+            description: 'Semua keluhan yang masuk',
             icon: FileText,
             color: 'text-blue-600',
             bgColor: 'bg-blue-100 dark:bg-blue-900',
@@ -75,7 +75,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
         {
             title: 'Total Pengguna',
             value: stats.totalUsers,
-            // description: 'Active system users',
+            description: 'Pengguna sistem aktif',
             icon: Users,
             color: 'text-green-600',
             bgColor: 'bg-green-100 dark:bg-green-900',
@@ -83,7 +83,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
         {
             title: 'Menunggu Tanggapan',
             value: stats.pendingComplaints,
-            // description: 'Awaiting resolution',
+            description: 'Menunggu penyelesaian',
             icon: Clock,
             color: 'text-yellow-600',
             bgColor: 'bg-yellow-100 dark:bg-yellow-900',
@@ -91,7 +91,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
         {
             title: 'Keluhan Teratasi',
             value: stats.resolvedComplaints,
-            // description: 'Successfully resolved',
+            description: 'Berhasil diselesaikan',
             icon: TrendingUp,
             color: 'text-emerald-600',
             bgColor: 'bg-emerald-100 dark:bg-emerald-900',
@@ -123,7 +123,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
     }));
 
     const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
+        return new Date(dateString).toLocaleDateString('id-ID', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -189,14 +189,14 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                 <CardHeader>
                                     <CardTitle className='flex items-center gap-2'>
                                         <Filter className='h-5 w-5' />
-                                        Dashboard Filters
+                                        Filter Dashboard
                                     </CardTitle>
-                                    <CardDescription>Filter the dashboard data by date range, status, and priority</CardDescription>
+                                    <CardDescription>Filter data dashboard berdasarkan rentang tanggal, status, dan prioritas</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <div className='grid grid-cols-1 gap-4 md:grid-cols-6'>
                                         <div className='space-y-2'>
-                                            <Label htmlFor='date_from'>From Date</Label>
+                                            <Label htmlFor='date_from'>Tanggal Mulai</Label>
                                             <Input
                                                 id='date_from'
                                                 onChange={(e) => setLocalFilters((prev) => ({ ...prev, date_from: e.target.value }))}
@@ -205,7 +205,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                             />
                                         </div>
                                         <div className='space-y-2'>
-                                            <Label htmlFor='date_to'>To Date</Label>
+                                            <Label htmlFor='date_to'>Tanggal Akhir</Label>
                                             <Input
                                                 id='date_to'
                                                 onChange={(e) => setLocalFilters((prev) => ({ ...prev, date_to: e.target.value }))}
@@ -222,10 +222,10 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                 value={localFilters.status}
                                             >
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder='All Statuses' />
+                                                    <SelectValue placeholder='Semua Status' />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='all'>All Statuses</SelectItem>
+                                                    <SelectItem value='all'>Semua Status</SelectItem>
                                                     {filterOptions.statuses.map((status) => (
                                                         <SelectItem key={status} value={status}>
                                                             {status.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -235,7 +235,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                             </Select>
                                         </div>
                                         <div className='space-y-2'>
-                                            <Label>Priority</Label>
+                                            <Label>Prioritas</Label>
                                             <Select
                                                 onValueChange={(value) =>
                                                     setLocalFilters((prev) => ({ ...prev, priority: value === 'all' ? '' : value }))
@@ -243,10 +243,10 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                 value={localFilters.priority}
                                             >
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder='All Priorities' />
+                                                    <SelectValue placeholder='Semua Prioritas' />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='all'>All Priorities</SelectItem>
+                                                    <SelectItem value='all'>Semua Prioritas</SelectItem>
                                                     {filterOptions.priorities.map((priority) => (
                                                         <SelectItem key={priority} value={priority}>
                                                             {priority.replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -256,7 +256,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                             </Select>
                                         </div>
                                         <div className='space-y-2'>
-                                            <Label>Months Back</Label>
+                                            <Label>Bulan Terakhir</Label>
                                             <Select
                                                 onValueChange={(value) => setLocalFilters((prev) => ({ ...prev, months_back: parseInt(value) }))}
                                                 value={localFilters.months_back.toString()}
@@ -265,9 +265,9 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                     <SelectValue />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='3'>3 Months</SelectItem>
-                                                    <SelectItem value='6'>6 Months</SelectItem>
-                                                    <SelectItem value='12'>12 Months</SelectItem>
+                                                    <SelectItem value='3'>3 Bulan</SelectItem>
+                                                    <SelectItem value='6'>6 Bulan</SelectItem>
+                                                    <SelectItem value='12'>12 Bulan</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>
@@ -281,7 +281,7 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                     });
                                                 }}
                                             >
-                                                Apply Filters
+                                                Terapkan Filter
                                             </Button>
                                             <Button
                                                 onClick={() => {
@@ -314,10 +314,10 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                     <Icon className={`h-4 w-4 ${stat.color}`} />
                                                 </div>
                                             </CardHeader>
-                                            {/* <CardContent>
+                                            <CardContent>
                                                 <div className='text-2xl font-bold'>{stat.value.toLocaleString()}</div>
                                                 <p className='text-muted-foreground text-xs'>{stat.description}</p>
-                                            </CardContent> */}
+                                            </CardContent>
                                         </Card>
                                     );
                                 })}
@@ -327,8 +327,8 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                 {/* Status Distribution Chart */}
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Complaint Status Distribution</CardTitle>
-                                        <CardDescription>Overview of complaint statuses</CardDescription>
+                                        <CardTitle>Distribusi Status Pengaduan</CardTitle>
+                                        <CardDescription>Ikhtisar status pengaduan</CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <ResponsiveContainer height={300} width='100%'>
@@ -365,8 +365,8 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                 {/* Priority Distribution Chart */}
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Priority Distribution</CardTitle>
-                                        <CardDescription>Breakdown by complaint priority</CardDescription>
+                                        <CardTitle>Distribusi Prioritas</CardTitle>
+                                        <CardDescription>Rincian berdasarkan prioritas keluhan</CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <ResponsiveContainer height={300} width='100%'>
@@ -388,8 +388,8 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                             {/* Monthly Trends Chart */}
                             <Card>
                                 <CardHeader>
-                                    <CardTitle>Monthly Trends</CardTitle>
-                                    <CardDescription>Complaint submission and resolution trends over the last 6 months</CardDescription>
+                                    <CardTitle>Tren Bulanan</CardTitle>
+                                    <CardDescription>Tren pengajuan dan penyelesaian keluhan selama {localFilters.months_back} bulan terakhir</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <ResponsiveContainer height={300} width='100%'>
@@ -398,18 +398,17 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                             <XAxis dataKey='month' />
                                             <YAxis />
                                             <Tooltip />
-                                            <Line dataKey='complaints' name='Complaints' stroke='#3B82F6' strokeWidth={2} type='monotone' />
-                                            <Line dataKey='resolved' name='Resolved' stroke='#10B981' strokeWidth={2} type='monotone' />
+                                            <Line dataKey='complaints' name='Keluhan' stroke='#3B82F6' strokeWidth={2} type='monotone' />
+                                            <Line dataKey='resolved' name='Selesai' stroke='#10B981' strokeWidth={2} type='monotone' />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </CardContent>
                             </Card>{' '}
-                            */
                             {/* Recent Complaints */}
                             <Card>
                                 <CardHeader>
-                                    <CardTitle>Recent Complaints</CardTitle>
-                                    <CardDescription>Latest submitted complaints</CardDescription>
+                                    <CardTitle>Keluhan Terbaru</CardTitle>
+                                    <CardDescription>Keluhan yang baru saja diajukan</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     {recentComplaints.length > 0 ? (
@@ -420,19 +419,19 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                                         <div className='flex-1 space-y-2'>
                                                             <div className='flex items-center gap-2'>
                                                                 <h4 className='text-foreground font-medium'>
-                                                                    {complaint.incident_title || `Complaint #${complaint.id}`}
+                                                                    {complaint.incident_title || `Keluhan #${complaint.id}`}
                                                                 </h4>
                                                                 <span className='text-foreground/80 text-xs'>#{complaint.id}</span>
                                                             </div>
                                                             <p className='text-sm leading-relaxed text-gray-600'>{complaint.incident_description}</p>
                                                             <div className='text-foreground/80 flex items-center gap-4 text-xs'>
                                                                 <span>
-                                                                    Reporter: {complaint.reporter} ({complaint.reporter_type})
+                                                                    Pelapor: {complaint.reporter} ({complaint.reporter_type})
                                                                 </span>
                                                                 <span>•</span>
-                                                                <span>{complaint.evidences_count} evidence(s)</span>
+                                                                <span>{complaint.evidences_count} bukti</span>
                                                                 <span>•</span>
-                                                                <span>{complaint.days_since_created} days ago</span>
+                                                                <span>{complaint.days_since_created} hari lalu</span>
                                                                 <span>•</span>
                                                                 <span>
                                                                     {complaint.time_created} ({complaint.time_since_created})
@@ -461,13 +460,12 @@ export default function Dashboard({ stats, statusStats, priorityStats, monthlySt
                                     ) : (
                                         <div className='text-muted-foreground py-6 text-center'>
                                             <FileText className='mx-auto mb-2 h-8 w-8 opacity-50' />
-                                            <p>No recent complaints</p>
-                                            <p className='text-xs'>Recent complaints will appear here</p>
+                                            <p>Tidak ada keluhan terbaru</p>
+                                            <p className='text-xs'>Keluhan terbaru akan muncul di sini</p>
                                         </div>
                                     )}
                                 </CardContent>
                             </Card>{' '}
-                            */
                         </div>
                     </div>
                 </SidebarInset>

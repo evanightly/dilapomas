@@ -193,7 +193,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                             initial={{ opacity: 0, y: 10 }}
                                             transition={{ duration: 0.5, delay: 1.0 }}
                                         >
-                                            <CardTitle className='text-foreground text-2xl font-bold'>Welcome Back</CardTitle>
+                                            <CardTitle className='text-foreground text-2xl font-bold'>Akses Pengaduan</CardTitle>
                                         </motion.div>
                                         <motion.div
                                             animate={{ opacity: 1, y: 0 }}

@@ -8,7 +8,7 @@ import { Meteors } from '@/components/ui/meteors';
 import { SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { Clock, Eye, File, FileImage, Mail, MapPin, Music, Phone, Scale, Shield } from 'lucide-react';
+import { Clock, Eye, File, FileImage, FileVideo, Mail, MapPin, Music, Phone, Scale, Shield } from 'lucide-react';
 
 export default function Welcome() {
     const page = usePage<SharedData>();
@@ -51,12 +51,12 @@ export default function Welcome() {
             description: 'JPG, PNG, GIF, WebP, SVG',
             color: 'text-blue-500',
         },
-        // {
-        //     icon: FileVideo,
-        //     title: 'Videos',
-        //     description: 'MP4, AVI, MOV, WebM',
-        //     color: 'text-purple-500',
-        // },
+        {
+            icon: FileVideo,
+            title: 'Videos',
+            description: 'MP4, AVI, MOV, WebM',
+            color: 'text-purple-500',
+        },
         {
             icon: Music,
             title: 'Audio',
@@ -373,7 +373,7 @@ export default function Welcome() {
                             <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>Unggah berbagai jenis file sebagai bukti keluhan Anda</p>
                         </motion.div>
 
-                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2'>
                             {supportedFiles.map((file, index) => (
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
@@ -423,10 +423,10 @@ export default function Welcome() {
                             whileInView={{ opacity: 1, y: 0 }}
                         >
                             <h2 className='text-foreground mb-4 text-3xl font-bold md:text-4xl'>Hubungi Kami</h2>
-                            <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
+                            {/* <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
                                 Butuh bantuan atau informasi lebih lanjut?
                                 <span className='text-muted-foreground mx-auto max-w-2xl text-xl'>Tim kami siap membantu Anda 24/7</span>
-                            </p>
+                            </p> */}
                         </motion.div>
 
                         <div className='mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3'>
@@ -442,7 +442,7 @@ export default function Welcome() {
                                     icon: Mail,
                                     title: 'Email',
                                     content: 'laporrripontianak@gmail.com',
-                                    subtitle: 'Respon dalam 24 jam',
+                                    // subtitle: 'Respon dalam 24 jam',
                                     color: 'from-green-500 to-emerald-500',
                                 },
                                 {
@@ -601,8 +601,8 @@ export default function Welcome() {
                             </motion.div>
 
                             <div className='text-center md:text-right'>
-                                <p className='text-muted-foreground text-sm'>© 2025 Radio Republik Indonesia. All Rights Reserved.</p>
-                                <p className='text-muted-foreground mt-1 text-xs'>Based on Director General Regulation No. 06 of 2023</p>
+                                <p className='text-muted-foreground text-sm'>© 2025 Radio Republik Indonesia</p>
+                                {/* <p className='text-muted-foreground mt-1 text-xs'>Based on Director General Regulation No. 06 of 2023</p> */}
                             </div>
                         </motion.div>
                     </div>
