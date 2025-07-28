@@ -27,6 +27,8 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
         resolver: zodResolver(complaintValidationSchema),
         defaultValues: {
             reporter: '',
+            reporter_email: '',
+            reporter_phone_number: '',
             reporter_identity_type: 'KTP',
             reporter_identity_number: '',
             incident_title: '',
@@ -87,6 +89,10 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
 
             // Append form fields
             formData.append('reporter', data.reporter);
+            formData.append('reporter_email', data.reporter_email || '');
+            // Add +62 prefix to phone number when submitting
+            const phoneNumber = data.reporter_phone_number ? `+62${data.reporter_phone_number}` : '';
+            formData.append('reporter_phone_number', phoneNumber);
             formData.append('reporter_identity_type', data.reporter_identity_type);
             formData.append('reporter_identity_number', data.reporter_identity_number);
             formData.append('incident_title', data.incident_title);
@@ -163,6 +169,43 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                                 </FormItem>
                             )}
                         />
+
+                        <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+                            <FormField
+                                control={form.control}
+                                name='reporter_email'
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email (Opsional)</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder='Masukkan alamat email' type='email' {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name='reporter_phone_number'
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Nomor Telepon *</FormLabel>
+                                        <FormControl>
+                                            <div className='relative'>
+                                                <div className='absolute top-0 left-0 flex h-full items-center'>
+                                                    <span className='bg-muted text-muted-foreground border-border flex h-full items-center rounded-l-md border-r px-3 py-2 text-sm font-medium'>
+                                                        +62
+                                                    </span>
+                                                </div>
+                                                <Input {...field} className='pl-16' placeholder='81234567890' />
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
 
                         <div>
                             {/* <FormField

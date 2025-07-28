@@ -19,6 +19,18 @@ import { z } from 'zod';
 
 const complaintSchema = z.object({
     reporter: z.string().min(1, 'Reporter name is required'),
+    reporter_email: z.string().email('Invalid email address').optional().or(z.literal('')),
+    reporter_phone_number: z
+        .string()
+        .min(1, 'Phone number is required')
+        .refine((val) => {
+            // If user manually adds +62, show validation error
+            if (val.startsWith('+62')) {
+                return false;
+            }
+            // Check if it's a valid Indonesian phone number (8-12 digits)
+            return /^[0-9]{8,12}$/.test(val);
+        }, 'Enter phone number without country code (+62). Example: 81234567890'),
     reporter_identity_type: z.enum(['KTP', 'SIM', 'Passport', 'Other']),
     reporter_identity_number: z.string().min(1, 'Identity number is required'),
     incident_title: z.string().min(1, 'Incident title is required'),
@@ -56,6 +68,8 @@ export default function EditComplaint({ data: complaint }: EditComplaintProps) {
         resolver: zodResolver(complaintSchema),
         defaultValues: {
             reporter: complaint.reporter || '',
+            reporter_email: complaint.reporter_email || '',
+            reporter_phone_number: complaint.reporter_phone_number ? complaint.reporter_phone_number.replace(/^\+62/, '') : '',
             reporter_identity_type: (complaint.reporter_identity_type as 'KTP' | 'SIM' | 'Passport' | 'Other') || 'KTP',
             reporter_identity_number: complaint.reporter_identity_number || '',
             incident_title: complaint.incident_title || '',
@@ -67,8 +81,14 @@ export default function EditComplaint({ data: complaint }: EditComplaintProps) {
     });
 
     const onSubmit = async (data: ComplaintFormData) => {
+        // Add +62 prefix to phone number when submitting
+        const formDataWithPrefix = {
+            ...data,
+            reporter_phone_number: data.reporter_phone_number ? `+62${data.reporter_phone_number}` : '',
+        };
+
         updateComplaint.mutate(
-            { id: complaint.id, data },
+            { id: complaint.id, data: formDataWithPrefix },
             {
                 onSuccess: () => {
                     toast.success('Complaint updated successfully!');
@@ -133,6 +153,43 @@ export default function EditComplaint({ data: complaint }: EditComplaintProps) {
                                                 <FormLabel>Reporter Name</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} placeholder='Enter reporter name' />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name='reporter_email'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Email (Optional)</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} placeholder='Enter email address' type='email' />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+                                    <FormField
+                                        control={form.control}
+                                        name='reporter_phone_number'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Phone Number *</FormLabel>
+                                                <FormControl>
+                                                    <div className='relative'>
+                                                        <div className='absolute top-0 left-0 flex h-full items-center'>
+                                                            <span className='bg-muted text-muted-foreground border-border flex h-full items-center rounded-l border-r px-3 py-2 text-sm font-medium'>
+                                                                +62
+                                                            </span>
+                                                        </div>
+                                                        <Input {...field} className='pl-16' placeholder='81234567890' />
+                                                    </div>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

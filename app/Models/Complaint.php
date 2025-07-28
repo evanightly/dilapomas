@@ -15,6 +15,8 @@ class Complaint extends Model {
      */
     protected $fillable = [
         'reporter',
+        'reporter_email',
+        'reporter_phone_number',
         'reporter_identity_type',
         'reporter_identity_number',
         'incident_title',

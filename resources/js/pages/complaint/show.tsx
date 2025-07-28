@@ -9,7 +9,23 @@ import { complaintServiceHook } from '@/services/complaintServiceHook';
 import { ComplaintResource } from '@/support/interfaces/resources';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { AlertCircle, ArrowLeft, Calendar, CheckCircle, Clock, Copy, Download, Edit3, Eye, FileText, Shield, User, XCircle } from 'lucide-react';
+import {
+    AlertCircle,
+    ArrowLeft,
+    Calendar,
+    CheckCircle,
+    Clock,
+    Copy,
+    Download,
+    Edit3,
+    Eye,
+    FileText,
+    Mail,
+    Phone,
+    Shield,
+    User,
+    XCircle,
+} from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -318,6 +334,54 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                                 <div>
                                     <label className='text-foreground/70 text-sm font-semibold'>Reporter Name</label>
                                     <p className='text-foreground mt-1 font-medium'>{complaint.reporter}</p>
+                                </div>
+
+                                <Separator />
+
+                                <div className='grid grid-cols-1 gap-4'>
+                                    <div>
+                                        <label className='text-foreground/70 text-sm font-semibold'>Email</label>
+                                        <div className='mt-1 flex items-center gap-2'>
+                                            <Mail className='text-foreground/50 h-4 w-4' />
+                                            {complaint.reporter_email ? (
+                                                <>
+                                                    <span className='text-foreground font-mono'>{complaint.reporter_email}</span>
+                                                    <Button
+                                                        className='h-6 w-6 p-0'
+                                                        onClick={() => copyToClipboard(complaint.reporter_email || '')}
+                                                        size='sm'
+                                                        variant='ghost'
+                                                    >
+                                                        <Copy className='h-3 w-3' />
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <span className='text-foreground/50 italic'>Not provided</span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className='text-foreground/70 text-sm font-semibold'>Phone Number</label>
+                                        <div className='mt-1 flex items-center gap-2'>
+                                            <Phone className='text-foreground/50 h-4 w-4' />
+                                            {complaint.reporter_phone_number ? (
+                                                <>
+                                                    <span className='text-foreground font-mono'>{complaint.reporter_phone_number}</span>
+                                                    <Button
+                                                        className='h-6 w-6 p-0'
+                                                        onClick={() => copyToClipboard(complaint.reporter_phone_number || '')}
+                                                        size='sm'
+                                                        variant='ghost'
+                                                    >
+                                                        <Copy className='h-3 w-3' />
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <span className='text-foreground/50 italic'>Not provided</span>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <Separator />

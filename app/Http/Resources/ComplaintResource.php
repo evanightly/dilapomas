@@ -18,6 +18,8 @@ class ComplaintResource extends JsonResource {
         $dataSource = [
             'id' => $this->id,
             'reporter' => $this->reporter,
+            'reporter_email' => $this->reporter_email,
+            'reporter_phone_number' => $this->reporter_phone_number,
             'reporter_identity_type' => $this->reporter_identity_type,
             'reporter_identity_number' => $this->reporter_identity_number,
             'incident_title' => $this->incident_title,

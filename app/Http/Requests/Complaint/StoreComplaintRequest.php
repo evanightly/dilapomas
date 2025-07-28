@@ -16,6 +16,8 @@ class StoreComplaintRequest extends FormRequest {
     public function rules(): array {
         $rules = [
             'reporter' => ['required', 'string', 'min:2', 'max:255'],
+            'reporter_email' => ['nullable', 'email', 'max:255'],
+            'reporter_phone_number' => ['nullable', 'string', 'regex:/^\+62[0-9]{8,12}$/', 'max:20'],
             'reporter_identity_type' => ['required', 'in:KTP,SIM,PASSPORT'],
             'reporter_identity_number' => ['required', 'string'],
             'incident_title' => ['required', 'string', 'min:5', 'max:255'],
@@ -56,6 +58,10 @@ class StoreComplaintRequest extends FormRequest {
             'reporter.required' => 'Nama pelapor harus diisi.',
             'reporter.min' => 'Nama pelapor minimal 2 karakter.',
             'reporter.max' => 'Nama pelapor maksimal 255 karakter.',
+            'reporter_email.email' => 'Email pelapor tidak valid.',
+            'reporter_email.max' => 'Email pelapor maksimal 255 karakter.',
+            'reporter_phone_number.regex' => 'Nomor telepon harus dimulai dengan +62 dan diikuti 8-12 digit angka.',
+            'reporter_phone_number.max' => 'Nomor telepon maksimal 20 karakter.',
             'reporter_identity_type.required' => 'Jenis identitas harus dipilih.',
             'reporter_identity_type.in' => 'Jenis identitas tidak valid.',
             'reporter_identity_number.required' => 'Nomor identitas harus diisi.',

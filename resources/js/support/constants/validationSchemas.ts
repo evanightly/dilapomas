@@ -3,6 +3,20 @@ import { z } from 'zod';
 export const complaintValidationSchema = z.object({
     reporter: z.string().min(2, 'Nama pelapor minimal 2 karakter').max(255, 'Nama pelapor maksimal 255 karakter'),
 
+    reporter_email: z.string().email('Email tidak valid').optional().or(z.literal('')),
+
+    reporter_phone_number: z
+        .string()
+        .min(1, 'Nomor telepon harus diisi')
+        .refine((val) => {
+            // If user manually adds +62, show validation error
+            if (val.startsWith('+62')) {
+                return false;
+            }
+            // Check if it's a valid Indonesian phone number (8-12 digits)
+            return /^[0-9]{8,12}$/.test(val);
+        }, 'Masukkan nomor telepon tanpa kode negara (+62). Contoh: 81234567890'),
+
     reporter_identity_type: z.enum(['KTP', 'SIM', 'PASSPORT'], {
         message: 'Pilih jenis identitas',
     }),

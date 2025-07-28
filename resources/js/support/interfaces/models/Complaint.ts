@@ -5,6 +5,8 @@ import { Model } from './Model';
  */
 export interface Complaint extends Model {
     reporter?: string;
+    reporter_email?: string;
+    reporter_phone_number?: string;
     reporter_identity_type: string;
     reporter_identity_number?: string;
     incident_title?: string;

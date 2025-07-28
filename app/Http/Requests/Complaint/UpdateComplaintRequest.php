@@ -9,6 +9,8 @@ class UpdateComplaintRequest extends FormRequest {
     public function rules(): array {
         $rules = [
             'reporter' => ['nullable', 'string'],
+            'reporter_email' => ['nullable', 'email', 'max:255'],
+            'reporter_phone_number' => ['nullable', 'string', 'regex:/^\+62[0-9]{8,12}$/', 'max:20'],
             'reporter_identity_type' => ['nullable', 'string'],
             'reporter_identity_number' => ['nullable', 'string'],
             'incident_title' => ['nullable', 'string'],
