@@ -12,7 +12,7 @@ import { Clock, Eye, File, FileImage, FileVideo, Mail, MapPin, Music, Phone, Sca
 
 export default function Welcome() {
     const page = usePage<SharedData>();
-
+    
     const theme = useTheme();
     const isAuthenticated = !!page.props.auth?.user;
 
@@ -122,12 +122,21 @@ export default function Welcome() {
                             initial={{ opacity: 0, x: -30 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
-                            <div className='flex items-center justify-center gap-4 rounded-lg'>
-                                <img alt='logo' className='h-10' src='/blue-main-logo.png' />
-                                <img alt='logo' className='h-10' src='/pro1.png' />
-                                <img alt='logo' className='h-10' src='/pro2.png' />
-                                <img alt='logo' className='h-10' src='/pro4.png' />
-                            </div>
+                            {theme.theme === 'dark' ? (
+                                <div className='flex items-center justify-center gap-4 rounded-lg'>
+                                    <img alt='logo' className='h-10' src='/white-main-logo.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-1-freq-white.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-2-freq-white.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-4-freq-white.png' />
+                                </div>
+                            ) : (
+                                <div className='flex items-center justify-center gap-4 rounded-lg'>
+                                    <img alt='logo' className='h-10' src='/blue-main-logo.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-1-freq.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-2-freq.png' />
+                                    <img alt='logo' className='h-10' src='/logo-pro-4-freq.png' />
+                                </div>
+                            )}
                         </motion.div>
                         <motion.div
                             animate={{ opacity: 1, x: 0 }}
