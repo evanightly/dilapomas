@@ -22,13 +22,13 @@ const complaintSchema = z.object({
         .string()
         .min(1, 'Phone number is required')
         .refine((val) => {
-            // If user manually adds +62, show validation error
-            if (val.startsWith('+62')) {
+            // If user manually adds +62 or starts with 0, show validation error
+            if (val.startsWith('+62') || val.startsWith('0')) {
                 return false;
             }
             // Check if it's a valid Indonesian phone number (8-12 digits)
             return /^[0-9]{8,12}$/.test(val);
-        }, 'Enter phone number without country code (+62). Example: 81234567890'),
+        }, 'Enter phone number without country code (+62) or leading 0. Example: 81234567890'),
     reporter_identity_type: z.enum(['KTP', 'SIM', 'Passport', 'Other']),
     reporter_identity_number: z.string().min(1, 'Identity number is required'),
     incident_title: z.string().min(1, 'Incident title is required'),

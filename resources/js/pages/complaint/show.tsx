@@ -181,12 +181,14 @@ export default function ShowComplaint({ data: complaint }: ShowComplaintProps) {
                             <div className='flex items-center gap-2'>
                                 <Shield className='h-5 w-5 text-blue-600' />
                                 <div>
-                                    <p className='text-foreground/80 text-sm font-medium'>Complaint ID</p>
+                                    <p className='text-foreground/80 text-sm font-medium'>Complaint Number</p>
                                     <div className='flex items-center gap-2'>
-                                        <p className='text-foreground text-lg font-bold'>#{complaint.id}</p>
+                                        <p className='text-foreground font-mono text-lg font-bold'>
+                                            {complaint.complaint_number || `#${complaint.id}`}
+                                        </p>
                                         <Button
                                             className='h-6 w-6 p-0'
-                                            onClick={() => copyToClipboard(complaint.id.toString())}
+                                            onClick={() => copyToClipboard(complaint?.complaint_number || complaint.id.toString())}
                                             size='sm'
                                             variant='ghost'
                                         >

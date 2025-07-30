@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
+            $table->string('complaint_number')->unique()->nullable();
             $table->string('reporter')->nullable();
             $table->string('reporter_email')->nullable();
             $table->string('reporter_phone_number')->nullable();

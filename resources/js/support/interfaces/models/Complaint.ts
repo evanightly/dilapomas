@@ -4,6 +4,7 @@ import { Model } from './Model';
  * Complaint model interface
  */
 export interface Complaint extends Model {
+    complaint_number?: string;
     reporter?: string;
     reporter_email?: string;
     reporter_phone_number?: string;

@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\ComplaintObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy([ComplaintObserver::class])]
 class Complaint extends Model {
     use HasFactory;
 
@@ -14,6 +17,7 @@ class Complaint extends Model {
      * @var array<int, string>
      */
     protected $fillable = [
+        'complaint_number',
         'reporter',
         'reporter_email',
         'reporter_phone_number',

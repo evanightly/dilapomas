@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import { Confetti } from '@/components/ui/confetti';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -10,7 +12,8 @@ import { complaintValidationSchema, validateIdentityNumber, type ComplaintFormDa
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
-import { CalendarIcon, FileText, SendHorizontal, Upload } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { CalendarIcon, CheckCircle, FileText, SendHorizontal, Upload } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -21,6 +24,8 @@ interface ComplaintFormProps {
 
 export function ComplaintForm({ className }: ComplaintFormProps) {
     const [files, setFiles] = useState<File[]>([]);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [submittedComplaintNumber, setSubmittedComplaintNumber] = useState<string>('');
     const submitComplaintMutation = complaintServiceHook.useSubmitPublicComplaint();
 
     const form = useForm<ComplaintFormData>({
@@ -105,9 +110,14 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                 formData.append(`evidence_files[${index}]`, file);
             });
 
-            await submitComplaintMutation.mutateAsync(formData);
+            const response = await submitComplaintMutation.mutateAsync(formData);
 
-            toast.success('Laporan berhasil dikirim! Terima kasih atas partisipasi Anda.');
+            // Extract complaint number from response if available
+            const complaintNumber = response?.data?.complaint_number || 'N/A';
+            setSubmittedComplaintNumber(complaintNumber);
+
+            // Show success modal instead of toast
+            setShowSuccessModal(true);
             form.reset();
             setFiles([]);
         } catch (error: any) {
@@ -400,6 +410,79 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                     </Button>
                 </form>
             </Form>
+
+            {/* Success Modal */}
+            <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+                <DialogContent className='sm:max-w-md'>
+                    {/* Confetti effect */}
+                    {showSuccessModal && <Confetti className='absolute top-0 left-0 z-0 size-full' />}
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                    >
+                        <DialogHeader className='text-center'>
+                            <motion.div
+                                className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900'
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ duration: 0.5, delay: 0.2, type: 'spring', stiffness: 200 }}
+                            >
+                                <motion.div
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.4, type: 'spring', stiffness: 150 }}
+                                >
+                                    <CheckCircle className='h-8 w-8 text-green-600 dark:text-green-400' />
+                                </motion.div>
+                            </motion.div>
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.3 }}>
+                                <DialogTitle className='text-center text-xl font-semibold text-green-800 dark:text-green-200'>
+                                    Laporan Berhasil Dikirim!
+                                </DialogTitle>
+                            </motion.div>
+                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.4 }}>
+                                <DialogDescription className='text-center'>
+                                    <div className='space-y-3 pt-2'>
+                                        <p className='text-base'>Terima kasih atas partisipasi Anda dalam melaporkan masalah ini.</p>
+                                        {submittedComplaintNumber && submittedComplaintNumber !== 'N/A' && (
+                                            <motion.div
+                                                className='bg-muted rounded-lg p-3'
+                                                initial={{ opacity: 0, scale: 0.9 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ duration: 0.3, delay: 0.6 }}
+                                            >
+                                                <p className='text-muted-foreground text-sm font-medium'>Nomor Pengaduan Anda:</p>
+                                                <p className='text-foreground font-mono text-lg font-bold'>{submittedComplaintNumber}</p>
+                                            </motion.div>
+                                        )}
+                                        <p className='text-muted-foreground text-sm'>
+                                            Tim kami akan meninjau laporan Anda dan memberikan tindak lanjut sesuai dengan prosedur yang berlaku. Anda
+                                            dapat menghubungi kami jika memerlukan informasi lebih lanjut.
+                                        </p>
+                                    </div>
+                                </DialogDescription>
+                            </motion.div>
+                        </DialogHeader>
+                        <motion.div
+                            className='flex justify-center pt-4'
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.7 }}
+                        >
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Button
+                                    onClick={() => setShowSuccessModal(false)}
+                                    className='bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600'
+                                >
+                                    Tutup
+                                </Button>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

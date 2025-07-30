@@ -17,6 +17,7 @@ class ComplaintResource extends JsonResource {
     public function toArray(Request $request): array {
         $dataSource = [
             'id' => $this->id,
+            'complaint_number' => $this->complaint_number,
             'reporter' => $this->reporter,
             'reporter_email' => $this->reporter_email,
             'reporter_phone_number' => $this->reporter_phone_number,
