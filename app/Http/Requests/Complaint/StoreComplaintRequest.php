@@ -43,12 +43,12 @@ class StoreComplaintRequest extends FormRequest {
         }
 
         // Handle custom intents if needed
-        switch (request()->get('intent')) {
-            case IntentEnum::SUBMIT_PUBLIC_COMPLAINT->value:
-                // Additional validation for public submissions
-                $rules['reporter_identity_number'][] = 'unique:complaints,reporter_identity_number';
-                break;
-        }
+        // switch (request()->get('intent')) {
+        //     case IntentEnum::SUBMIT_PUBLIC_COMPLAINT->value:
+        //         // Additional validation for public submissions
+        //         $rules['reporter_identity_number'][] = 'unique:complaints,reporter_identity_number';
+        //         break;
+        // }
 
         return $rules;
     }
@@ -65,7 +65,7 @@ class StoreComplaintRequest extends FormRequest {
             'reporter_identity_type.required' => 'Jenis identitas harus dipilih.',
             'reporter_identity_type.in' => 'Jenis identitas tidak valid.',
             'reporter_identity_number.required' => 'Nomor identitas harus diisi.',
-            'reporter_identity_number.unique' => 'Nomor identitas sudah pernah digunakan untuk pengaduan sebelumnya.',
+            // 'reporter_identity_number.unique' => 'Nomor identitas sudah pernah digunakan untuk pengaduan sebelumnya.',
             'incident_title.required' => 'Judul kejadian harus diisi.',
             'incident_title.min' => 'Judul kejadian minimal 5 karakter.',
             'incident_title.max' => 'Judul kejadian maksimal 255 karakter.',

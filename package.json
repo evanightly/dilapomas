@@ -85,6 +85,7 @@
         "react-dropzone": "^14.3.8",
         "react-hook-form": "^7.60.0",
         "react-resizable-panels": "^3.0.3",
+        "react-to-print": "^3.1.1",
         "react-tweet": "^3.2.2",
         "recharts": "^2.15.4",
         "shiki": "^3.8.0",

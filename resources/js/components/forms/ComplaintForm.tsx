@@ -13,10 +13,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { motion } from 'framer-motion';
-import { CalendarIcon, CheckCircle, FileText, SendHorizontal, Upload } from 'lucide-react';
-import { useState } from 'react';
+import { CalendarIcon, CheckCircle, Copy, FileText, Printer, SendHorizontal, Upload, X } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useReactToPrint } from 'react-to-print';
 import { toast } from 'sonner';
+import { ComplaintPrintTemplate } from './ComplaintPrintTemplate';
 
 interface ComplaintFormProps {
     className?: string;
@@ -26,7 +28,10 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
     const [files, setFiles] = useState<File[]>([]);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [submittedComplaintNumber, setSubmittedComplaintNumber] = useState<string>('');
+    const [submittedFormData, setSubmittedFormData] = useState<ComplaintFormData | null>(null);
+    const [submittedFiles, setSubmittedFiles] = useState<File[]>([]);
     const submitComplaintMutation = complaintServiceHook.useSubmitPublicComplaint();
+    const printRef = useRef<HTMLDivElement>(null);
 
     const form = useForm<ComplaintFormData>({
         resolver: zodResolver(complaintValidationSchema),
@@ -113,8 +118,12 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
             const response = await submitComplaintMutation.mutateAsync(formData);
 
             // Extract complaint number from response if available
-            const complaintNumber = response?.data?.complaint_number || 'N/A';
+            const complaintNumber = response?.data?.data?.complaint_number || 'N/A';
             setSubmittedComplaintNumber(complaintNumber);
+
+            // Store form data and files for printing
+            setSubmittedFormData(data);
+            setSubmittedFiles([...files]); // Store files before clearing
 
             // Show success modal instead of toast
             setShowSuccessModal(true);
@@ -134,6 +143,33 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
             } else {
                 toast.error('Terjadi kesalahan saat mengirim laporan. Silakan coba lagi.');
             }
+        }
+    };
+
+    const handlePrintComplaint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: `Laporan Pengaduan - ${submittedComplaintNumber}`,
+        onAfterPrint: () => {
+            setShowSuccessModal(false);
+            toast.success('Laporan berhasil dicetak!');
+        },
+    });
+
+    const handleCopyComplaintNumber = async () => {
+        if (!submittedComplaintNumber || submittedComplaintNumber === 'N/A') return;
+
+        try {
+            await navigator.clipboard.writeText(submittedComplaintNumber);
+            toast.success('Nomor pengaduan berhasil disalin ke clipboard!');
+        } catch (error) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = submittedComplaintNumber;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            toast.success('Nomor pengaduan berhasil disalin ke clipboard!');
         }
     };
 
@@ -413,7 +449,7 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
 
             {/* Success Modal */}
             <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
-                <DialogContent className='sm:max-w-md'>
+                <DialogContent className='sm:max-w-lg'>
                     {/* Confetti effect */}
                     {showSuccessModal && <Confetti className='absolute top-0 left-0 z-0 size-full' />}
 
@@ -442,40 +478,70 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                                     Laporan Berhasil Dikirim!
                                 </DialogTitle>
                             </motion.div>
-                            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.4 }}>
-                                <DialogDescription className='text-center'>
-                                    <div className='space-y-3 pt-2'>
-                                        <p className='text-base'>Terima kasih atas partisipasi Anda dalam melaporkan masalah ini.</p>
-                                        {submittedComplaintNumber && submittedComplaintNumber !== 'N/A' && (
-                                            <motion.div
-                                                className='bg-muted rounded-lg p-3'
-                                                initial={{ opacity: 0, scale: 0.9 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                transition={{ duration: 0.3, delay: 0.6 }}
-                                            >
-                                                <p className='text-muted-foreground text-sm font-medium'>Nomor Pengaduan Anda:</p>
-                                                <p className='text-foreground font-mono text-lg font-bold'>{submittedComplaintNumber}</p>
-                                            </motion.div>
-                                        )}
-                                        <p className='text-muted-foreground text-sm'>
-                                            Tim kami akan meninjau laporan Anda dan memberikan tindak lanjut sesuai dengan prosedur yang berlaku. Anda
-                                            dapat menghubungi kami jika memerlukan informasi lebih lanjut.
-                                        </p>
-                                    </div>
-                                </DialogDescription>
-                            </motion.div>
                         </DialogHeader>
+                        <DialogDescription />
+
+                        {/* Content section with proper semantic structure */}
                         <motion.div
-                            className='flex justify-center pt-4'
+                            className='space-y-3 pt-2 text-center'
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.4 }}
+                        >
+                            <p className='text-muted-foreground text-base'>Terima kasih atas partisipasi Anda dalam melaporkan masalah ini.</p>
+
+                            {submittedComplaintNumber && submittedComplaintNumber !== 'N/A' && (
+                                <motion.div
+                                    className='rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-green-50 p-4 dark:border-blue-800 dark:from-blue-950 dark:to-green-950'
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.6 }}
+                                >
+                                    <p className='mb-2 text-sm font-medium text-blue-700 dark:text-blue-300'>Nomor Pengaduan Anda:</p>
+                                    <div className='mb-2 flex items-center justify-center gap-2'>
+                                        <p className='font-mono text-2xl font-bold tracking-wider text-blue-900 dark:text-blue-100'>
+                                            {submittedComplaintNumber}
+                                        </p>
+                                        <Button
+                                            variant='ghost'
+                                            size='sm'
+                                            className='h-8 w-8 p-0 hover:bg-blue-100 dark:hover:bg-blue-800'
+                                            onClick={handleCopyComplaintNumber}
+                                        >
+                                            <Copy className='h-4 w-4 text-blue-600 dark:text-blue-400' />
+                                        </Button>
+                                    </div>
+                                    <p className='text-xs text-blue-600 dark:text-blue-400'>Simpan nomor ini sebagai referensi</p>
+                                </motion.div>
+                            )}
+
+                            <p className='text-muted-foreground text-sm'>
+                                Tim kami akan meninjau laporan Anda dan memberikan tindak lanjut sesuai dengan prosedur yang berlaku.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            className='flex justify-center gap-3 pt-4'
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.7 }}
                         >
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <Button
-                                    onClick={() => setShowSuccessModal(false)}
-                                    className='bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600'
+                                    onClick={handlePrintComplaint}
+                                    className='bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600'
+                                    disabled={!submittedFormData}
                                 >
+                                    <Printer className='mr-2 h-4 w-4' />
+                                    Cetak Laporan
+                                </Button>
+                            </motion.div>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Button
+                                    onClick={() => setShowSuccessModal(false)}
+                                    variant='outline'
+                                    className='border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800'
+                                >
+                                    <X className='mr-2 h-4 w-4' />
                                     Tutup
                                 </Button>
                             </motion.div>
@@ -483,6 +549,18 @@ export function ComplaintForm({ className }: ComplaintFormProps) {
                     </motion.div>
                 </DialogContent>
             </Dialog>
+
+            {/* Hidden Print Template */}
+            <div style={{ display: 'none' }}>
+                {submittedFormData && (
+                    <ComplaintPrintTemplate
+                        ref={printRef}
+                        complaintNumber={submittedComplaintNumber}
+                        formData={submittedFormData}
+                        files={submittedFiles}
+                    />
+                )}
+            </div>
         </div>
     );
 }
