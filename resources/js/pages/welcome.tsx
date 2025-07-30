@@ -12,7 +12,7 @@ import { Clock, Eye, File, FileImage, FileVideo, Mail, MapPin, Music, Phone, Sca
 
 export default function Welcome() {
     const page = usePage<SharedData>();
-    
+
     const theme = useTheme();
     const isAuthenticated = !!page.props.auth?.user;
 
